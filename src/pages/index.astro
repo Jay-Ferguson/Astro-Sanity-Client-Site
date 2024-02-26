@@ -1,7 +1,27 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+import Card from '../components/Card.astro'
+
+
+const str = 'bob'
+const num = 1
+
+const obj = {
+	name: str,
+	number: num,
+	favourites:[
+		'astro', 'css', 'js'
+	]
+}
+
 ---
+
+/// <reference types="astro/client" />
+/// <reference types="@sanity/astro/module" />
+
+<meta name="generator" content={Astro.generator}>
+<title>Astro</title>
+</meta>
 
 <Layout title="Welcome to Astro.">
 	<main>

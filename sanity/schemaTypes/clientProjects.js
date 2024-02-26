@@ -2,7 +2,7 @@ import {defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'client',
-  title: 'Client',
+  title: 'Clients',
   type: 'document',
   fields: [
     defineField({
@@ -34,18 +34,18 @@ export default defineType({
         hotspot: true,
       },
     }),
+
     defineField({
-      name: 'description',
-      title: 'Description',
+      name: 'categories',
+      title: 'Categories',
       type: 'array',
-      of: [
-        {
-          title: 'Block',
-          type: 'block',
-          styles: [{title: 'Normal', value: 'normal'}],
-          lists: [],
-        },
-      ],
+      of: [{type: 'reference', to: {type: 'category'}}],
+    }),
+
+    defineField({
+      name: 'body',
+      title: 'Body',
+      type: 'blockContent',
     }),
   ],
   preview: {
