@@ -1,15 +1,17 @@
 import { defineConfig } from 'astro/config';
 import { sanityIntegration } from "@sanity/astro";
 import react from "@astrojs/react";
+import {loadEnv} from 'vite';
 
-import sanity from "@sanity/astro";
+const projectId = loadEnv(process.env.PROJECT_ID, process.cwd(), "");
 
 // https://astro.build/config
 export default defineConfig({
+  site:'https://wornockwood.com',
   integrations: [react(), sanityIntegration({
-    projectId: process.env.PROJECT_ID,
-    dataset: process.env.DATASET_ID,
+    projectId: '9gy3ebd9',
+    dataset: "production",
     //set 
-    useCdn:false
-  })]
+    useCdn: false
+  }),]
 });

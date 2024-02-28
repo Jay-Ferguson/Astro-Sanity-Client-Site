@@ -1,16 +1,20 @@
 ---
-
+import MainHead from './MainHead.astro';
 interface Props {
      title?: string;
      description?: string;
 }
 
 
-const {title, description} = Astro.props;
+const {
+title="Wornock Wood Website",
+description="Our wood working blog for the industry"
+} = Astro.props as Props;
 ---
 
 
-<html lang="en">
+<html lang="en">``
+     <MainHead {title} {description}></MainHead>
 <head>
      <meta charset="UTF-8">
      <link rel="icon" type="image/svg" href="/favicon.svg" />
