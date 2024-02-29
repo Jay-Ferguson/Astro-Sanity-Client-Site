@@ -8,6 +8,7 @@ const projectId = loadEnv(process.env.PROJECT_ID, process.cwd(), "");
 // https://astro.build/config
 export default defineConfig({
   site:'https://wornockwood.com',
+  output:'static',
   integrations: [react(), sanityIntegration({
     projectId: '9gy3ebd9',
     dataset: "production",
