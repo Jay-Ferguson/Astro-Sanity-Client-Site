@@ -3,7 +3,7 @@ import { sanityIntegration } from "@sanity/astro";
 import react from "@astrojs/react";
 import {loadEnv} from 'vite';
 
-const projectId = loadEnv(process.env.PROJECT_ID, process.cwd(), "");
+// const projectId = loadEnv(process.env.PROJECT_ID, process.cwd(), "");
 
 // https://astro.build/config
 export default defineConfig({

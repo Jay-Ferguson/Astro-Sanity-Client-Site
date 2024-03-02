@@ -5,7 +5,7 @@ import {schemaTypes} from './schemaTypes'
 
 export default defineConfig({
   name: 'default',
-  title: 'Wornock Wood',
+  title: 'Wornock Cabinetry',
 
   projectId: '9gy3ebd9',
   dataset: 'production',
