@@ -6,6 +6,8 @@ function UpladForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    // !  TODO: Upload image to Sanity
   };
 }
 
