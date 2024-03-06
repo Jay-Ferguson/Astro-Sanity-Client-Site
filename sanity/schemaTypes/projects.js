@@ -19,7 +19,7 @@ export default defineType({
         maxLength: 96,
       },
     }),
-   
+
     defineField({
       name: 'mainImage',
       title: 'Main image',
@@ -28,6 +28,21 @@ export default defineType({
         hotspot: true,
       },
     }),
+
+    defineField({
+      name: 'galleryImages',
+      title: 'Gallery Images',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          options: {
+            hotspot: true, // Optional: allows defining a focal point for responsive images
+          },
+        },
+      ],
+    }),
+
     defineField({
       name: 'categories',
       title: 'Categories',
