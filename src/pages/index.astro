@@ -24,8 +24,8 @@ console.log(process.env.PROJECT_ID);
   rel="stylesheet"
 />
 
-/// <reference types="astro/client"></reference>
-/// <reference types="@sanity/astro/module"></reference>
+ <reference types="astro/client"></reference>
+ <reference types="@sanity/astro/module"></reference>
 
 <html>
   <meta name="generator" content={Astro.generator} />
@@ -64,6 +64,16 @@ console.log(process.env.PROJECT_ID);
     </svg>
     <h1>Welcome to <span class="text-gradient">Wornock cabinetry</span></h1>
     <p class="instructions">this is a test</p>
+
+
+
+    <header>
+	<img src="" alt="header-slider">
+	<h1>Wornock Cabinetry</h1>
+	<h5>Where crafstmenship meets customization in the world of bespoke cabinetmaking</h5>
+	<a href="/contact.astro" class="call-to-action"></a>
+    </header>
+
     <ul role="list" class="link-card-grid">
       <Card
         href="https://docs.astro.build/"
@@ -97,7 +107,7 @@ console.log(process.env.PROJECT_ID);
     font-size: 16px;
     font-weight: 300;
     font-family: "Cormorant Garamond", serif;
-    color: #292929;
+    color: #9c9c9c;
   }
   main {
     margin: auto;
@@ -130,6 +140,7 @@ console.log(process.env.PROJECT_ID);
     -webkit-text-fill-color: transparent;
     background-size: 400%;
     background-position: 0%;
+    font-size: 2rem;
   }
   .instructions {
     margin-bottom: 2rem;
