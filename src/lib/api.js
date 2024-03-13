@@ -8,7 +8,7 @@ export async function getAllPosts() {
   return posts;
 }
 
-export async function getProjects() {
+export async function getAllProjects() {
   const client = useSanityClient();
   const query = '*[_type == "projects"]';
   const params = {};
@@ -16,14 +16,14 @@ export async function getProjects() {
   return projects;
 }
 
-export async function sliderImages() {
+export async function getAllsliderImages() {
   const sliderQuery = '*[_type == "slider"]';
   const sliderParams = {};
   const sliderImages = await useSanityClient().fetch(sliderQuery, sliderParams);
   return sliderImages;
 }
 
-export async function Categories() {
+export async function getAllCategories() {
   const categoryQuery = '*[_type == "category"]';
   const categoryParams = {};
   const categories = await useSanityClient().fetch(

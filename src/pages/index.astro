@@ -2,18 +2,10 @@
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
 import { getAllPosts } from "../lib/api";
-import MainLayout from "../layouts/MainLayout.astro";
 import Footer from "../components/Footer.astro";
 const posts = await getAllPosts();
 
-const str = "bob";
-const num = 1;
-
-const obj = {
-  name: str,
-  number: num,
-  favourites: ["astro", "css", "js"],
-};
+const headerImg = "../local-images/homepage1.jpg";
 
 console.log(process.env.PROJECT_ID);
 ---
@@ -25,8 +17,8 @@ console.log(process.env.PROJECT_ID);
   rel="stylesheet"
 />
 
- <reference types="astro/client"></reference>
- <reference types="@sanity/astro/module"></reference>
+<reference types="astro/client"></reference>
+<reference types="@sanity/astro/module"></reference>
 
 <html>
   <meta name="generator" content={Astro.generator} />
@@ -66,29 +58,50 @@ console.log(process.env.PROJECT_ID);
     <h1>Welcome to <span class="text-gradient">Wornock cabinetry</span></h1>
 
     <header>
-	<img src="" alt="header-slider">
-	<h1>Wornock Cabinetry</h1>
-	<h5 class="subtitle-header">Where crafstmenship meets customization in the world of bespoke cabinetmaking</h5>
-	<a href="/contact.astro" class="call-to-action"></a>
+      <img src={headerImg} alt="header-slider" class="header_img-slider" />
+      <h1>Wornock Cabinetry</h1>
+      <h5 class="subtitle-header">
+        Where crafstmenship meets customization in the world of bespoke
+        cabinetmaking
+      </h5>
+      <a href="/contact.astro" class="call-to-action"></a>
     </header>
+
+    	<div class="post">{JSON.stringify(posts)}</div>
+
+	<ul>
+		{
+			posts.map((post) => (
+				<li>
+					<a href={`/posts/${post.slug.current}`}>
+						{post.title}
+					</a>
+				</li>
+			))
+		}
+	</ul>
 
     <ul role="list" class="link-card-grid">
       <Card
+        image=""
         href="https://docs.astro.build/"
         title="Documentation"
         body="Learn how Astro works and explore the official API docs."
       />
       <Card
+        image=""
         href="https://astro.build/integrations/"
         title="Integrations"
         body="Supercharge your project with new frameworks and libraries."
       />
       <Card
+        image="{}"
         href="https://astro.build/themes/"
         title="Themes"
         body="Explore a galaxy of community-built starter themes."
       />
       <Card
+        image="{}"
         href="https://astro.build/chat/"
         title="Community"
         body="Come say hi to our amazing Discord community. ❤️"
@@ -97,15 +110,9 @@ console.log(process.env.PROJECT_ID);
   </main>
 </Layout>
 
-<Footer>
-
-</Footer>
+<Footer />
 
 <style is:global>
-  * {
-   
-    color: #9c9c9c;
-  }
   main {
     margin: auto;
     padding: 1rem;
@@ -137,11 +144,19 @@ console.log(process.env.PROJECT_ID);
     font-weight: 400;
     line-height: 1;
     text-align: center;
-    max-width:40rem;
-    display:flex;
+    max-width: 40rem;
+    display: flex;
     align-self: center;
     margin-bottom: 1em;
   }
+
+  .header_img-slider {
+    width: 100%;
+    height: 25rem;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+
   .text-gradient {
     background-image: var(--accent-gradient);
     -webkit-background-clip: text;
