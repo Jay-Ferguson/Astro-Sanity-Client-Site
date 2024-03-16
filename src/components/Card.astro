@@ -1,67 +1,146 @@
 ---
 interface Props {
-	title: string;
-	body: string;
-	href: string;
-	image: string;
+  title: string;
+  body: string;
+  href: string;
+  image: string;
 }
 
+import { getAllPromotions } from "../lib/api";
+import { urlForImage } from "../lib/urlForImage";
 const { href, title, body, image } = Astro.props;
+const promotion = await getAllPromotions();
+import arrow from '../local-images/arrowRight.svg';
+import { Image } from "astro:assets";
 ---
 
-<li class="link-card">
-	<a href={href}>
-		<img
-			src={image}
-			alt="wornock cabinetry image"
-			class="home-card-img"
-		/>
-		<h2>
-			{title}
-			<span>&rarr;</span>
-		</h2>
-		<p>
-			{body}
-		</p>
-	</a>
-</li>
+<!-- <div class="promotion">{JSON.stringify(urlForImage(promotion.mainImage).url())}</div> -->
+
+
+<ul class="card-container">
+  {
+    promotion.map((promotion) => (
+      <li class="link-card">
+	<Image
+      src={urlForImage(promotion.mainImage).url()}
+      alt="home-project-image"
+      width={500}
+      height={300}
+      format="webp"
+      quality={100}
+      class="card-img"
+    /> 
+
+        <a href={`/posts/${promotion.slug.current}`}>
+          {promotion.title}
+
+          <Image
+            src={arrow}
+            alt="why"
+            class="arrow-right"
+          />
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<!-- <li class="link-card">
+  <a href={href}>
+   
+    <h2>
+      {title}
+      <span>&rarr;</span>
+    </h2>
+    <p>
+      {body}
+    </p>
+  </a>
+</li> -->
+
+
+
+
+
 <style>
-	.link-card {
-		list-style: none;
-		display: flex;
-		padding: 1rem;
-		background-color: #23262d;
-		background-image: none;
-		background-size: 400%;
-		border-radius: 7px;
-		background-position: 100%;
-		transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+.card-container {
+margin: 0 auto;
+  display: flex;
+  flex-flow:column;
+  align-items: center;
+  padding: 0;
+  list-style: none;
+}
+
+
+  .link-card {
+    list-style: none;
+    display: flex;
+    flex-flow:column;
+	margin:2rem;
+    width:50%;
+    padding: 1rem;
+    background-color: #23262d;
+    background-image: none;
+    background-size: 150%;
+    border-radius: 27px;
+    background-position: 100%;
+    transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+
+  .arrow-right {
+	  color:white;
+	  text-decoration: none;
+  }
+
+  .card-img{
+	width:100%;
+	height:auto;
+	object-fit: cover;
+  }
+  .link-card > a {
+    width: 100%;
+    text-decoration: none;
+    line-height: 1.4;
+    padding: calc(1.5rem - 1px);
+    border-radius: 8px;
+    color: white;
+    background-color: #23262d;
+    opacity: 0.8;
+  }
+  h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  p {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+  }
+  .link-card:is(:hover, :focus-within) {
+    background-position: 0;
+    background-image: var(--accent-gradient);
+  }
+  .link-card:is(:hover, :focus-within) h2 {
+    color: rgb(var(--accent-light));
+  }
+
+/* large-monitor and desktop */
+@media screen and (min-wdith:12000px) {
+	
+}
+
+
+/* //large tablet and desktop */
+  @media screen and (min-width: 600px) {
+	.card-container{
+		flex-flow:row;
 	}
-	.link-card > a {
-		width: 100%;
-		text-decoration: none;
-		line-height: 1.4;
-		padding: calc(1.5rem - 1px);
-		border-radius: 8px;
-		color: white;
-		background-color: #23262d;
-		opacity: 0.8;
-	}
-	h2 {
-		margin: 0;
-		font-size: 1.25rem;
-		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-	}
-	p {
-		margin-top: 0.5rem;
-		margin-bottom: 0;
-	}
-	.link-card:is(:hover, :focus-within) {
-		background-position: 0;
-		background-image: var(--accent-gradient);
-	}
-	.link-card:is(:hover, :focus-within) h2 {
-		color: rgb(var(--accent-light));
-	}
+  }
+
+/* mobile  */
+  @media screen and (max-width: 400px) {
+
+  }
 </style>

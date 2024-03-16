@@ -21,6 +21,16 @@ export default defineType({
     }),
 
     defineField({
+      name: 'mainImage',
+      title: 'Main Image',
+      type: 'image',
+      imgUrl: 'imgUrl',
+      options: {
+        hotspot: true,
+      },
+    }),
+
+    defineField({
       name: 'body',
       title: 'Body',
       type: 'blockContent',

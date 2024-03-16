@@ -32,3 +32,10 @@ export async function getAllCategories() {
   );
   return categories;
 }
+
+export async function getAllPromotions() {
+  const homeQuery = '*[_type == "promotion"]';
+  const homeParams = {};
+  const homeImages = await useSanityClient().fetch(homeQuery, homeParams);
+  return homeImages
+}

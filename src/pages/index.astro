@@ -1,13 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
-import { getAllPosts } from "../lib/api";
+import { getAllPosts, getAllPromotions } from "../lib/api";
+import { urlForImage } from "../lib/urlForImage.js";
 import Footer from "../components/Footer.astro";
+import { Image } from "astro:assets";
+import headerLogo from '../local-images/header-logo.svg'
 const posts = await getAllPosts();
-
+const promotion = await getAllPromotions();
 const headerImg = "../local-images/homepage1.jpg";
-
-console.log(process.env.PROJECT_ID);
 ---
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,6 +27,17 @@ console.log(process.env.PROJECT_ID);
 </html>
 
 <Layout title="Welcome">
+  <header>
+    <ul class="heading-menu">
+<Image src={headerLogo} alt="header-logo"></Image>
+
+      <li><a class="header-menu-item" href="">Home</a></li>
+      <li><a class="header-menu-item" href="">Gallery</a></li>
+      <li><a class="header-menu-item" href="">Contact</a></li>
+      <li><a class="header-menu-item" href="">Aboout</a></li>
+    </ul>
+  </header>
+
   <main>
     <svg
       class="astro-a"
@@ -67,46 +79,36 @@ console.log(process.env.PROJECT_ID);
       <a href="/contact.astro" class="call-to-action"></a>
     </header>
 
-    	<div class="post">{JSON.stringify(posts)}</div>
+    <!-- <div class="post">{JSON.stringify(posts)}</div> -->
 
-	<ul>
-		{
-			posts.map((post) => (
-				<li>
-					<a href={`/posts/${post.slug.current}`}>
-						{post.title}
-					</a>
-				</li>
-			))
-		}
-	</ul>
+    <h2 class="sub-headder">Designs</h2>
+    <hr class="line" />
+
+    <ul>
+      {
+        posts.map((post) => (
+          <li>
+            <a href={`/posts/${post.slug.current}`}>{post.title}</a>
+          </li>
+        ))
+      }
+    </ul>
 
     <ul role="list" class="link-card-grid">
       <Card
-        image=""
-        href="https://docs.astro.build/"
-        title="Documentation"
-        body="Learn how Astro works and explore the official API docs."
+
       />
-      <Card
-        image=""
-        href="https://astro.build/integrations/"
-        title="Integrations"
-        body="Supercharge your project with new frameworks and libraries."
-      />
-      <Card
-        image="{}"
-        href="https://astro.build/themes/"
-        title="Themes"
-        body="Explore a galaxy of community-built starter themes."
-      />
-      <Card
-        image="{}"
-        href="https://astro.build/chat/"
-        title="Community"
-        body="Come say hi to our amazing Discord community. ❤️"
-      />
+
+
     </ul>
+
+    <h6 class="lower-sub-header">
+      From our artisanal workshop located in Cantley Quebec, we take pride in
+      creating tailor- made cabinets that seamlessly blend functionality style,
+      and your unique vision.
+    </h6>
+    <h2 class="subtitle">For more information</h2>
+    <button class="contact"> Contact </button>
   </main>
 </Layout>
 
@@ -115,8 +117,6 @@ console.log(process.env.PROJECT_ID);
 <style is:global>
   main {
     margin: auto;
-    padding: 1rem;
-    width: 800px;
     max-width: calc(100% - 2rem);
     color: white;
     font-size: 2rem;
@@ -130,6 +130,31 @@ console.log(process.env.PROJECT_ID);
     width: 220px;
     height: auto;
     z-index: -1;
+  }
+
+  li {
+    list-style: none;
+  }
+
+  header {
+    padding: 0;
+  }
+
+  .heading-menu {
+    display: flex;
+    text-decoration: none;
+    flex-flow: row;
+    align-items: center;
+    gap: 2rem;
+    height: 5rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+    width: 100%;
+    background-color: #f2f2f2;
+  }
+
+  .header-menu-item {
+    text-decoration: none;
   }
   h1 {
     font-size: 4rem;
@@ -148,6 +173,12 @@ console.log(process.env.PROJECT_ID);
     display: flex;
     align-self: center;
     margin-bottom: 1em;
+  }
+
+  .line {
+    height: 1px;
+    width: 80%;
+    color: var(--accent-light);
   }
 
   .header_img-slider {
@@ -187,8 +218,8 @@ console.log(process.env.PROJECT_ID);
     color: rgb(var(--accent-light));
   }
   .link-card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+display:flex;
+flex-flow:row;
     gap: 2rem;
     padding: 0;
   }
