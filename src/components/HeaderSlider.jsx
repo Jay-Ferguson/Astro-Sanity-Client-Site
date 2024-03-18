@@ -6,6 +6,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import {KayboardNavigation, Controller, A11y} from "swiper";
 
 import "swiper/css";
+import "swiper/css/autoplay";
+import "swiper/css/controller";
+import "swiper/css/effect-fade";
+
+
 
 const headerImages = await getAllsliderImages();
 
