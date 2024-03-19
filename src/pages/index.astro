@@ -6,6 +6,7 @@ import { urlForImage } from "../lib/urlForImage.js";
 import Footer from "../components/Footer.astro";
 import { Image } from "astro:assets";
 import headerLogo from "../local-images/header-logo.svg";
+import HeaderSlider from '../components/HeaderSlider.jsx'
 const posts = await getAllPosts();
 const promotion = await getAllPromotions();
 const headerImg = "../local-images/homepage1.jpg";
@@ -71,6 +72,7 @@ const headerImg = "../local-images/homepage1.jpg";
 
     <header>
       <img src={headerImg} alt="header-slider" class="header_img-slider" />
+	 <HeaderSlider></HeaderSlider>
       <h1>Wornock Cabinetry</h1>
       <h5 class="subtitle-header">
         Where crafstmenship meets customization in the world of bespoke
