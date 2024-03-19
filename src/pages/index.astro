@@ -2,11 +2,11 @@
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
 import { getAllPosts, getAllPromotions } from "../lib/api";
-import { urlForImage } from "../lib/urlForImage.js";
 import Footer from "../components/Footer.astro";
 import { Image } from "astro:assets";
 import headerLogo from "../local-images/header-logo.svg";
-import HeaderSlider from '../components/HeaderSlider.jsx'
+import HeaderSlider from "../components/HeaderSlider.astro";
+import { urlForImage } from "../lib/urlForImage.js";
 const posts = await getAllPosts();
 const promotion = await getAllPromotions();
 const headerImg = "../local-images/homepage1.jpg";
@@ -71,8 +71,7 @@ const headerImg = "../local-images/homepage1.jpg";
     <h1>Welcome to <span class="text-gradient">Wornock cabinetry</span></h1>
 
     <header>
-      <img src={headerImg} alt="header-slider" class="header_img-slider" />
-	 <HeaderSlider></HeaderSlider>
+      <HeaderSlider/>
       <h1>Wornock Cabinetry</h1>
       <h5 class="subtitle-header">
         Where crafstmenship meets customization in the world of bespoke
