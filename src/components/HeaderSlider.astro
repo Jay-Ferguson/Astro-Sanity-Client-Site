@@ -1,5 +1,4 @@
 ---
-
 import React from "react";
 import PropTypes from "prop-types";
 import { Image } from "astro:assets";
@@ -20,23 +19,47 @@ import "swiper/css/effect-fade";
 
 const headerImages = await getAllsliderImages();
 
-console.log(urlForImage(headerImages));
-
 ---
 
-<!-- <div>{JSON.stringify(urlForImage(headerImages).url())}</div> -->
-<div>
-<!-- 
+<div class="swiper-container">
+     
      {
-          headerImages.map((headerImage) => (
-               <div>
-                    <Image src={urlForImage(headerImage.mainImage).url()} alt={headerImage.title}} />
-                         
-                    </div>
-                    ))
-               } -->
+          const swiper = new Swiper(".swiper-container", {
+               
+          })
+
+          const swiper = document.querySelector('.swiper-container').swiper;
+
+
+
+          headerImages.map((headerImage) => {
+               return (
+                    <div>
+                         <Image
+                         src={urlForImage(headerImage.imageUrl).url()}
+                         alt={headerImage}
+                         width={500}
+                         height={500}
+                         class='header-image'
+                         format="webp"
+                         quality={100}
+                         />
+                         </div>
+                         );
+                    })
+               }
 
 </div>
-<script>
 
-</script>
+<style>
+     .swiper-container {
+          height: 500px;
+          width:100%;
+          display:flex;
+          justify-content: center;
+          align-items: center;
+          margin-bottom:1rem;
+     }
+
+</style>
+     

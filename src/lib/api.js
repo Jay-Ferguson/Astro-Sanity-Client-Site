@@ -17,7 +17,9 @@ export async function getAllProjects() {
 }
 
 export async function getAllsliderImages() {
-  const sliderQuery = '*[_type == "slider"]';
+  const sliderQuery = `*[_type == "slider"]{
+    "imageUrl": image.asset->url
+  }`;
   const sliderParams = {};
   const sliderImages = await useSanityClient().fetch(sliderQuery, sliderParams);
   return sliderImages;
