@@ -1,65 +1,111 @@
 ---
-import React from "react";
-import PropTypes from "prop-types";
-import { Image } from "astro:assets";
 import { urlForImage } from "../lib/urlForImage";
 import { getAllsliderImages } from "../lib/api";
-import Swiper from "swiper";
-import {
-  Navigation,
-  Pagination,
-  Autoplay,
-  KayboardNavigation,
-} from "swiper/modules";
-
-import "swiper/css";
-import "swiper/css/autoplay";
-import "swiper/css/controller";
-import "swiper/css/effect-fade";
+import Image from "astro/components/Image.astro";
 
 const headerImages = await getAllsliderImages();
-
 ---
 
-<div class="swiper-container">
-     
-     {
-          const swiper = new Swiper(".swiper-container", {
-               
-          })
+<link rel="stylesheet" href="../../src/dist/css/splide.min.css" />
+<script>
+  import Splide from "@splidejs/splide";
+  import { MyTransition } from "../lib/Fade";
 
-          const swiper = document.querySelector('.swiper-container').swiper;
+  new Splide(".splide").mount({}, MyTransition);
 
+  document.addEventListener("DOMContentLoaded", function () {
+ let mainSplide = new Splide(".splide", {
+    type:'fade',
+    autoplay: true,
+    duration: 1000,
+    rewind:true,
+    pagination:false,
+    arrows: false,
+    });
 
+    mainSplide.mount();
+  });
+</script>
 
-          headerImages.map((headerImage) => {
-               return (
-                    <div>
-                         <Image
-                         src={urlForImage(headerImage.imageUrl).url()}
-                         alt={headerImage}
-                         width={500}
-                         height={500}
-                         class='header-image'
-                         format="webp"
-                         quality={100}
-                         />
-                         </div>
-                         );
-                    })
-               }
-
-</div>
+<section
+  class="splide"
+  aria-label="Splide Basic HTML Example"
+  aria-labelledby="carousel-heading"
+>
+  <div class="splide__container">
+    <div class="splide__track">
+      <ul class="splide__list">
+        {
+          headerImages.map((headerImages) => (
+            <li class="splide__slide fade-in">
+              <Image
+                src={urlForImage(headerImages.image).url()}
+                class="splide__image"
+                alt="home-project-image"
+                height={600}
+                width={1200}
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
 
 <style>
-     .swiper-container {
-          height: 500px;
-          width:100%;
-          display:flex;
-          justify-content: center;
-          align-items: center;
-          margin-bottom:1rem;
-     }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 
+  .fade-in {
+    /* Initial opacity for all slides */
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  .splide {
+    width: 100%;
+    height: 30rem;
+  }
+
+  .splide__slide {
+    opacity: 0.5;
+    text-align: center;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+  }
+
+  .splide__slide.is-active {
+    opacity: 1;
+  }
+
+  .splide__slide:first-child {
+    opacity: 1;
+  }
+
+  .splide__track {
+    overflow: hidden;
+  }
+
+  .swiper-slid__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .swiper-container {
+    height: 500px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
 </style>
-     

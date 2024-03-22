@@ -30,11 +30,11 @@ export default defineType({
       name: 'image',
       title: 'Image',
       type: 'image',
+      imgUrl: 'imgUrl',
       options: {
         hotspot: true,
       },
     }),
-
   ],
   preview: {
     select: {
