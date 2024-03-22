@@ -1,0 +1,52 @@
+---
+import MainHead from "../layouts/MainHead.astro";
+import Layout from "../layouts/Layout.astro";
+import { getAllProjects } from "../lib/api";
+import { urlForImage } from "../lib/urlForImage";
+import Image from "astro/components/Image.astro";
+import { ViewTransitions } from "astro:transitions";
+const projects = await getAllProjects();
+---
+
+<Layout>
+ 
+     <!-- <div class="projects">{JSON.stringify(projects)}</div> -->
+
+      <p id="test">this is a test</p>
+    <ul>
+      {
+        projects.map((project) => (
+          <li>
+            <Image src={urlForImage(project.mainImage).url()} alt={projects.title}
+            alt={project.title}
+            height={300}
+            width={400}
+
+            />
+            <a href={`/posts/${project.slug.current}`}>
+              <h3 class="project-title">{project.title}</h3>
+              <p>{project.children}</p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+</Layout>
+
+
+<style>
+.gallery-container{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+
+  .projects {
+    color:white;
+  }
+
+
+  #test{
+    color:white;
+  }
+</style>

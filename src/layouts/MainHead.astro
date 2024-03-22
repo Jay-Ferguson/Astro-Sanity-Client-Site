@@ -1,7 +1,7 @@
 ---
 const { title, description } = Astro.props;
 import { getImage } from "astro:assets";
-import faviconSrc from "../images/favicon.png";
+import faviconSrc from "../local-images/favicon.png";
 import faviconSvgSrc from "../local-images/warnock-logo.svg";
 
 const appleTouchIcon = await getImage({
@@ -15,25 +15,30 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: "svg" });
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg" href="/favicon.svg" />
-  <link rel="icon" href="/favicon.ico" sizes="32x32" />
-  <link rel="icon" href={faviconSvg.src} type="image/svg+xml" />
-  <link rel="apple-touch-icon" href={appleTouchIcon.src} />
-  <link rel="manifest" href="/manifest.json" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="viewport" content="width=device-width" />
   <meta name="generator" content={Astro.generator} />
 
   <title>{title}</title>
   <meta name="description" content={description} />
+
+  <link
+    rel="icon"
+    type="image/svg"
+    sizes="32X32"
+    href="../local-images/favicon.png"
+  />
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="icon" href={faviconSvg.src} type="image/svg+xml" />
+  <link rel="apple-touch-icon" href={appleTouchIcon.src} />
+  <link rel="manifest" href="/manifest.json" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
     rel="stylesheet"
   />
-
-  <link rel="stylesheet" href="path-to-the-file/splide.min.css" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gst atic.com" crossorigin />
@@ -45,8 +50,7 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: "svg" });
   <link
     rel="preload"
     type="text/javascript"
-    <script
-    src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"
-  />
-  /></head
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"/>
+    />
+  </head
 >

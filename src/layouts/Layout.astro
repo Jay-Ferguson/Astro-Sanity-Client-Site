@@ -7,6 +7,8 @@ interface Props {
 const { title } = Astro.props;
 
 import MainHead from './MainHead.astro';
+import HeadingMenu from '../components/HeadingMenu.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <!doctype html>
@@ -14,7 +16,9 @@ import MainHead from './MainHead.astro';
 
   <MainHead title={"Wornock Cabinetry"} description={"welcome to wornock cabinetry custom design"}></MainHead>
   <body>
+    <HeadingMenu></HeadingMenu>
     <slot />
+    <Footer></Footer>
   </body>
 </html>
 <style is:global>
