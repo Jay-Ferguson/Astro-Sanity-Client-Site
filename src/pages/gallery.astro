@@ -9,44 +9,62 @@ const projects = await getAllProjects();
 ---
 
 <Layout>
- 
-     <!-- <div class="projects">{JSON.stringify(projects)}</div> -->
+  <!-- <div class="projects">{JSON.stringify(projects)}</div> -->
 
-      <p id="test">this is a test</p>
+  <div class="gallery-container">
     <ul>
       {
         projects.map((project) => (
-          <li>
-            <Image src={urlForImage(project.mainImage).url()} alt={projects.title}
-            alt={project.title}
-            height={300}
-            width={400}
-
+          <li class="project-item-container">
+            <p class="project-description">
+              {console.log(project.body[0].children[0].text)}
+              
+            </p>
+            <Image
+              src={urlForImage(project.mainImage).url()}
+              alt={project.title}
+              height={300}
+              width={400}
             />
-            <a href={`/posts/${project.slug.current}`}>
-              <h3 class="project-title">{project.title}</h3>
-              <p>{project.children}</p>
+            <a href={`/posts/${project.slug.current}`} class="project-text">
+              <h3 class="project-title project-text">{project.title}</h3>
+              <p class="project-description project-text">
+                {project.body[0].children[0].text}
+              </p>
             </a>
           </li>
         ))
       }
     </ul>
+  </div>
 </Layout>
 
-
 <style>
-.gallery-container{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-}
-
-
-  .projects {
-    color:white;
+  .gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    margin: 2rem;
   }
 
+  .project-item-container {
+    margin: 2rem;
+  }
 
-  #test{
-    color:white;
+  .projects-text {
+    color: #ececec;
+    text-decoration: none;
+  }
+
+  .project-title {
+    color: #ececec;
+    text-decoration: none;
+    margin-top: 2rem;
+    margin-bottom:-0.4rem;
+    font-size: 2.5rem;
+  }
+
+  .project-description {
+    color: #ececec;
+    margin-bottom:4rem;
   }
 </style>
