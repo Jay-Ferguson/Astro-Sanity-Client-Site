@@ -28,6 +28,21 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: "svg" });
     sizes="32X32"
     href="../local-images/favicon.png"
   />
+  <!-- ligthgallery styles -->
+  <!-- <link type="text/css" rel="stylesheet" href='../dist/css/lightgallery.min.css' /> -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/lightgallery@2.0.1/css/lightgallery-bundle.css"
+    integrity="sha256-WR+ulqwZ5yV4YeuSWti+kDOFoK25M84m9GSmAtRXZPU= sha384-vvV3kNxHjN8AEovmXzpf4E0jSHvPYEMfeDE2+ICOjwInHn6RXeV1NEHbiGwQcFfR sha512-lQWNPVtPmeO0RBuGJ0uOv8uKjJSJ6+XI6HuKBfLK90mKGIgW/sCzs0vHyC1csWeG71sFsKM2u097lhMRe2BGtw=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <script src="../dist/js/umd/lightgallery.umd.js"></script>
+  <script src="../dist/js/umd/lg-thumbnail.umd.js"></script>
+  <script src="../dist/js/umd/lg-zoom.umd.js"></script>
+  <script src="../dist/js/umd/lg-fullscreen.umd.js"></script>
+
   <link rel="icon" href="/favicon.ico" sizes="32x32" />
   <link rel="icon" href={faviconSvg.src} type="image/svg+xml" />
   <link rel="apple-touch-icon" href={appleTouchIcon.src} />
@@ -50,7 +65,8 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: "svg" });
   <link
     rel="preload"
     type="text/javascript"
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"/>
-    />
-  </head
->
+    <script
+    src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"
+  />
+  />
+</head>

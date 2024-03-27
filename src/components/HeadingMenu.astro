@@ -5,7 +5,7 @@ import headerLogo from "../local-images/header-logo.svg";
 
 <header>
   <ul class="heading-menu">
-    <Image src={headerLogo} alt="header-logo" />
+    <Image src={headerLogo} alt="header-logo" class="header-logo"/>
 
     <li><a class="header-menu-item" href="/">Home</a></li>
     <li><a class="header-menu-item" href="/gallery/">Gallery</a></li>
@@ -19,20 +19,31 @@ import headerLogo from "../local-images/header-logo.svg";
     padding: 0;
   }
 
+  li{
+    list-style: none;
+  }
+
   .heading-menu {
     display: flex;
     text-decoration: none;
-    flex-flow: row;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-evenly;
     gap: 2rem;
     height: 5rem;
-    justify-content: center;
     margin-top: 0.5rem;
     width: 100%;
     background-color: #f2f2f2;
   }
 
+  .header-logo {
+     justify-self: flex-start;
+     margin-right:3rem;
+  }
+
+
   .header-menu-item {
     text-decoration: none;
+    list-style: none !important;
   }
 </style>
