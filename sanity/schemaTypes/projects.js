@@ -27,7 +27,7 @@ export default defineType({
       options: {
         hotspot: true,
       },
-    }),
+    }), 
 
     defineField({
       name: 'galleryImages',
