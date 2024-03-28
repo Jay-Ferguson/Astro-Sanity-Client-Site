@@ -49,7 +49,7 @@ function Projects() {
                             src={urlForImage(project.galleryImage).url()}
                             inferSize
                           />
-                          <p>test</p>
+                          <p>testtesttesr</p>
                         </a>
                       );
                     }
