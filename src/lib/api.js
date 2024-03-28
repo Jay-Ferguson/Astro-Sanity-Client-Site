@@ -16,6 +16,16 @@ export async function getAllProjects() {
   return projects;
 }
 
+
+export async function getAllGalleryImages(){
+  const client = useSanityClient();
+  const galleryImages = '{galleryImages}'
+  const query = '*[_type == "projects"]';
+  const params = galleryImages;
+  const gallerys = await client.fetch(query, params);
+  return gallerys;
+}
+
 export async function getAllsliderImages() {
   const sliderQuery = `*[_type == "slider"]`;
   const sliderParams = {};
