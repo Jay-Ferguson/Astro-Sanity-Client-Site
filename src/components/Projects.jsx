@@ -39,7 +39,10 @@ function Projects() {
                     width={400}
                   />
                 </a>
-                <p>the</p>
+                <p>
+                  this is a test to view if the passfrase was saved to the
+                  keychain
+                </p>
 
                 <div className="thumnail-container">
                   {galleryImages.map((galleryImage) => {
