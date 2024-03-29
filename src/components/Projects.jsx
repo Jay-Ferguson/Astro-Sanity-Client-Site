@@ -1,4 +1,7 @@
 import React from "react";
+import { getAllProjects } from "../lib/api";
+import { getAllGalleryImages } from "../lib/api";
+import { LightGallery, Image } from "lightgallery/lightgallery";
 // import styles
 import "lightgallery/css/lightgallery.css";
 import "lightgallery/css/lg-zoom.css";
@@ -6,7 +9,7 @@ import "lightgallery/css/lg-thumbnail.css";
 
 import lgThumbnail from "lightgallery/plugins/thumbnail";
 import lgZoom from "lightgallery/plugins/zoom";
-import Styles from "..dist/css/Stylesgallery.module.scss/";
+import Styles from "../dist/css/galstyles.module.css";
 
 const projects = await getAllProjects();
 
