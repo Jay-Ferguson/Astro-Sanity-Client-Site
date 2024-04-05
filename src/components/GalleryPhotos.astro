@@ -1,0 +1,77 @@
+---
+import { getAllProjects } from "../lib/api";
+import { getAllGalleryImages } from "../lib/api";
+import { urlForImage } from "../lib/urlForImage";
+import Styles from "../dist/css/galstyles.module.css";
+import Image from "astro/components/Image.astro";
+
+const projects = await getAllProjects();
+
+const galleryImages = await getAllGalleryImages();
+
+---
+
+<script>
+  import "../dist/css/photoswipe.css";
+  import PhotoSwipeLightbox from "photoswipe/lightbox";
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: "#my-gallery",
+    children: "a",
+    pswpModule: () => import("photoswipe"),
+  });
+
+  lightbox.init();
+</script>
+
+<ul class={Styles.gallery_container}>
+  {
+    projects.map((project) => (
+      <section id="my-gallery">
+        <div class='intro' />
+        <li class="project-item-container" id="lightgallery">
+          <a
+            href={urlForImage(project.mainImage).url()}
+            data-lg-size="1600-2400"
+          >
+            <Image
+              src={urlForImage(project.mainImage).url()}
+              class="project-image"
+              alt={project.title}
+              height={300}
+              width={400}
+              loading="lazy"
+            />
+          </a>
+          <p />
+
+          <div class="thumnail-container">
+            {galleryImages.map((galleryImage) => {
+              if (project.gallertImages > 0) {
+                return (
+                  <a href="thumbnail-click">
+                    <Image
+                      alt="project-thumnail"
+                      class="thumnail-img"
+                      src={urlForImage(project.galleryImage).url()}
+                      height={100}
+                      width={100}
+                    />
+
+                    <p></p>
+                  </a>
+                );
+              }
+            })}
+          </div>
+
+          <a href={`/posts/${project.slug.current}`} class="project-text">
+            <h3 class="project-title project-text">{project.title}</h3>
+            <p class="project-description project-text">
+              {project.body[0].children[0].text}
+            </p>
+          </a>
+        </li>
+      </section>
+    ))
+  }
+</ul>
