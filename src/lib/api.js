@@ -19,9 +19,8 @@ export async function getAllProjects() {
 
 export async function getAllGalleryImages(){
   const client = useSanityClient();
-  const galleryImages = '{galleryImages}'
   const query = '*[_type == "projects"]';
-  const params = galleryImages;
+  const params = '{galleryImages}';
   const gallerys = await client.fetch(query, params);
   return gallerys;
 }
