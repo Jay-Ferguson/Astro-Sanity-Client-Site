@@ -1,4 +1,81 @@
 ---
-
+import Layout from "../layouts/Layout.astro";
+import Image from "astro/components/Image.astro";
 ---
 
+<section class="contact-form">
+  <div contact-container>
+    <form action="https://submit-form.com/your-form-id">
+      <input
+        type="text"
+        name="first-name"
+        placeholder="first name"
+        class="text-input"
+      />
+      <input
+        type="text"
+        name="last-name"
+        placeholder="last name"
+        class="text-input"
+      />
+      <input type="email" name="email" placeholder="email" class="text-input" />
+      <input
+        type="text"
+        name="message"
+        placeholder="message"
+        class="text-input message-text"
+      />
+      <div class="checkbox-container">
+        <input type="checkbox" name="kitchen" class="checkbox" />
+        <input type="checkbox" name="closet" class="checkbox" />
+        <input type="checkbox" name="bathroom" class="checkbox" />
+        <input type="checkbox" name="kitchen" class="checkbox" />
+
+        <label for="file-upload">Upload project images</label>
+
+        <input
+          type="file"
+          accept="image/png, image/jpeg, image/webp, image/gif"
+          id="file-upload"
+        />
+        <button type="submit">Send</button>
+      </div>
+    </form>
+
+    <iframe src="...." frameborder="0" class="contact-iframe"> </iframe>
+  </div>
+</section>
+
+<style>
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+  }
+
+  .contact-container {
+    width: 80%;
+    padding: 1rem;
+    background-color: ececec;
+    border-radius: 10px;
+  }
+
+  .checkbox-container {
+    display: flex;
+    flex-flow: row-wrap;
+    width: 60%;
+    align-items: center;
+  }
+
+  .message-text {
+    height: 10rem;
+  }
+
+  .text-input {
+    width: 60%;
+    padding: 0.2rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+  }
+</style>
