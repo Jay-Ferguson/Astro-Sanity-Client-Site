@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Image from "astro/components/Image.astro";
-import axios from 'axios';
+import axios from "axios";
 ---
 
 <section class="contact-form">
@@ -61,9 +61,47 @@ import axios from 'axios';
   </div>
 </section>
 
-<script>
-axios.post
+<script type="module">
+  import * as LR from "@uploadcare/blocks";
+  LR.registerBlocks(LR);
+</script>
 
+<lr-config 
+ctx-name="my-uploader" 
+pubkey="e8567231b94b07c13e67" 
+max-local-file-size-bytes="10000000"
+img-only="true"
+source-list="local, url, camera, instagram"
+>
+</lr-config>
+
+<lr-file-uploader-regular
+  ctx-name="my-uploader"
+  css-src="https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.css"
+></lr-file-uploader-regular>
+
+<script>
+  import axios from "axios";
+  axios
+    .post("https://submit-form.com/your-form-id", {
+      first: "Fred",
+      last: "Flintstone",
+      message: "hello",
+      email: {
+        from: "",
+        subject: "",
+        template: {
+          title: false,
+          footer: false,
+        },
+      },
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 
   let isAdvancedUpload = (function () {
     let div = document.createElement("div");
@@ -162,5 +200,12 @@ axios.post
 
   .box.has-advanced-upload .box__dragndrop {
     display: inline;
+  }
+
+  .my-config {
+    --darkmode: 0;
+    --h-accent: 144;
+    --s-accent: 67%;
+    --l-accent: 57%;
   }
 </style>
