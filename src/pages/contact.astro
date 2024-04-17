@@ -60,10 +60,6 @@ const offWhite = 'rgb(255, 255, 255)';
     <!-- <iframe src="...." frameborder="0" class="contact-iframe"> </iframe> -->
   </section>
 
-  <script type="module">
-    import * as LR from "https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.js";
-    LR.registerBlocks(LR);
-  </script>
 
   <lr-config
     ctx-name="my-uploader"
@@ -87,6 +83,63 @@ const offWhite = 'rgb(255, 255, 255)';
 ></lr-upload-ctx-provider>
 
 <div id="previews"></div>
+
+<script type="module">
+    import * as LR from "https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.js";
+    LR.registerBlocks(LR);
+
+const providerNode = document.getElementById('my-uploader-provider');
+const previewsNode = document.getElementById('previews');
+
+providerNode.addEventListener('change', handleChangeEvent);
+function handleChangeEvent(e) {
+     console.log('change event payload', e);
+     renderFiles(e.detail.allEntries.filter(f => f.status === 'success'));
+}
+
+function renderFiles(files) {
+     const renderedFiles = files.map(file => {
+          const fileNode = document.createElement('div');
+          fileNode.setAttribute('class', 'preview-wrapper');
+
+          const imgNode = document.createElement('img');
+          imgNode.setAttribute('class', 'preview');
+          imgNode.setAttribute('src', file.cdnUrl + '/-/preview/-resize/x400/');
+          imgNode.setAttribute('width','200');
+          imgNode.setAttribute('height','200');
+          imgNode.setAttribute('alt', file.fileInfo.originalFilename);
+          imgNode.setAttribute('title', file.fileInfo.originalFilename);
+
+          const imgNameNode = document.createElement('p');
+          imgNameNode.setAttribute('class', 'preview-data');
+          imgNameNode.textContent = `${file.fileInfo.originalFileName}`;
+
+          const imgSizeNode = document.createElement('p');
+          imgSizeNode.setAttribute('class', 'preview-data');
+          imgSizeNode.textContent = `${file.fileInfo.fileSize}`;
+
+          fileNode.append(imgNode, imgNameNode, imgSizeNode);
+
+          return fileNode;
+
+     });
+
+     previewsNode.replaceChildren(...renderedFiles);
+}
+
+function formatSize(bytes) {
+     if(!bytes) return '0 bytes';
+
+     const k = 1024;
+     const sizes = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+     const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+     return `${parseFloat((bytes/ k ** i).toFixed(2))} ${sizes[i]}`;
+}
+
+
+</script>
 
 
   <script>
