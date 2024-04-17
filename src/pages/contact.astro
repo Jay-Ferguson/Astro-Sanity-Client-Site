@@ -4,253 +4,339 @@ import Image from "astro/components/Image.astro";
 import axios from "axios";
 
 const size = "0.3rem";
+const offWhite = 'rgb(255, 255, 255)';
 ---
 
-<section class="contact-form">
-  <div contact-container>
-    <form
-      action="https://submit-form.com/n6nFdqZtI"
-      onsubmit="return sumbitMail();"
-    >
-      <input
-        name="first-name"
-        placeholder="first name"
-        class="text-input"
-        required
-        minlength="2"
-        type="text"
-      />
-      <input
-        type="text"
-        name="last-name"
-        placeholder="last name"
-        class="text-input"
-        minlength="4"
-        required
-      />
-      <input type="email" name="email" placeholder="email" class="text-input" required />
-      <input
-        type="text"
-        name="message"
-        placeholder="message"
-        class="text-input message-text"
-        required
-      />
-      <div class="selector--container">
-        <label for="project-cat">Select Project Category:</label>
-        <select name="project-cat" class="custom-select">
-          <option value="Kitchens">Kitchens</option>
-          <option value="Cabinetry">Cabinetry</option>
-          <option value="Closets">Closets</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-      <button type="submit" id="send-button">Send</button>
-    </form>
-  </div>
+<Layout>
+  <section class="contact-form">
+    <div class="contact-container">
+      <form
+        action="https://submit-form.com/n6nFdqZtI"
+        onsubmit="return sumbitMail();"
+        class="form contact-container"
+      >
+        <input
+          name="first-name"
+          placeholder="first name"
+          class="text-input"
+          required
+          minlength="2"
+          type="text"
+        />
+        <input
+          type="text"
+          name="last-name"
+          placeholder="last name"
+          class="text-input"
+          minlength="4"
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="email"
+          class="text-input"
+          required
+        />
+        <textarea
+          name="message"
+          placeholder="message"
+          class="text-input message-text"
+          required
+        />
+        <div class="selector--container">
+          <label for="project-cat">Select Project Category:</label>
+          <select name="project-cat" class="custom-select">
+            <option value="Kitchens">Kitchens</option>
+            <option value="Cabinetry">Cabinetry</option>
+            <option value="Closets">Closets</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <button type="submit" id="send-button" class="send-button-class">Send</button>
+      </form>
+    </div>
 
-  <!-- <iframe src="...." frameborder="0" class="contact-iframe"> </iframe> -->
-</section>
+    <!-- <iframe src="...." frameborder="0" class="contact-iframe"> </iframe> -->
+  </section>
 
-<script type="module">
-  import * as LR from "@uploadcare/blocks";
-  LR.registerBlocks(LR);
-</script>
+  <script type="module">
+    import * as LR from "https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.js";
+    LR.registerBlocks(LR);
+  </script>
 
-<lr-config
+  <lr-config
+    ctx-name="my-uploader"
+    pubkey="e8567231b94b07c13e67"
+    max-local-file-size-bytes="10000000"
+    img-only="true"
+    source-list="local, url, camera, instagram"
+  >
+  </lr-config>
+
+  <lr-file-uploader-regular
+    ctx-name="my-uploader"
+    css-src="https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.css"
+    class="my-config"
+  >
+  </lr-file-uploader-regular>
+
+  <lr-upload-ctx-provider
   ctx-name="my-uploader"
-  pubkey="e8567231b94b07c13e67"
-  max-local-file-size-bytes="10000000"
-  img-only="true"
-  source-list="local, url, camera, instagram"
->
-</lr-config>
+  id="my-uploader-provider"
+></lr-upload-ctx-provider>
 
-<lr-file-uploader-regular
-  ctx-name="my-uploader"
-  css-src="https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.css"
-  class="my-config"
->
-</lr-file-uploader-regular>
+<div id="previews"></div>
 
-<script>
-  import axios from "axios";
 
-  function sendMail() {
-    document
-      .getElementById("send-button")
-      .addEventListener("click", function () {
-        axios
-          .post("https://submit-form.com/n6nFdqZtI", {
-            first: "First Name",
-            last: "Last Name",
-            message: "hello",
-            email: {
-              from: "",
-              subject: "",
-              template: {
-                title: false,
-                footer: false,
+  <script>
+    import axios from "axios";
+
+    function sendMail() {
+      let status = document.getElementById("status");
+      document
+        .getElementById("send-button")
+        .addEventListener("click", function () {
+          axios
+            .post("https://submit-form.com/n6nFdqZtI", {
+              first: "First Name",
+              last: "Last Name",
+              message: "hello",
+              email: {
+                from: "",
+                subject: "",
+                template: {
+                  title: false,
+                  footer: false,
+                },
               },
-            },
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      });
-  }
+            })
+            .then((response) => {
+              if (response.data === "success") {
+                status.innerHTML = "Thanks for your email";
+              } else {
+                status.innerHTML = "Something went wrong";
+              }
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        });
+    }
 
-  //   let isAdvancedUpload = (function () {
-  //     let div = document.createElement("div");
-  //     return (
-  //       "draggable" in div ||
-  //       ("ondragstart" in div &&
-  //         "ondrop" in div &&
-  //         "FormData" in window &&
-  //         "FileReader" in window)
-  //     );
-  //   })();
+    //   let isAdvancedUpload = (function () {
+    //     let div = document.createElement("div");
+    //     return (
+    //       "draggable" in div ||
+    //       ("ondragstart" in div &&
+    //         "ondrop" in div &&
+    //         "FormData" in window &&
+    //         "FileReader" in window)
+    //     );
+    //   })();
 
-  //   let form = document.getElementsByClassName("box")[0]
-  //     .firstChild as HTMLElement;
-  //   form.classList.add("has-advanced-upload");
+    //   let form = document.getElementsByClassName("box")[0]
+    //     .firstChild as HTMLElement;
+    //   form.classList.add("has-advanced-upload");
 
-  //   if (isAdvancedUpload) {
-  //     let form = document.querySelector("form");
-  //     let droppedFiles = false;
+    //   if (isAdvancedUpload) {
+    //     let form = document.querySelector("form");
+    //     let droppedFiles = false;
 
-  //     form.addEventListener("drag", handleDragEvents);
-  //     form.addEventListener("drag", handleDragEvents);
-  //     form.addEventListener("drag", handleDragEvents);
-  //     form.addEventListener("drag", handleDragEvents);
-  //     form.addEventListener("drag", handleDragEvents);
+    //     form.addEventListener("drag", handleDragEvents);
+    //     form.addEventListener("drag", handleDragEvents);
+    //     form.addEventListener("drag", handleDragEvents);
+    //     form.addEventListener("drag", handleDragEvents);
+    //     form.addEventListener("drag", handleDragEvents);
 
-  //     function handleDragEvents(e) {
-  //       e.preventDefault();
-  //       e.stopPropagation();
+    //     function handleDragEvents(e) {
+    //       e.preventDefault();
+    //       e.stopPropagation();
 
-  //       if (e.type === "dragover" || e.type === "dragenter") {
-  //         form.classList.add("is-dragover");
-  //       } else {
-  //         form.classList.remove("is-dragover");
-  //       }
-  //     }
-  //     function handleDrop(e) {
-  //       droppedFiles = e.dataTransfer.files;
-  //     }
-  //   }
-</script>
+    //       if (e.type === "dragover" || e.type === "dragenter") {
+    //         form.classList.add("is-dragover");
+    //       } else {
+    //         form.classList.remove("is-dragover");
+    //       }
+    //     }
+    //     function handleDrop(e) {
+    //       droppedFiles = e.dataTransfer.files;
+    //     }
+    //   }
+  </script>
 
-<style define:vars={{ size }}>
-  .contact-form {
-    display: flex;
-    flex-direction: column;
-    justify-self: center;
-    align-items: center;
-  }
+  <style define:vars={{ size, offWhite }}>
+    .contact-form {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-self: center;
+      align-items: center;
+    }
 
-  .contact-container {
-    width: 80%;
-    padding: 1rem;
-    background-color: ececec;
-    border-radius: 10px;
-  }
+    .contact-container {
+      width: 80%;
+      padding: 1rem;
+      background-color: ececec;
+      display: flex;
+      flex-direction: column;
+      justify-self: center;
+      align-items: center;
+      border-radius: 10px;
+    }
 
-  .custom-select {
-    min-width: 350px;
-    margin-bottom: 1rem;
-    position: relative;
-  }
+    input{
+     border:none;
+     margin:.2rem;
+    }
 
-  .custom-select::before,
-  .custom-select::after {
-    --size: 0.3rem;
-    positon: absolute;
-    content: "";
-    right: 1rem;
-    pointer-events: none;
-  }
 
-  ,
-  .custom-select::before {
-    border-left: var(--size) solid transparent;
-    border-right: var(--size) solid transparent;
-    border-bottom: var(--size) solid black;
-    top: 40%;
-  }
+   
 
-  .custom-select::after {
-    border-left: var(--size) solid transparent;
-    border-right: var(--size) solid transparent;
-    border-top: var(--size) solid black;
-    top: 55%;
-  }
+    .send-button-class{
+     position:relative;
+     font-size:2rem;
+     text-transform: uppercase;
+     width:10rem;
+     text-align:center;
+     border-radius:1rem;
+     padding:.5rem;
+     border:none;
+     background: linear-gradient(-35deg, #dd543e, #f1bed0);
+     color:#efefef;
+     transition: ease-out .4s;
+     box-shadow: 2px 2px 2px 4px rgba(35, 35, 35, 0.35);
+     
+    }
 
-  .selector--container {
-    display: flex;
-    flex-flow: row;
-    width: 60%;
-    align-items: center;
-  }
+    .send-button-class:active{
 
-  select {
-    appearance: none;
-    /* safari */
-    -webkit-appearance: none;
-    /* other styles for aesthetics */
-    width: 100%;
-    font-size: 1.15rem;
-    padding: 0.675em 6em 0.675em 1em;
-    background-color: #fff;
-    border: 1px solid #caced1;
-    border-radius: 0.25rem;
-    color: #000;
-    cursor: pointer;
-  }
+    }
 
-  .message-text {
-    height: 10rem;
-  }
+    .send-button-class:hover{
+     background: linear-gradient(35deg, #dd543e, #f1bed0);
+     top:-2px;
+      color:rgb(55, 55, 55);
+      transition: ease-in .4s;s
+      box-shadow: 2px 2px 2px 4px rgba(35, 35, 35, 0.35);
 
-  .text-input {
-    width: 60%;
-    padding: 0.2rem;
-    border-radius: 10px;
-    margin-bottom: 1rem;
-  }
+    }
 
-  .box-input {
-    height: 20rem;
-    border: 1px dashed black;
-  }
+    .send-button-class::after{
 
-  .checkbox {
-  }
+    }
 
-  .box__dragndrop,
-  .box__uploading,
-  .box__success,
-  .box__error {
-    display: none;
-  }
+    .selector--container {
+      display: flex;
+      flex-flow: row;
+      width: 60%;
+      align-items: center;
+    }
 
-  .box.has-advanced-upload {
-    background-color: white;
-    outline: 2px dashed black;
-    outline-offset: -10px;
-  }
+     .selector--container{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-content:center;
+      margin:2rem;
 
-  .box.has-advanced-upload .box__dragndrop {
-    display: inline;
-  }
+    }
 
-  .my-config {
-    --darkmode: 0;
-    --h-accent: 144;
-    --s-accent: 67%;
-    --l-accent: 57%;
-  }
-</style>
+    .custom-select {
+      min-width: 150px;
+      max-width:200px;
+      position: relative;
+      border-radius:10px;
+    }
+
+    .custom-select::before,
+    .custom-select::after {
+      --size: 0.3rem;
+      positon: absolute;
+      content: "";
+      right: 1rem;
+      pointer-events: none;
+    }
+
+    ,
+    .custom-select::before {
+      border-left: var(--size) solid transparent;
+      border-right: var(--size) solid transparent;
+      border-bottom: var(--size) solid black;
+      top: 40%;
+    }
+
+    .custom-select::after {
+      border-left: var(--size) solid transparent;
+      border-right: var(--size) solid transparent;
+      border-top: var(--size) solid black;
+      top: 55%;
+    }
+
+    label{
+     display:inline;
+     color:var(--offWhite)
+    }
+
+    select {
+      appearance: none;
+      /* safari */
+      -webkit-appearance: none;
+      /* other styles for aesthetics */
+      width: 100%;
+      font-size: 1.15rem;
+      padding: 0.675em 6em 0.675em 1em;
+      background-color: #fff;
+      border: 1px solid #caced1;
+      border-radius: 0.25rem;
+      color: #000;
+      cursor: pointer;
+    }
+
+    .message-text {
+     overflow:auto;
+     white-space: normal;
+     text-overflow:"-" ;
+     height: 10rem;
+    }
+
+    .text-input {
+      width: 60%;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .box-input {
+      height: 20rem;
+      border: 1px dashed black;
+    }
+
+    .checkbox {
+    }
+
+    .box__dragndrop,
+    .box__uploading,
+    .box__success,
+    .box__error {
+      display: none;
+    }
+
+    .box.has-advanced-upload {
+      background-color: var(--offWhite);
+      outline: 2px dashed black;
+      outline-offset: -10px;
+    }
+
+    .box.has-advanced-upload .box__dragndrop {
+      display: inline;
+    }
+
+    .my-config {
+      --darkmode: 0;
+      --h-accent: 144;
+      --s-accent: 67%;
+      --l-accent: 57%;
+    }
+  </style>
+</Layout>
