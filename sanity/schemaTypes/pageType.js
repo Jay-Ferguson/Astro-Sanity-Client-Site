@@ -6,6 +6,14 @@ const pageType = defineType({
   title: 'Page',
   fields: [
     defineField({name: 'title', type: 'string'}),
+    defineField({name: 'subtitle', type: 'string'}),
+
+    defineField({
+      name: 'subheading',
+      title: 'SubHeading',
+      type: 'blockContent',
+    }),
+
     defineField({
       name: 'body',
       title: 'Body',

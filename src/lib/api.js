@@ -48,3 +48,13 @@ export async function getAllPromotions() {
   const homeImages = await useSanityClient().fetch(homeQuery, homeParams);
   return homeImages
 }
+
+
+//page queries
+
+export async function getAllAboutUs() {
+  const aboutUsQuery = '*[_type == "page" && slug.current == "about-us"]';
+  const aboutUsParams = {};
+  const aboutUs = await useSanityClient().fetch(aboutUsQuery, aboutUsParams);
+  return aboutUs
+}
