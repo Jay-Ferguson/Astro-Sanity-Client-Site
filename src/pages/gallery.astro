@@ -8,21 +8,20 @@ import Image from "astro/components/Image.astro";
 import Projects from '../components/Projects.jsx'
 import { ViewTransitions } from "astro:transitions";
 import GalleryPhotos from "../components/GalleryPhotos.astro";
-
+import { getAllGallery } from '../lib/api.js'
 const projects = await getAllProjects();
-
 const galleryImages = await getAllGalleryImages();
+const catalogue = await getAllGallery();
 ---
 
 
 <Layout>
-  <h2 class="gal-intro-text">
-    From concept to completion, our skilled craftsmen bring unparalleled
-    attention to detail, ensuring each piece is a testament to the artistry and
-    precision that define our brand. Explore the possibilities of personalized
-    cabinet solutions that elevate your space with Warnock Cabinetry. Below you
-    can view several of our clients completed projects.
+  <h2 class="gal-title">
+    {catalogue[0].subtitle}
   </h2>
+  <p class="gal-intro-text">
+    {catalogue[0].subheading[0].children[0].text}
+  </p>
     <!-- project data from sanity.io -->
 
     <GalleryPhotos/>
@@ -32,11 +31,18 @@ const galleryImages = await getAllGalleryImages();
 
 <style>
 
+  .gal-title {
+    color: #ececec;
+    font-size: 2.5rem;
+    text-align:center;
+    margin-top: 4rem;
+  }
+
   .gal-intro-text {
     color: #ececec;
     font-size: 1.3rem;
     font-weight: 600;
-    padding-top: 5rem;
+    padding-top: 2rem;
     margin: 0 auto;
     margin-bottom: 2rem;
     max-width: 80%;

@@ -2,13 +2,21 @@
 import Layout from "../layouts/Layout.astro";
 import Image from "astro/components/Image.astro";
 import axios from "axios";
+import { getAllContact } from "../lib/api";
 
 const size = "0.3rem";
 const offWhite = "rgb(255, 255, 255)";
+const contact = await getAllContact();
 ---
 
 <Layout>
   <section class="contact-form">
+
+    <h2 class="contact-subtitle">
+      {contact[0].subtitle}
+    </h2>
+
+    <p class="contact-subheader">{contact[0].subheading[0].children[0].text}</p>
     <div class="contact-container">
       <form
         action="https://submit-form.com/n6nFdqZtI"
@@ -183,7 +191,6 @@ const offWhite = "rgb(255, 255, 255)";
 
     .contact-container {
       width: 80%;
-      margin-top:2rem;
       padding: 1rem;
       background-color: ececec;
       display: flex;
@@ -233,8 +240,20 @@ rgb(241, 198, 190)rgb(176, 65, 46)rgb(176, 55, 46)      top: -1px;
       flex-direction: row;
       justify-content: space-around;
       align-items: center;
-      min-width: 60%;
       margin: 2rem;
+      padding:1rem;
+    }
+
+    .contact-subheader{
+      font-size: 1.2rem;
+      color:white;
+      max-width:40rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-subtitle{
+      font-size: 1.9rem;
+      color:var(--offWhite);
     }
 
   
@@ -300,7 +319,7 @@ rgb(241, 198, 190)rgb(176, 65, 46)rgb(176, 55, 46)      top: -1px;
     }
 
     .text-input {
-      width: 60%;
+      width: 80%;
       padding: 1rem;
       border-radius: 10px;
       margin-bottom: 1rem;

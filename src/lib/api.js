@@ -53,8 +53,29 @@ export async function getAllPromotions() {
 //page queries
 
 export async function getAllAboutUs() {
-  const aboutUsQuery = '*[_type == "page" && slug.current == "about-us"]';
+  const aboutUsQuery = '*[_type == "page" && title match "bout"]';
   const aboutUsParams = {};
   const aboutUs = await useSanityClient().fetch(aboutUsQuery, aboutUsParams);
   return aboutUs
+}
+
+export async function getAllContact() {
+  const catalogQuery = '*[_type == "page" && title match "Contact"]';
+  const catalogParams = {};
+  const catalog = await useSanityClient().fetch(catalogQuery, catalogParams);
+  return catalog
+}
+
+export async function getAllGallery() {
+  const catalogQuery = '*[_type == "page" && title match "Catalogue"]';
+  const catalogParams = {};
+  const catalog = await useSanityClient().fetch(catalogQuery, catalogParams);
+  return catalog;
+}
+
+export async function getAllHome() {
+  const catalogQuery = '*[_type == "page" && title match "Home"]';
+  const catalogParams = {};
+  const catalog = await useSanityClient().fetch(catalogQuery, catalogParams);
+  return catalog;
 }

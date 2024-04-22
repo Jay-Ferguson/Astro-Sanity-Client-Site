@@ -24,22 +24,23 @@ const pageType = defineType({
       type: 'array',
       title: 'Page builder',
       of: [
-        //    defineArrayMember({
-        //      name: 'hero',
-        //      type: 'hero',
-        //    }),
-        //    defineArrayMember({
-        //      name: 'gallery',
-        //      type: 'gallery',
-        //    }),
-        //    defineArrayMember({
-        //      name: 'form',
-        //      type: 'form',
-        //    }),
-        //    defineArrayMember({
-        //      name: 'video',
-        //      type: 'video',
-        //    }),
+          //  defineArrayMember({
+          //    name: 'hero',
+          //    type: 'hero',
+          //  }),
+          //  defineArrayMember({
+          //    name: 'gallery',
+          //    type: 'gallery',
+          //  }),
+          //  defineArrayMember({
+          //    name: 'form',
+          //    type: 'form',
+          //  }),
+           defineArrayMember({
+             name: 'posts',
+             type: 'reference',
+             to:[{type: 'post'}]
+           }),
 
         defineArrayMember({
           name: 'callToAction',
