@@ -5,7 +5,13 @@ import headerLogo from "../local-images/header-logo.svg";
 
 <header>
   <ul class="heading-menu">
-    <Image src={headerLogo} alt="header-logo" class="header-logo"/>
+    <Image src={headerLogo} alt="header-logo" class="header-logo" />
+
+    <div class="hamburger-menu__close">
+      <span class="line" id="top"></span>
+      <span class="line" id="cntr"></span>
+      <span class="line" id="btm"></span>
+    </div>
 
     <li><a class="header-menu-item" href="/">Home</a></li>
     <li><a class="header-menu-item" href="/gallery/">Gallery</a></li>
@@ -15,11 +21,19 @@ import headerLogo from "../local-images/header-logo.svg";
 </header>
 
 <style>
+  .hamburger-menu__close {
+    display: none;
+  }
+
+  .line {
+    display: none;
+  }
+
   header {
     padding: 0;
   }
 
-  li{
+  li {
     list-style: none;
   }
 
@@ -31,30 +45,95 @@ import headerLogo from "../local-images/header-logo.svg";
     justify-content: space-evenly;
     gap: 2rem;
     height: 5rem;
-    margin-top: 0.5rem;
+    margin-top: -0.5rem;
     width: 100%;
     background-color: #f2f2f2;
   }
 
   .header-logo {
-     justify-self: flex-start;
-     margin-right:3rem;
+    justify-self: flex-start;
+    margin-right: 3rem;
   }
-
 
   .header-menu-item {
     text-decoration: none;
     list-style: none !important;
   }
 
-
   @media screen and (max-width: 700px) {
+    .header-logo {
+      display: none;
+    }
     .heading-menu {
-      flex-direction:column;
-      height:100%;
-      display:none;
+      flex-direction: column;
+      height: 25rem;
+      display: flex;
       align-items: center;
       justify-content: center;
+      transition: 0.4s ease-in;
+
+      /* display: none; */
+    }
+
+    .hamburger-menu__close {
+      display: flex;
+      height: 4rem;
+      width: 4rem;
+      border-radius: 50%;
+      border: 10px;
+      align-items: center;
+      justify-content: center;
+      flex-flow: row;
+    }
+
+    .line {
+      color: black;
+      height: 2px;
+      width: 5px;
+      transiton: 0.4s ease-in ease-out;
+    }
+
+    #top {
+      transform: rotate(45deg);
+    }
+
+    #cntr {
+      display: none;
+    }
+
+    #btm {
+      transform: rotate(-45deg);
+    }
+
+    .line__open {
+    }
+
+    .heading-menu__open {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      transition: 0.4s ease-in;
+    }
+
+    .header-menu-item {
+      font-size: 2rem;
     }
   }
 </style>
+
+<script>
+  const menu = document.querySelector(".heading-menu");
+  const menuOpen = document.querySelector(".heading-menu__open");
+  const menuClose = document.querySelector(".close");
+  function addClass() {
+    menu.classList.add("heading-menu__open");
+  }
+
+  function removeClass() {
+    menu.classList.remove("heading-menu__open");
+  }
+
+  menuOpen.addEventListener("click", addClass);
+  menuClose.addEventListener("click", removeClass);
+</script>
