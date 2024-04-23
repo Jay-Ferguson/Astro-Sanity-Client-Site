@@ -5,6 +5,7 @@ import { getAllPosts, getAllPromotions } from "../lib/api";
 import Footer from "../components/Footer.astro";
 import { Image } from "astro:assets";
 import headerLogo from "../local-images/header-logo.svg";
+import HeadingMenu from "../components/HeadingMenu.astro";
 import HeaderSlider from "../components/HeaderSlider.astro";
 import { ViewTransitions } from "astro:transitions";
 import { urlForImage } from "../lib/urlForImage.js";
@@ -31,18 +32,7 @@ const headerImg = "../local-images/homepage1.jpg";
 </html>
 
 <Layout>
-  <ViewTransitions>
-    <header>
-      <ul class="heading-menu">
-        <Image src={headerLogo} alt="header-logo" />
-
-        <li><a class="header-menu-item" href="/">Home</a></li>
-        <li><a class="header-menu-item" href="/gallery/">Gallery</a></li>
-        <li><a class="header-menu-item" href="/contact/">Contact</a></li>
-        <li><a class="header-menu-item" href="/about/">Aboout</a></li>
-      </ul>
-    </header>
-
+   
     <main>
       <svg
         class="astro-a"
