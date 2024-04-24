@@ -4,12 +4,12 @@ import headerLogo from "../local-images/header-logo.svg";
 ---
 
 <header>
-  <nav role="navigation" aria-label="Main menu">
+  <nav role="navigation" aria-label="Main menu" class="heading-menu-nav">
     <span id="nav-label" hidden>Navigation</span>
     <button
-    id="btnOpen"
+      id="btnOpen"
       aria-expanded="false"
-      class="hamburger-menu"
+      class="hamburger-menu open"
       aria-labelled="nav-label"
     >
       <svg
@@ -30,7 +30,12 @@ import headerLogo from "../local-images/header-logo.svg";
 
     <ul class="heading-menu">
       <div class="menu-container" role="dialog" ariab-labelledby="nav-label">
-        <button aria-expanded="true" class="hamburger-menu close">
+        <button
+          id="btnClose"
+          aria-expanded="true"
+          class="hamburger-menu close"
+          aria-label="Close"
+        >
           <svg
             width="28"
             height="27"
@@ -60,13 +65,13 @@ import headerLogo from "../local-images/header-logo.svg";
       <li><a class="header-menu-item" href="/">Home</a></li>
       <li><a class="header-menu-item" href="/gallery/">Gallery</a></li>
       <li><a class="header-menu-item" href="/contact/">Contact</a></li>
-      <li><a class="header-menu-item" href="/about/">Aboout</a></li>
+      <li><a class="header-menu-item" href="/about/">About</a></li>
     </ul>
   </nav>
 </header>
 
 <style>
-  .hamburger-menu{
+  .hamburger-menu {
     display: none;
   }
 
@@ -82,6 +87,9 @@ import headerLogo from "../local-images/header-logo.svg";
     list-style: none;
   }
 
+  .heading-menu-nav {
+  }
+
   .heading-menu {
     display: flex;
     text-decoration: none;
@@ -91,7 +99,7 @@ import headerLogo from "../local-images/header-logo.svg";
     gap: 2rem;
     height: 5rem;
     margin-top: -0.5rem;
-    padding-top: 2rem;
+    padding-top:4rem;
     width: 100%;
     background-color: #ffffff;
     position: absolute;
@@ -119,20 +127,22 @@ import headerLogo from "../local-images/header-logo.svg";
       align-items: center;
       justify-content: flex-start;
       transition: 0.4s ease-in;
-      translate:100vw;
+      translate: -100vw;
       transition: translate 0.5s ease-in-out;
+      z-index: 90;
     }
     #btnOpen[aria-expanded="true"] {
-      + .heading-menu {
-        translate:0;
+    + .heading-menu {
+        translate: 0;
       }
     }
-    .heading-menu[ { 
-        translate:0;
-      
+
+    #btnClose[aria-expanded="false"] {
+     + .heading-menu {
+        translate: 100vw;
+      }
     }
     .hamburger-menu {
-      position: absolute;
       border-radius: 50%;
       border: none;
       padding: 0;
@@ -140,12 +150,23 @@ import headerLogo from "../local-images/header-logo.svg";
       z-index: 50;
       height: 5rem;
       width: 5rem;
-      top: 15px;
-      right: 25px;
       display: flex;
       flex-flow: column;
       justify-content: center;
       align-items: center;
+    }
+
+    .open {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .close {
+      position: absolute;
+      align-self: flex-end;
+      top:20px;
+      right: 20px;
     }
 
     .menu-label {
@@ -156,84 +177,33 @@ import headerLogo from "../local-images/header-logo.svg";
     /* hamburger menu */
     svg {
     }
-    .ham {
+
+    .heading-menu__open {
       display: flex;
-      flex-flow: column;
-      align-items: space-between;
+      align-items: center;
       justify-content: center;
-      height: 4rem;
-      width: 4rem;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-      transition: transform 400ms;
-      -moz-user-select: none;
-      -webkit-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-    .hamRotate.active {
-      transform: rotate(45deg);
-    }
-    .hamRotate180.active {
-      transform: rotate(180deg);
-    }
-    .line {
-      fill: currentColor;
-      transition:
-        stroke-dasharray 400ms,
-        stroke-dashoffset 400ms;
-      stroke: #ed1717 !important;
-      stroke-width: 6.5;
-      stroke-linecap: round;
+      height: 100%;
+      transition: 0.15s ease-in-out;
     }
 
-    .ham8 .top {
-      stroke-dasharray: 40 160;
+    .header-menu-item {
+      font-size: 2.5rem;
     }
-    .ham8 .middle {
-      stroke-dasharray: 40 142;
-      transform-origin: 50%;
-      transition: transform 400ms;
-    }
-    .ham8 .bottom {
-      stroke-dasharray: 40 85;
-      transform-origin: 50%;
-      transition:
-        transform 400ms,
-        stroke-dashoffset 400ms;
-    }
-    .ham8.active .top {
-      stroke-dashoffset: -64px;
-    }
-    .ham8.active .middle {
-      transform: rotate(90deg);
-    }
-    .ham8.active .bottom {
-      stroke-dashoffset: -64px;
-    }
-  }
-
-  .heading-menu__open {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    transition: 0.4s ease-in;
-  }
-
-  .header-menu-item {
-    font-size: 2rem;
   }
 </style>
 
 <script>
   const btnOpen = document.querySelector("#btnOpen");
-  
+  const btnClose = document.querySelector("#btnClose");
+
   function openMobileMenu() {
-    btnOpen.setAttribute('aria-expanded', 'true');
+    btnOpen.setAttribute("aria-expanded", "true");
   }
-  btnOpen.addEventListener('click', openMobileMenu);
+  function closeMobileMenu() {
+    btnOpen.setAttribute("aria-expanded", "false");
+    console.log("checking closeMobileMenu");
+  }
 
-
-
+  btnOpen.addEventListener("click", openMobileMenu);
+  btnClose.addEventListener("click", closeMobileMenu);
 </script>

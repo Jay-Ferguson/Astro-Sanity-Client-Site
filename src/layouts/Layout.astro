@@ -16,11 +16,12 @@ const accentClour = "#f2f2f2";
 
 <!doctype html>
 <html lang="en">
-
   <MainHead title={"Wornock Cabinetry"} description={"welcome to wornock cabinetry custom design"}></MainHead>
   <body>
     <HeadingMenu></HeadingMenu>
-    <slot />
+    <div class="content">
+      <slot />
+    </div>
     <Footer></Footer>
   </body>
 </html>
@@ -43,15 +44,17 @@ const accentClour = "#f2f2f2";
   }
   html {
     /* background: ; */
-    
+    height: 100%;
     background: radial-gradient(#201a15, #111111);
   } 
 
   body{
 	margin:0px;
-  min-height:100vh;
+  height:100%;
   box-sizing: border-box;
-  padding: 0;
+  padding: 0px;
+  display:flex;
+  flex-direction: column;
   }
   code {
     font-family:
@@ -63,6 +66,10 @@ const accentClour = "#f2f2f2";
       Bitstream Vera Sans Mono,
       Courier New,
       monospace;
+  }
+
+  .content{
+    flex: 1 0 auto;
   }
 
 

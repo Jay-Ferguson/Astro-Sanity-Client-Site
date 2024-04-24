@@ -16,12 +16,14 @@ const catalogue = await getAllGallery();
 
 
 <Layout>
-  <h2 class="gal-title">
-    {catalogue[0].subtitle}
-  </h2>
-  <p class="gal-intro-text">
-    {catalogue[0].subheading[0].children[0].text}
-  </p>
+  <div class="">
+    <h2 class="gal-title">
+      {catalogue[0].subtitle}
+    </h2>
+    <p class="gal-intro-text">
+      {catalogue[0].subheading[0].children[0].text}
+    </p>
+  </div>
     <!-- project data from sanity.io -->
 
     <GalleryPhotos/>
@@ -35,7 +37,7 @@ const catalogue = await getAllGallery();
     color: #ececec;
     font-size: 2.5rem;
     text-align:center;
-    margin-top: 4rem;
+    padding-top:2rem;
   }
 
   .gal-intro-text {
