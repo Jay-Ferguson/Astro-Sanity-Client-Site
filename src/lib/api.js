@@ -53,7 +53,7 @@ export async function getAllPromotions() {
 //page queries
 
 export async function getAllAboutUs() {
-  const aboutUsQuery = '*[_type == "page" && title match "bout"]';
+  const aboutUsQuery = '*[_type == "page" && title match "About"]';
   const aboutUsParams = {};
   const aboutUs = await useSanityClient().fetch(aboutUsQuery, aboutUsParams);
   return aboutUs

@@ -3,18 +3,34 @@ import Layout from "../layouts/Layout.astro";
 import { getAllAboutUs } from "../lib/api";
 
 const about = await getAllAboutUs();
+const lightcolor = "#f2f2f2";
+
+console.log(about);
 ---
 
-<Layout title="About" description="the about page for wornock wood">
-  <h1>{about[0].title}</h1>
+<Layout>
+  <h1 class="about-title">
+    {about[0].subtitle}
+  </h1>
 
-  <p>
+  <p class="about-text">
     {about[0].body[0].children[0].text}
-    Warnock Cabinetry started with a desire to make unique and impactful
-    furnishings. From there, we expanded to custom closets, built-in cabinetry
-    and now offer complete kitchen remodeling. Our pieces are meant to be an
-    integral part of your daily living experience—something to appreciate and
-    enrich your space. In every aspect, we proudly carry the essence of the
-    Gatineau hills in our custom cabinetry.
   </p>
 </Layout>
+
+<style define:vars={{ lightcolor }}>
+  .about-title {
+    color: var(--lightcolor);
+    font-size: 3rem;
+    font-weight: 700;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .about-text {
+    font-size: 1.4rem;
+    color: var(--lightcolor);
+    max-width: 30rem;
+    padding: 2rem;
+  }
+</style>
