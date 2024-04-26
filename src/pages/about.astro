@@ -2,23 +2,49 @@
 import Layout from "../layouts/Layout.astro";
 import { getAllAboutUs } from "../lib/api";
 
+import { urlForImage } from "../lib/urlForImage";
+import Image from "astro:assets";
 const about = await getAllAboutUs();
+const backgrnd = about[0].image;
 const lightcolor = "#f2f2f2";
-
-console.log(about);
 ---
 
 <Layout>
-  <h1 class="about-title">
-    {about[0].subtitle}
-  </h1>
+  <div class="container">
+    <img
+      src={urlForImage(backgrnd).url()}
+      class="bckgrnd-about"
+      alt="about-image"
+    />
 
-  <p class="about-text">
-    {about[0].body[0].children[0].text}
-  </p>
+    <h1 class="about-title">
+      {about[0].subtitle}
+    </h1>
+
+    <p class="about-text body-text">
+      {about[0].body[0].children[0].text}
+    </p>
+  </div>
 </Layout>
 
 <style define:vars={{ lightcolor }}>
+
+.container{
+  padding-top:2rem;
+}
+  .bckgrnd-about {
+    z-index: -4;
+    position: absolute;
+    width: 60%;
+    height: auto;
+    top:70px;
+    margin-left:auto;
+    margin-right:auto;
+    left: 0;
+    right:0;
+    opacity: 0.3;
+  }
+
   .about-title {
     color: var(--lightcolor);
     font-size: 3rem;
@@ -28,9 +54,9 @@ console.log(about);
   }
 
   .about-text {
-    font-size: 1.4rem;
     color: var(--lightcolor);
     max-width: 30rem;
-    padding: 2rem;
+    padding: 2.4rem;
+    margin: 0 auto;
   }
 </style>

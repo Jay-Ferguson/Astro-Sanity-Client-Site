@@ -10,6 +10,7 @@ import HeaderSlider from "../components/HeaderSlider.astro";
 import { ViewTransitions } from "astro:transitions";
 import { urlForImage } from "../lib/urlForImage.js";
 import { getAllHome } from "../lib/api";
+
 const homeText = await getAllHome();
 const posts = await getAllPosts();
 const promotion = await getAllPromotions();
@@ -33,7 +34,6 @@ const headerImg = "../local-images/homepage1.jpg";
 
 <Layout>
   <main>
-
     <header>
       <HeaderSlider />
 
@@ -60,17 +60,25 @@ const headerImg = "../local-images/homepage1.jpg";
       }
     </ul>
 
-    <ul role="list" class="link-card-grid">
+    <ul role="list" class="link-card-grid"> 
       <Card />
     </ul>
 
-    <h6 class="lower-sub-header">
-      {homeText[0].body[0].children[0].text}
-    </h6>
-    <h2 class="subtitle">For more information</h2>
-    <a class="subheader--contact__button" href="/contact"> Contact </a>
+    <div class="cta-container">
+      <h6 class="lower-sub-header body-text">
+        {homeText[0].body[0].children[0].text}
+      </h6>
+      <h2 class="info-cta">For more information</h2>
+      <a class="subheader--contact__button" href="/contact"> Contact </a>
+    </div>
   </main>
 </Layout>
+
+<script is:inline">
+  ScrollReveal().reveal(".info-cta", { delay: 1500 });
+  ScrollReveal().reveal(".lower-sub-header", { delay: 1500, duration: 2000 });
+  ScrollReveal().reveal(".cta-container", { delay: 1500 });
+</script>
 
 <style is:global>
   main {
@@ -133,9 +141,21 @@ const headerImg = "../local-images/homepage1.jpg";
     font-size: 1rem;
     font-weight: 400;
     background-color: #f2f2f2;
-    border-radius: 20px;
+    padding: 1rem;
+    color: black;
+    border-radius: 45px;
   }
 
+  .info-cta {
+    font-size: 1.5rem;
+  }
+  .cta-container {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
   .call-to-action {
     text-decoration: none;
     display: flex;

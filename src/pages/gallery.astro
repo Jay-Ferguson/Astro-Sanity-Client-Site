@@ -4,7 +4,6 @@ import Layout from "../layouts/Layout.astro";
 import { getAllProjects } from "../lib/api";
 import { getAllGalleryImages } from "../lib/api";
 import { urlForImage } from "../lib/urlForImage";
-import Image from "astro/components/Image.astro";
 import Projects from '../components/Projects.jsx'
 import { ViewTransitions } from "astro:transitions";
 import GalleryPhotos from "../components/GalleryPhotos.astro";
@@ -16,7 +15,7 @@ const catalogue = await getAllGallery();
 
 
 <Layout>
-  <div class="">
+  <div class="gal-heading-container">
     <h2 class="gal-title">
       {catalogue[0].subtitle}
     </h2>
@@ -32,6 +31,10 @@ const catalogue = await getAllGallery();
 </Layout>
 
 <style>
+
+.gal-heading-container{
+ padding-top: 4rem ;
+}
 
   .gal-title {
     color: #ececec;
@@ -66,7 +69,6 @@ const catalogue = await getAllGallery();
     grid-template-rows: 1fr;
     gap: 0.2rem;
     margin-right: 4rem;
-    margin-left: 2rem;
 
     @media screen and (max-width: 700px) {
       grid-template-columns: 1fr;
@@ -96,17 +98,11 @@ const catalogue = await getAllGallery();
     border-radius: 5px;
   }
 
-  .projects-text {
-    color: #ececec;
-    text-decoration: none;
-  }
-
   .project-title {
     color: #ececec;
     text-decoration: none;
     margin-bottom: 2rem;
     margin-top: 2rem;
-    margin-left: 2rem;
     font-size: 2.5rem;
 
     @media screen and (max-width: 700px) {
@@ -118,7 +114,6 @@ const catalogue = await getAllGallery();
   .project-description {
     color: #ececec;
     margin-top: 0rem;
-    margin-left: 2rem;
 
     @media screen and (max-width: 700px) {
     }

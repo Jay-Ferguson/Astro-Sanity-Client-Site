@@ -1,11 +1,4 @@
 ---
-// interface Props {
-//   title: string;
-//   body: string;
-//   href: string;
-//   image: string;
-// }
-
 import { getAllPromotions } from "../lib/api";
 import { urlForImage } from "../lib/urlForImage";
 const { href, title, body, image } = Astro.props;
@@ -76,8 +69,9 @@ margin: 0 auto;
     list-style: none;
     display: flex;
     flex-flow:column;
-	margin:2rem;
-    width:50%;
+	  margin:2rem;
+    min-width:25rem;
+    height:auto;
     padding: 1rem;
     background-color: #23262d;
     background-image: none;
