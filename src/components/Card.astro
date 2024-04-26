@@ -3,34 +3,32 @@ import { getAllPromotions } from "../lib/api";
 import { urlForImage } from "../lib/urlForImage";
 const { href, title, body, image } = Astro.props;
 const promotion = await getAllPromotions();
-import arrow from '../local-images/arrowRight.svg';
+import arrow from "../local-images/arrowRight.svg";
 import { Image } from "astro:assets";
 ---
 
-
+<script type="module">
+  ScrollReveal().reveal(".link-card", { delay: 300 });
+</script>
 
 <ul class="card-container">
   {
     promotion.map((promotion) => (
       <li class="link-card">
-	<Image
-      src={urlForImage(promotion.mainImage).url()}
-      alt="home-project-image"
-      width={500}
-      height={300}
-      format="webp"
-      quality={100}
-      class="card-img"
-    /> 
+        <Image
+          src={urlForImage(promotion.mainImage).url()}
+          alt="home-project-image"
+          width={500}
+          height={300}
+          format="webp"
+          quality={100}
+          class="card-img"
+        />
 
         <a href={`/posts/${promotion.slug.current}`} class="card-link">
           {promotion.title}
 
-          <Image
-            src={arrow}
-            alt="why"
-            class="arrow-right"
-          />
+          <Image src={arrow} alt="why" class="arrow-right" />
         </a>
       </li>
     ))
@@ -50,28 +48,23 @@ import { Image } from "astro:assets";
   </a>
 </li> -->
 
-
-
-
-
 <style>
-.card-container {
-margin: 0 auto;
-  display: flex;
-  flex-flow:column;
-  align-items: center;
-  padding: 0;
-  list-style: none;
-}
-
+  .card-container {
+    margin: 0 auto;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    padding: 0;
+    list-style: none;
+  }
 
   .link-card {
     list-style: none;
     display: flex;
-    flex-flow:column;
-	  margin:2rem;
-    min-width:25rem;
-    height:auto;
+    flex-flow: column;
+    margin: 2rem;
+    min-width: 25rem;
+    height: auto;
     padding: 1rem;
     background-color: #23262d;
     background-image: none;
@@ -83,20 +76,20 @@ margin: 0 auto;
   }
 
   .card-link {
-	  display: flex;
-	  flex-flow:column;
-	  gap:1rem;
+    display: flex;
+    flex-flow: column;
+    gap: 1rem;
   }
 
   .arrow-right {
-	  color:white;
-	  text-decoration: none;
+    color: white;
+    text-decoration: none;
   }
 
-  .card-img{
-	width:100%;
-	height:25rem;
-	object-fit: cover;
+  .card-img {
+    width: 100%;
+    height: 25rem;
+    object-fit: cover;
   }
   .link-card > a {
     width: 100%;
@@ -125,21 +118,18 @@ margin: 0 auto;
     color: rgb(var(--accent-light));
   }
 
-/* large-monitor and desktop */
-@media screen and (min-wdith:12000px) {
-	
-}
-
-
-/* //large tablet and desktop */
-  @media screen and (min-width: 600px) {
-	.card-container{
-		flex-flow:row;
-	}
+  /* large-monitor and desktop */
+  @media screen and (min-wdith: 12000px) {
   }
 
-/* mobile  */
-  @media screen and (max-width: 400px) {
+  /* //large tablet and desktop */
+  @media screen and (min-width: 1600px) {
+    .card-container {
+      flex-flow: row;
+    }
+  }
 
+  /* mobile  */
+  @media screen and (max-width: 400px) {
   }
 </style>

@@ -24,6 +24,14 @@ const headerImg = "../local-images/homepage1.jpg";
   rel="stylesheet"
 />
 
+<script type="module">
+  ScrollReveal().version;
+  ScrollReveal({ distance: "60px" });
+  ScrollReveal().reveal(".subtitle-header", { delay: 200 });
+  ScrollReveal().reveal(".lower-sub-header", { delay: 400, duration: 300 });
+  ScrollReveal().reveal(".cta-container", { delay: 400 });
+</script>
+
 <reference types="astro/client"></reference>
 <reference types="@sanity/astro/module"></reference>
 
@@ -60,7 +68,7 @@ const headerImg = "../local-images/homepage1.jpg";
       }
     </ul>
 
-    <ul role="list" class="link-card-grid"> 
+    <ul role="list" class="link-card-grid">
       <Card />
     </ul>
 
@@ -73,12 +81,6 @@ const headerImg = "../local-images/homepage1.jpg";
     </div>
   </main>
 </Layout>
-
-<script is:inline">
-  ScrollReveal().reveal(".info-cta", { delay: 1500 });
-  ScrollReveal().reveal(".lower-sub-header", { delay: 1500, duration: 2000 });
-  ScrollReveal().reveal(".cta-container", { delay: 1500 });
-</script>
 
 <style is:global>
   main {
@@ -134,6 +136,10 @@ const headerImg = "../local-images/homepage1.jpg";
     display: flex;
     align-self: center;
     margin-bottom: 1em;
+  }
+
+  .lower-sub-header{
+    padding:0rem 2rem 0rem 2rem;
   }
 
   .subheader--contact__button {

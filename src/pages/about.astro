@@ -3,18 +3,27 @@ import Layout from "../layouts/Layout.astro";
 import { getAllAboutUs } from "../lib/api";
 
 import { urlForImage } from "../lib/urlForImage";
-import Image from "astro:assets";
+import { Image } from "astro:assets";
 const about = await getAllAboutUs();
 const backgrnd = about[0].image;
 const lightcolor = "#f2f2f2";
 ---
 
+<script type="module">
+  ScrollReveal({ distance: "60px" });
+  ScrollReveal().reveal(".about-text", { delay: 200,
+  origin:'bottom'
+  });
+</script>
+
 <Layout>
   <div class="container">
-    <img
+    <Image
       src={urlForImage(backgrnd).url()}
       class="bckgrnd-about"
       alt="about-image"
+      width={500}
+      height={1000}
     />
 
     <h1 class="about-title">
@@ -28,20 +37,19 @@ const lightcolor = "#f2f2f2";
 </Layout>
 
 <style define:vars={{ lightcolor }}>
-
-.container{
-  padding-top:2rem;
-}
+  .container {
+    padding-top: 2rem;
+  }
   .bckgrnd-about {
     z-index: -4;
     position: absolute;
     width: 60%;
     height: auto;
-    top:70px;
-    margin-left:auto;
-    margin-right:auto;
+    top: 70px;
+    margin-left: auto;
+    margin-right: auto;
     left: 0;
-    right:0;
+    right: 0;
     opacity: 0.3;
   }
 

@@ -62,10 +62,20 @@ import headerLogo from "../local-images/header-logo.svg";
         </button>
       </div>
       <Image src={headerLogo} alt="header-logo" class="header-logo" />
-      <li><a class="header-menu-item" href="/">Home</a></li>
-      <li><a class="header-menu-item" href="/gallery/">Gallery</a></li>
-      <li><a class="header-menu-item" href="/contact/">Contact</a></li>
-      <li><a class="header-menu-item" href="/about/">About</a></li>
+      <li><a class="header-menu-item" href="/" data-astro-prefetch>Home</a></li>
+      <li>
+        <a class="header-menu-item" href="/gallery/" data-astro-prefetch
+          >Gallery</a
+        >
+      </li>
+      <li>
+        <a class="header-menu-item" href="/contact/" data-astro-prefetch
+          >Contact</a
+        >
+      </li>
+      <li>
+        <a class="header-menu-item" href="/about/" data-astro-prefetch>About</a>
+      </li>
     </ul>
   </nav>
 </header>
@@ -131,13 +141,13 @@ import headerLogo from "../local-images/header-logo.svg";
       z-index: 90;
     }
     #btnOpen[aria-expanded="true"] {
-    + .heading-menu {
+      + .heading-menu {
         translate: 0;
       }
     }
 
     #btnClose[aria-expanded="false"] {
-     + .heading-menu {
+      + .heading-menu {
         translate: 100vw;
       }
     }
@@ -164,7 +174,7 @@ import headerLogo from "../local-images/header-logo.svg";
     .close {
       position: absolute;
       align-self: flex-end;
-      top:20px;
+      top: 20px;
       right: 20px;
     }
 
@@ -205,4 +215,15 @@ import headerLogo from "../local-images/header-logo.svg";
 
   btnOpen.addEventListener("click", openMobileMenu);
   btnClose.addEventListener("click", closeMobileMenu);
+
+  //menu animation
+</script>
+
+<script
+  type="module"
+  src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"
+>
+  ScrollReveal().reveal(".header-menu-item", {
+    duration: 2000,
+  });
 </script>

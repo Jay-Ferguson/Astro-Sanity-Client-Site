@@ -1,9 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Image from "astro/components/Image.astro";
-import axios from "axios";
 import { getAllContact } from "../lib/api";
-
+import { Image } from "astro:assets";
+import { urlForImage } from "../lib/urlForImage";
 const size = "0.3rem";
 const offWhite = "rgb(255, 255, 255)";
 const contact = await getAllContact();
@@ -11,6 +10,16 @@ const contact = await getAllContact();
 
 <Layout>
   <section class="contact-form">
+    <Image
+      src={urlForImage(contact[0].image).url()}
+      
+      class="bckgrnd-contact"
+      alt="contact-image"
+       width={500}
+        height={300}
+         format="webp"
+          quality={100}>
+    </Image>
 
     <h2 class="contact-subtitle">
       {contact[0].subtitle}
@@ -197,6 +206,18 @@ const contact = await getAllContact();
       border-radius: 10px;
     }
 
+    .bckgrnd-contact {
+    z-index: -4;
+    position: absolute;
+    height: auto;
+    top: 70px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    opacity: 0.3;
+  }
+
     input {
       border: none;
       margin: 0.2rem;
@@ -373,4 +394,5 @@ rgb(241, 198, 190)rgb(176, 65, 46)rgb(176, 55, 46)      top: -1px;
       --l-accent: 57%;
     }
   </style>
-</Layout>
+</Layout
+>

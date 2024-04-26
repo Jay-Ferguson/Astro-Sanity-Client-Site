@@ -9,6 +9,7 @@ import {loadEnv} from 'vite';
 export default defineConfig({
   site:'https://wornockwood.com',
   output:'static',
+  prefetch:true,
   integrations: [react(), sanityIntegration({
     projectId: '9gy3ebd9',
     dataset: "production",
