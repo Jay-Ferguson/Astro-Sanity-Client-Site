@@ -1,9 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { getAllAboutUs } from "../lib/api";
-
+// import { Image } from "@unpic/astro";
 import { urlForImage } from "../lib/urlForImage";
-import { Image } from "astro:assets";
+import { Image } from "@unpic/astro";
 const about = await getAllAboutUs();
 const backgrnd = about[0].image;
 const lightcolor = "#f2f2f2";
@@ -11,9 +11,7 @@ const lightcolor = "#f2f2f2";
 
 <script type="module">
   ScrollReveal({ distance: "60px" });
-  ScrollReveal().reveal(".about-text", { delay: 200,
-  origin:'bottom'
-  });
+  ScrollReveal().reveal(".about-text", { delay: 200, origin: "bottom" });
 </script>
 
 <Layout>
@@ -22,8 +20,10 @@ const lightcolor = "#f2f2f2";
       src={urlForImage(backgrnd).url()}
       class="bckgrnd-about"
       alt="about-image"
+      placeholder="blurhash"
       width={500}
-      height={1000}
+      height={500}
+      priority
     />
 
     <h1 class="about-title">

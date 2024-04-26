@@ -8,6 +8,7 @@ import projects from './projects'
 import pageType from './pageType'
 import promotion from './promotion'
 
+
 export const schemaTypes = [
   pageType,
   post,

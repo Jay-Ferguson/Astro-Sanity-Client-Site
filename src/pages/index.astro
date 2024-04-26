@@ -46,7 +46,7 @@ const headerImg = "../local-images/homepage1.jpg";
       <HeaderSlider />
 
       <div class="subtitle_container">
-        <h1>Wornock Cabinetry</h1>
+        <h1 class="title-header">Wornock Cabinetry</h1>
         <h5 class="subtitle-header">
           {homeText[0].subheading[0].children[0].text}
         </h5>
@@ -54,8 +54,6 @@ const headerImg = "../local-images/homepage1.jpg";
         <a href="/contact.astro" class="call-to-action">Contact</a>
       </div>
     </header>
-
-    <h2 class="sub-headder">Designs</h2>
     <hr class="line" />
 
     <ul>
@@ -103,6 +101,10 @@ const headerImg = "../local-images/homepage1.jpg";
     margin-bottom: 0.2rem;
   }
 
+  .title-header{
+    margin-top:0;
+  }
+
   .slider-container {
     display: flex;
     justify-content: center;
@@ -114,11 +116,11 @@ const headerImg = "../local-images/homepage1.jpg";
     position: absolute;
     left: 0;
     right: 0;
-    top: 10rem;
+    top: 2rem;
     margin: 0 auto;
     padding: 2.5rem;
     width: 70%;
-    min-height: 25rem;
+    min-height: 22rem;
     display: flex;
     justify-content: center;
     flex-flow: column;

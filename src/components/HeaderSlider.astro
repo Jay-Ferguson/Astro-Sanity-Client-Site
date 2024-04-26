@@ -1,8 +1,8 @@
 ---
 import { urlForImage } from "../lib/urlForImage";
 import { getAllsliderImages } from "../lib/api";
-import Image from "astro/components/Image.astro";
-
+// import {Picture} from 'astro:assets'
+import { Image } from "@unpic/astro";
 const headerImages = await getAllsliderImages();
 ---
 
@@ -14,13 +14,13 @@ const headerImages = await getAllsliderImages();
   new Splide(".splide").mount({}, MyTransition);
 
   document.addEventListener("DOMContentLoaded", function () {
- let mainSplide = new Splide(".splide", {
-    type:'fade',
-    autoplay: true,
-    duration: 1000,
-    rewind:true,
-    pagination:false,
-    arrows: false,
+    let mainSplide = new Splide(".splide", {
+      type: "fade",
+      autoplay: true,
+      duration: 1000,
+      rewind: true,
+      pagination: false,
+      arrows: false,
     });
 
     mainSplide.mount();
@@ -40,10 +40,12 @@ const headerImages = await getAllsliderImages();
             <li class="splide__slide fade-in">
               <Image
                 src={urlForImage(headerImages.image).url()}
+                placeholder="blurred"
                 class="splide__image"
                 alt="home-project-image"
-                height={600}
+                height={1200}
                 width={1200}
+                priority
               />
             </li>
           ))
