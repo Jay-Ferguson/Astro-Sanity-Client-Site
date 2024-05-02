@@ -13,9 +13,11 @@ export default defineConfig({
   output:'static',
   prefetch:true,
   image:{
-    service: imageService,
-    fallbackService: 'netlify',
-    placeholder: 'blurhash',
+    service: imageService({
+      fallbackService: 'netlify',
+      placeholder: 'blurhash',
+      
+    })
   },
   integrations: [react(), sanityIntegration({
     projectId: '9gy3ebd9',
