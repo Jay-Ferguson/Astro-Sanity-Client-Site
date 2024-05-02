@@ -9,8 +9,8 @@ const projects = await getAllProjects();
 const galleryImages = await getAllGalleryImages();
 ---
 
-<script>
-  import "../dist/css/photoswipe.css";
+<script type="module">
+  import "../../dist/css/photoswipe.css";
   import PhotoSwipeLightbox from "photoswipe/lightbox";
   const lightbox = new PhotoSwipeLightbox({
     gallery: "#gallery--zoom-transition",
