@@ -3,14 +3,12 @@ import { getAllProjects } from "../lib/api";
 import { getAllGalleryImages } from "../lib/api";
 import { urlForImage } from "../lib/urlForImage";
 import Image from "astro/components/Image.astro";
-import '../lib/styles/photoswipe.css';
+import "../lib/styles/photoswipe.css";
 
 const projects = await getAllProjects();
 
 const galleryImages = await getAllGalleryImages();
 ---
-
-
 
 <script type="module">
   import PhotoSwipeLightbox from "photoswipe/lightbox";
@@ -44,28 +42,25 @@ const galleryImages = await getAllGalleryImages();
             />
           </a>
 
-
           <div class="thumbnail-container">
             {project.galleryImages.map((galleryImage) => (
               <div class="test-div">
-            <Image
-              src={urlForImage(galleryImage.asset).url()}
-              alt="project-thumnail"
-              class="thumbnail-img"
-              data-pspw-width="1669"
-              data-pspw-height="2500"
-              height={100}
-              width={200}
-            />
-            
-            <a href="thumbnail-click" class="gal-thumbnail">
-              <h1 class="test"></h1>
-              </a>
+                <Image
+                  src={urlForImage(galleryImage.asset).url()}
+                  alt="project-thumnail"
+                  class="thumbnail-img"
+                  data-pspw-width="1669"
+                  data-pspw-height="2500"
+                  height={100}
+                  width={200}
+                />
 
+                <a href="thumbnail-click" class="gal-thumbnail">
+                  <h1 class="test" />
+                </a>
               </div>
-            ))
-          }
-            </div>
+            ))}
+          </div>
 
           <a href={`/posts/${project.slug.current}`} class="project-text">
             <h3 class="project-title project-text">{project.title}</h3>
@@ -183,11 +178,7 @@ const galleryImages = await getAllGalleryImages();
 
   @font-face {
     font-family: "lg";
-    src:
-      url("../fonts/lg.woff2?io9a6k") format("woff2"),
-      url("../fonts/lg.ttf?io9a6k") format("truetype"),
-      url("../fonts/lg.woff?io9a6k") format("woff"),
-      url("../fonts/lg.svg?io9a6k#lg") format("svg");
+    src: url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
     font-weight: normal;
     font-style: normal;
     font-display: block;
