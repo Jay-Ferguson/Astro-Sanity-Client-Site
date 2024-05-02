@@ -3,7 +3,7 @@ import { getAllProjects } from "../lib/api";
 import { getAllGalleryImages } from "../lib/api";
 import { urlForImage } from "../lib/urlForImage";
 import Image from "astro/components/Image.astro";
-import '../dist/css/photoswipe.css';
+import '../lib/styles/photoswipe.css';
 
 const projects = await getAllProjects();
 
