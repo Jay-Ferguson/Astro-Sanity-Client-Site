@@ -5,6 +5,8 @@ const { href, title, body, image } = Astro.props;
 const promotion = await getAllPromotions();
 import arrow from "../local-images/arrowRight.svg";
 import { Image } from "astro:assets";
+const accentLight = 'rgba(255, 255, 255, 0.3)';
+const accentGradient = 'rgb(255, 255, 255)';
 ---
 
 <script type="module">
@@ -35,8 +37,7 @@ import { Image } from "astro:assets";
   }
 </ul>
 
-
-<style>
+<style define:vars={{ accentGradient, accentLight }}>
   .card-container {
     margin: 0 auto;
     display: flex;
@@ -100,10 +101,10 @@ import { Image } from "astro:assets";
   }
   .link-card:is(:hover, :focus-within) {
     background-position: 0;
-    background-image: var(--accent-gradient);
+    background-image: var(--accentGradient);
   }
   .link-card:is(:hover, :focus-within) h2 {
-    color: rgb(var(--accent-light));
+    color: rgb(var(--accentLight));
   }
 
   /* large-monitor and desktop */

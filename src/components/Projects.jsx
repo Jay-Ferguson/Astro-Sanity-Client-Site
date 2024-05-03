@@ -11,7 +11,6 @@ import lgThumbnail from "lightgallery/plugins/thumbnail";
 import lgZoom from "lightgallery/plugins/zoom";
 
 const projects = await getAllProjects();
-
 const galleryImages = await getAllGalleryImages();
 
 function Projects() {
