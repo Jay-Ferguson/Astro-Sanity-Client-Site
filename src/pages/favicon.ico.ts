@@ -3,7 +3,7 @@ import sharp from "sharp";
 import path from "node:path";
 
 // relative to project root
-const faviconSrc = path.resolve("src/local-images/favicon.png");
+const faviconSrc = path.resolve("src/images/favicon.png");
 
 export const GET: APIRoute = async () => {
   // resize to 32px PNG

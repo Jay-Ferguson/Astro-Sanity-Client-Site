@@ -1,8 +1,5 @@
 ---
 const { title } = Astro.props;
-const webTitle = "Wornock Cabinetry";
-import { Image } from "astro:assets";
-import warnockLogo from "../local-images/warnock-logo.svg";
 ---
 
 <style>
@@ -24,13 +21,5 @@ import warnockLogo from "../local-images/warnock-logo.svg";
 </style>
 
 <footer class="footer">
-  <p>
-    <a class="link">
-      <Image
-        src={warnockLogo}
-        alt="warnock cabinetry logo"
-        class="footer-logo"
-      />
-    </a>
-  </p>
+  <img src="../../src/images/warnocklogo.svg" class="footer-logo" />
 </footer>

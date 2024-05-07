@@ -1,6 +1,8 @@
 ---
 import Image from "astro/components/Image.astro";
-import headerLogo from "../local-images/header-logo.svg";
+import headerLogo from "../images/header-logo.svg";
+import Logo from "../../src/images/warnocklogo.svg";
+const accentColor = "#f05a24";
 ---
 
 <header>
@@ -61,7 +63,11 @@ import headerLogo from "../local-images/header-logo.svg";
           <p class="menu-label">Close</p>
         </button>
       </div>
-      <Image src={headerLogo} alt="header-logo" class="header-logo" />
+      <img
+        src="../../src/images/warnocklogo.svg"
+        alt="header-logo"
+        class="header-logo"
+      />
       <li><a class="header-menu-item" href="/" data-astro-prefetch>Home</a></li>
       <li>
         <a class="header-menu-item" href="/gallery/" data-astro-prefetch
@@ -108,23 +114,26 @@ import headerLogo from "../local-images/header-logo.svg";
     justify-content: space-evenly;
     gap: 2rem;
     height: 6rem;
+    padding-right: 2rem;
     margin-top: -0.5rem;
     width: 100%;
     background-color: #ffffff;
-    color:black;
+    color: black;
     position: absolute;
     z-index: 10;
   }
 
   .header-logo {
     justify-self: flex-start;
-    margin-right: 3rem;
+    margin-left: -10rem;
+    height:4rem;
+    fill: #f06124;
   }
 
   .header-menu-item {
     text-decoration: none;
     list-style: none !important;
-    color:black;
+    color: black;
     font-size: 1.3rem;
   }
 

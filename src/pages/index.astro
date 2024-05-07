@@ -4,7 +4,7 @@ import Card from "../components/Card.astro";
 import { getAllPosts, getAllPromotions } from "../lib/api";
 import Footer from "../components/Footer.astro";
 import { Image } from "astro:assets";
-import headerLogo from "../local-images/header-logo.svg";
+import headerLogo from "../images/header-logo.svg";
 import HeadingMenu from "../components/HeadingMenu.astro";
 import HeaderSlider from "../components/HeaderSlider.astro";
 import { ViewTransitions } from "astro:transitions";
@@ -14,7 +14,7 @@ import { getAllHome } from "../lib/api";
 const homeText = await getAllHome();
 const posts = await getAllPosts();
 const promotion = await getAllPromotions();
-const headerImg = "../local-images/homepage1.jpg";
+const headerImg = "../images/homepage1.jpg";
 ---
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -42,7 +42,7 @@ const headerImg = "../local-images/homepage1.jpg";
 
 <Layout>
   <main>
-    <header>
+    <header class="header-container">
       <HeaderSlider />
 
       <div class="subtitle_container">
@@ -105,6 +105,10 @@ const headerImg = "../local-images/homepage1.jpg";
     margin-top: 0;
   }
 
+  .header-container {
+    position: relative;
+  }
+
   .slider-container {
     display: flex;
     justify-content: center;
@@ -116,7 +120,7 @@ const headerImg = "../local-images/homepage1.jpg";
     position: absolute;
     left: 0;
     right: 0;
-    top: 2rem;
+    top: 10rem;
     margin: 0 auto;
     padding: 2.5rem;
     width: 70%;
@@ -235,11 +239,12 @@ const headerImg = "../local-images/homepage1.jpg";
     padding: 0;
   }
 
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 700px) {
 
     .subtitle_container {
       padding:.4rem;
       min-height: 18rem;
+      top:2rem;
     }
 
     .title-header {
@@ -256,9 +261,13 @@ const headerImg = "../local-images/homepage1.jpg";
     }
   }
 
-  @media screen and (min-width: 700px) {
+  @media screen and (min-width: 800px) {
+    .subtitle_container{
+      top:8rem;
+    }
   }
 
   @media screen and (min-width: 1000px) {
+
   }
 </style>
