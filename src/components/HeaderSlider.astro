@@ -75,6 +75,12 @@ const headerImages = await getAllsliderImages();
     height: 30rem;
   }
 
+  @media screen and (max-width: 500px) {
+    .splide {
+      height:24rem;
+    }
+  }
+
   .splide__slide {
     opacity: 0.5;
     text-align: center;
@@ -110,4 +116,5 @@ const headerImages = await getAllsliderImages();
     align-items: center;
     margin-bottom: 1rem;
   }
+
 </style>

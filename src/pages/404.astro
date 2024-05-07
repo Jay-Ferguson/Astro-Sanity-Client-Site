@@ -1,9 +1,34 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Picture from "astro:assets";
+import LottieAnimation from "astro-integration-lottie/Lottie.astro";
 ---
 
 <Layout>
-     <h1 class="layout__header">
-               This page does not exist please navigate back to the previous page
-     </h1>
+  <div class="container">
+    <LottieAnimation src="local-images/404animation.json" autoplay="visible">
+      <h1 class="layout__header">
+        This page does not exist please navigate back to the previous page.
+      </h1>
+    </LottieAnimation>
+  </div>
 </Layout>
+
+<style>
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 3rem;
+  }
+
+  .layout__header {
+    text-align: center;
+    max-width: 35rem;
+    min-width: 10rem;
+    padding: 2rem;
+    margin: 0 auto;
+  }
+</style>

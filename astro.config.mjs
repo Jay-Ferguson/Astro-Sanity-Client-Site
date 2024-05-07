@@ -17,6 +17,7 @@ export default defineConfig({
     service: imageService({
       fallbackService: 'netlify',
       placeholder: 'blurhash',
+      layout:'constrained',
       
     })
   },
