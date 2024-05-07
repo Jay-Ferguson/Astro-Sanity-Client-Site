@@ -30,7 +30,22 @@ const accentGradient = "rgb(255, 255, 255)";
         <a href={`/posts/${promotion.slug.current}`} class="card-link">
           {promotion.title}
 
-          <Image src={arrow} alt="why" class="arrow-right" />
+          <svg
+          class='arrow-right'
+            width="161"
+            height="10"
+            viewBox="0 0 161 10"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1 1H160C158.167 1.16667 154.3 2.9 153.5 8.5"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
         </a>
       </li>
     ))
@@ -65,10 +80,11 @@ const accentGradient = "rgb(255, 255, 255)";
   }
 
   @media screen and (max-width: 500px) {
-    .link-card{
-      min-width:10rem;
+    .link-card {
+      min-width: 10rem;
     }
-  } .card-link {
+  }
+  .card-link {
     display: flex;
     flex-flow: column;
     gap: 1rem;
