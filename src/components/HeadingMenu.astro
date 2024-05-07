@@ -126,7 +126,7 @@ const accentColor = "#f05a24";
   .header-logo {
     justify-self: flex-start;
     margin-left: -10rem;
-    height:4rem;
+    height: 4rem;
     fill: #f06124;
   }
 
@@ -137,6 +137,20 @@ const accentColor = "#f05a24";
     font-size: 1.3rem;
   }
 
+  @media screen and (max-width: 500px) {
+    #btnOpen {
+      height:4.2rem;
+      width: 4.2rem;
+      top:8px;
+    }
+
+    #btnClose {
+      height:4.2rem;
+      width: 4.2rem;
+    }
+  }
+  
+  
   @media screen and (max-width: 700px) {
     .header-logo {
       display: none;
