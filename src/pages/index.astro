@@ -42,44 +42,65 @@ const headerImg = "../images/homepage1.jpg";
 
 <Layout>
   <main>
-    <header class="header-container">
-      <HeaderSlider />
+    <div class="container-maintenance">
+      <img
+        src="../../src/images/warnocklogo.svg"
+        alt="Woodworking Business Logo"
+        class="maintenance-logo"
+      />
+      <h1>We're Under Construction!</h1>
+      <p class="subtitle-header">
+        We're busy crafting a brand new website to showcase our woodworking
+        expertise and bring you the latest creations.Thank you for your
+        patience!
+      </p>
+      <p>In the meantime, please check back soon to see our progress!</p>
 
-      <div class="subtitle_container">
-        <h1 class="title-header">Wornock Cabinetry</h1>
-        <h5 class="subtitle-header">
-          {homeText[0].subheading[0].children[0].text}
-        </h5>
-
-        <a href="/contact.astro" class="call-to-action">Contact</a>
-      </div>
-    </header>
-  
-    <ul>
-      {
-        posts.map((post) => (
+      <div class="info">
+        <ul>
+          <li></li>
           <li>
-            <a href={`/posts/${post.slug.current}`}>{post.title}</a>
+            <a href="mailto:info@warnockcabinetry.ca" class="contact-us-link"
+              >Contact us directly at info@warnockcabinetry.ca if you have any
+              questions.</a
+            >
           </li>
-        ))
-      }
-    </ul>
+        </ul>
+      </div>
 
-    <ul role="list" class="link-card-grid">
-      <Card />
-    </ul>
-
-    <div class="cta-container">
-      <h6 class="lower-sub-header body-text">
-        {homeText[0].body[0].children[0].text}
-      </h6>
-      <h2 class="info-cta">For more information</h2>
-      <a class="subheader--contact__button" href="/contact"> Contact </a>
+      <p class="coming-soon">coming soon</p>
     </div>
   </main>
 </Layout>
 
 <style is:global>
+  .container-maintenance {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .maintenance-logo {
+    height: 5rem;
+    width: 5rem;
+    margin: 2rem;
+  }
+
+  .contact-us-link {
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding-top: 2rem;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .coming-soon {
+    font-size: 3rem;
+    text-align: center;
+  }
+
   main {
     margin: 0 auto;
     max-width: calc(100% - 2rem);
@@ -152,7 +173,7 @@ const headerImg = "../images/homepage1.jpg";
     font-size: 1rem;
     font-weight: 400;
     width: 8rem;
-    text-align:center;
+    text-align: center;
     background-color: #f2f2f2;
     padding: 1rem;
     color: black;
@@ -190,8 +211,6 @@ const headerImg = "../images/homepage1.jpg";
       transition: 0.2s ease-in;
     }
   }
-
-  
 
   .header_img-slider {
     width: 100%;
@@ -237,16 +256,15 @@ const headerImg = "../images/homepage1.jpg";
   }
 
   @media screen and (max-width: 700px) {
-
     .subtitle_container {
-      padding:.4rem;
+      padding: 0.4rem;
       min-height: 18rem;
-      top:2rem;
+      top: 2rem;
     }
 
     .title-header {
       font-size: 2.5rem;
-      margin-top: .1rem;
+      margin-top: 0.1rem;
     }
 
     .link-card {
@@ -259,12 +277,11 @@ const headerImg = "../images/homepage1.jpg";
   }
 
   @media screen and (min-width: 800px) {
-    .subtitle_container{
-      top:8rem;
+    .subtitle_container {
+      top: 8rem;
     }
   }
 
   @media screen and (min-width: 1000px) {
-
   }
 </style>
