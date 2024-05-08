@@ -23,7 +23,7 @@ const galleryImages = await getAllGalleryImages();
 </script>
 
 <ul class="gallery_container">
-  {
+  {  
     projects.map((project) => (
       <section id="gallery--zoom-transition">
         <li class="pswp-gallery project-item-container" id="lightgallery">
@@ -65,7 +65,10 @@ const galleryImages = await getAllGalleryImages();
           <a href={`/posts/${project.slug.current}`} class="project-text">
             <h3 class="project-title project-text">{project.title}</h3>
             <p class="project-description">
-              {project.body[0].children[0].text}
+            
+              {/* (project.body === undefined) ? " " : {
+                project.body[0].children[0].text
+              } */}
             </p>
           </a>
         </li>
@@ -172,6 +175,10 @@ const galleryImages = await getAllGalleryImages();
     margin-top: 2rem;
     @media screen and (max-width: 700px) {
     }
+  }
+
+  .project-text{
+    text-decoration: none;
   }
 
   /* gallery-controls */

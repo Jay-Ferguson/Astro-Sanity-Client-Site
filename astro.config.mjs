@@ -13,6 +13,7 @@ export default defineConfig({
   site:'https://wornockwood.com',
   output:'static',
   prefetch:true,
+  base:'/',
   image:{
     service: imageService({
       fallbackService: 'netlify',
