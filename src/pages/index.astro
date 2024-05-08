@@ -10,7 +10,7 @@ import HeaderSlider from "../components/HeaderSlider.astro";
 import { ViewTransitions } from "astro:transitions";
 import { urlForImage } from "../lib/urlForImage.js";
 import { getAllHome } from "../lib/api";
-
+import Logo from "../components/Logo.astro";
 const homeText = await getAllHome();
 const posts = await getAllPosts();
 const promotion = await getAllPromotions();
@@ -43,11 +43,7 @@ const headerImg = "../images/homepage1.jpg";
 <Layout>
   <main>
     <div class="container-maintenance">
-      <img
-        src="../../src/images/warnocklogo.svg"
-        alt="Woodworking Business Logo"
-        class="maintenance-logo"
-      />
+      <Logo class="maintenance-logo" alt="Woodworking Business Logo" />
       <h1>We're Under Construction!</h1>
       <p class="subtitle-header">
         We're busy crafting a brand new website to showcase our woodworking
@@ -82,9 +78,7 @@ const headerImg = "../images/homepage1.jpg";
   }
 
   .maintenance-logo {
-    height: 5rem;
-    width: 5rem;
-    margin: 2rem;
+    transform: scale(1.5);
   }
 
   .contact-us-link {
