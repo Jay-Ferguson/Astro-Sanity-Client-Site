@@ -1,8 +1,8 @@
 ---
 const { title, description } = Astro.props;
 import { getImage } from "astro:assets";
-import faviconSrc from "../../dist/_astro/favicon.BIB2lusJ.png";
-import faviconSvgSrc from "../../dist/_astro/warnock-logo.B81DH6-4.svg";
+import faviconSrc from "../images/favicon.png";
+import faviconSvgSrc from "../images/warnocklogo.svg"
 
 const appleTouchIcon = await getImage({
   src: faviconSrc,
