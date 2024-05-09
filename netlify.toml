@@ -2,19 +2,4 @@
      command = "npm run build"
      publish = "/dist"
 
-[[redirects]]
-from = "/about/*"
-to = "/index.html"
-status = 301
-
-[[redirects]]
-from = "/contact/*"
-to = "/index.html"
-status = 302
-
-[[redirects]]
-from = "/gallery/*"
-to = "/index.html"
-status = 302
-
 # Rewrite a path
