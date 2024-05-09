@@ -1,7 +1,7 @@
 ---
 import Image from "astro/components/Image.astro";
 import headerLogo from "../images/header-logo.svg";
-import Logo from "../../src/images/warnocklogo.svg";
+import Logo from "../components/Logo.astro";
 const accentColor = "#f05a24";
 ---
 
@@ -63,11 +63,7 @@ const accentColor = "#f05a24";
           <p class="menu-label">Close</p>
         </button>
       </div>
-      <img
-        src="../../src/images/warnocklogo.svg"
-        alt="header-logo"
-        class="header-logo"
-      />
+      <Logo class="header-logo" />
       <li><a class="header-menu-item" href="/" data-astro-prefetch>Home</a></li>
       <li>
         <a class="header-menu-item" href="/gallery/" data-astro-prefetch
@@ -139,18 +135,17 @@ const accentColor = "#f05a24";
 
   @media screen and (max-width: 500px) {
     #btnOpen {
-      height:4.2rem;
+      height: 4.2rem;
       width: 4.2rem;
-      top:8px;
+      top: 8px;
     }
 
     #btnClose {
-      height:4.2rem;
+      height: 4.2rem;
       width: 4.2rem;
     }
   }
-  
-  
+
   @media screen and (max-width: 700px) {
     .header-logo {
       display: none;

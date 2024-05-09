@@ -1,5 +1,6 @@
 ---
 const { title } = Astro.props;
+import Logo from "../components/Logo.astro";
 ---
 
 <style>
@@ -15,11 +16,11 @@ const { title } = Astro.props;
   }
 
   .footer-logo {
-    width: 3rem;
-    height: 3rem;
+    width: 5rem;
+    height: 5rem;
   }
 </style>
 
 <footer class="footer">
-  <img src="../../src/images/warnocklogo.svg" class="footer-logo" />
+  <Logo class="footer-logo" />
 </footer>
