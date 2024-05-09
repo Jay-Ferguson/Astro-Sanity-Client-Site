@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from "@astrojs/sitemap";
+import robotsTxt from 'astro-robots-txt';
 import { sanityIntegration } from "@sanity/astro";
 import react from "@astrojs/react";
 import { defineConfig } from 'astro/config';
@@ -23,7 +24,7 @@ export default defineConfig({
       
     })
   },
-  integrations: [sitemap(),react(), lottie(), sanityIntegration({
+  integrations: [sitemap(),robotsTxt(),react(), lottie(), sanityIntegration({
     projectId: '9gy3ebd9',
     dataset: "production",
     //set 
