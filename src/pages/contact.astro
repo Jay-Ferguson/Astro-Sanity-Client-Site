@@ -89,7 +89,13 @@ const contact = await getAllContact();
 
         <lr-upload-ctx-provider ctx-name="my-uploader" id="my-uploader-provider"
         ></lr-upload-ctx-provider>
-
+        <input
+        type='hidden'
+        role="uploadcare-uploader"
+        name='my_files'
+        data-multiple='true'
+        
+        />
         <div id="previews"></div>
 
         <button type="submit" id="send-button" class="send-button-class">Send</button>
