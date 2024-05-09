@@ -13,14 +13,13 @@ const contact = await getAllContact();
   <section class="contact-form">
     <Image
       src={urlForImage(contact[0].image).url()}
-      
       class="bckgrnd-contact"
       alt="contact-image"
-       width={500}
-        height={200}
-        placeholder="blurhash"
-        priority
-        />
+      width={500}
+      height={200}
+      placeholder="blurhash"
+      priority
+    />
 
     <h2 class="contact-subtitle">
       {contact[0].subtitle}
@@ -62,7 +61,9 @@ const contact = await getAllContact();
           class="text-input message-text"
           required></textarea>
         <div class="selector--container">
-          <label for="project-cat" class="cat-selector-label">Select Project Category:</label>
+          <label for="project-cat" class="cat-selector-label"
+            >Select Project Category:</label
+          >
           <select name="project-cat" class="custom-select">
             <option value="Kitchens">Kitchens</option>
             <option value="Cabinetry">Cabinetry</option>
@@ -76,7 +77,7 @@ const contact = await getAllContact();
           pubkey="e8567231b94b07c13e67"
           max-local-file-size-bytes="10000000"
           img-only="true"
-          source-list="local, url, camera, instagram"
+          source-list="local, camera, url, instagram"
         >
         </lr-config>
 
@@ -90,15 +91,16 @@ const contact = await getAllContact();
         <lr-upload-ctx-provider ctx-name="my-uploader" id="my-uploader-provider"
         ></lr-upload-ctx-provider>
         <input
-        type='hidden'
-        role="uploadcare-uploader"
-        name='my_files'
-        data-multiple='true'
-        
+          type="hidden"
+          role="uploadcare-uploader"
+          name="my_files"
+          data-multiple="true"
         />
         <div id="previews"></div>
 
-        <button type="submit" id="send-button" class="send-button-class">Send</button>
+        <button type="submit" id="send-button" class="send-button-class"
+          >Send</button
+        >
       </form>
     </div>
 
@@ -124,12 +126,18 @@ const contact = await getAllContact();
         fileNode.setAttribute("class", "preview-wrapper");
 
         const imgNode = document.createElement("img");
+        imgNode.setAttribute("src", file.cdnUrl);
         imgNode.setAttribute("class", "preview");
-        imgNode.setAttribute("src", file.cdnUrl + "/-/preview/-resize/x400/");
-        imgNode.setAttribute("width", "200");
-        imgNode.setAttribute("height", "200");
+        imgNode.setAttribute("width", "50");
+        imgNode.setAttribute("height", "50");
         imgNode.setAttribute("alt", file.fileInfo.originalFilename);
         imgNode.setAttribute("title", file.fileInfo.originalFilename);
+
+        // document.querySelector(".preview").style.cssText = `
+        //   width: 20px;
+        //   height: auto;
+        // ("preview/-resize/x50/");
+        // `;
 
         const imgNameNode = document.createElement("p");
         imgNameNode.setAttribute("class", "preview-data");
@@ -214,20 +222,32 @@ const contact = await getAllContact();
     }
 
     .bckgrnd-contact {
-    z-index: -4;
-    position: absolute;
-    height: auto;
-    top: 70px;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    opacity: 0.3;
-  }
+      z-index: -4;
+      position: absolute;
+      height: auto;
+      top: 70px;
+      margin-left: auto;
+      margin-right: auto;
+      left: 0;
+      right: 0;
+      opacity: 0.3;
+    }
 
     input {
       border: none;
       margin: 0.2rem;
+    }
+
+    #previews {
+      margin: 2rem;
+      object-fit: cover;
+    }
+
+    .preview-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     .send-button-class {
@@ -250,7 +270,7 @@ const contact = await getAllContact();
     }
 
     .send-button-class:hover {
-      background: linear-gradient(-35deg,  #f05a24, #ba2f2f);
+      background: linear-gradient(-35deg, #f05a24, #ba2f2f);
       transition: ease-in 0.5s;
       color: rgb(30, 30, 30);
       box-shadow: 2px 2px 2px 4px rgba(35, 35, 35, 0.35);
@@ -265,29 +285,27 @@ const contact = await getAllContact();
       justify-content: space-around;
       align-items: center;
       margin: 2rem;
-      padding:1rem;
+      padding: 1rem;
     }
 
-    .contact-subheader{
-      padding:2rem;
+    .contact-subheader {
+      padding: 2rem;
       font-size: 1.2rem;
-      color:white;
-      max-width:40rem;
+      color: white;
+      max-width: 40rem;
       margin-bottom: 1rem;
     }
 
-    .contact-subtitle{
+    .contact-subtitle {
       font-size: 1.9rem;
-      color:var(--offWhite);
-      padding-top:2rem;
+      color: var(--offWhite);
+      padding-top: 2rem;
     }
-
-  
 
     .custom-select {
       min-width: 150px;
       max-width: 200px;
-      margin-left:1rem;
+      margin-left: 1rem;
       position: relative;
       border-radius: 10px;
     }
@@ -318,7 +336,6 @@ const contact = await getAllContact();
     label {
       display: inline;
       color: var(--offWhite);
-  
     }
 
     select {
@@ -344,6 +361,7 @@ const contact = await getAllContact();
     }
 
     .text-input {
+      color: black;
       width: 80%;
       padding: 1rem;
       border-radius: 10px;
@@ -352,20 +370,19 @@ const contact = await getAllContact();
 
     @media screen and (max-width: 700px) {
       .text-input {
-        min-width:20rem;
-}
-      .selector--container{
+        min-width: 20rem;
+      }
+      .selector--container {
         flex-direction: column;
       }
 
       .cat-selector-label {
-            margin-bottom: .5rem;
+        margin-bottom: 0.5rem;
       }
-        .custom-select {
-          margin:0;
-        }
-      }      
-    
+      .custom-select {
+        margin: 0;
+      }
+    }
 
     .box-input {
       height: 20rem;
@@ -399,5 +416,4 @@ const contact = await getAllContact();
       --l-accent: 57%;
     }
   </style>
-</Layout
->
+</Layout>
