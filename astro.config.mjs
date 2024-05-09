@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import sitemap from "@astrojs/sitemap";
 import { sanityIntegration } from "@sanity/astro";
 import react from "@astrojs/react";
 import { defineConfig } from 'astro/config';
@@ -10,7 +11,7 @@ import {loadEnv} from 'vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site:'https://wornockwood.com',
+  site:'https://warnockcabinetry.com',
   output:'static',
   prefetch:true,
   base:'/',
@@ -22,7 +23,7 @@ export default defineConfig({
       
     })
   },
-  integrations: [react(), lottie(), sanityIntegration({
+  integrations: [sitemap(),react(), lottie(), sanityIntegration({
     projectId: '9gy3ebd9',
     dataset: "production",
     //set 
