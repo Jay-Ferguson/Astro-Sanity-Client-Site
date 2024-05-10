@@ -28,10 +28,30 @@ const contact = await getAllContact();
     <p class="contact-subheader">{contact[0].subheading[0].children[0].text}</p>
     <div class="contact-container">
       <form
-        action="https://submit-form.com/n6nFdqZtI"
-        onsubmit="return sumbitMail();"
+        action="https://submit-form.com/KywouZ00x"
+        onsubmit="sendMail()"
         class="form contact-container"
       >
+        <input
+          type="submit"
+          id="send-button"
+          value="Submit"
+          class="send-button-class"
+        />
+        <input
+          type="hidden"
+          name="_redirect.dark"
+          value="true"
+          value="warnockcabinetry.ca/contact"
+        />
+
+        <input
+          type="checkbox"
+          name="_honeypot"
+          style="display:none"
+          tabindex="-1"
+          autocomplete="off"
+        />
         <input
           name="first-name"
           placeholder="first name"
@@ -48,6 +68,7 @@ const contact = await getAllContact();
           minlength="4"
           required
         />
+
         <input
           type="email"
           name="email"
@@ -61,10 +82,10 @@ const contact = await getAllContact();
           class="text-input message-text"
           required></textarea>
         <div class="selector--container">
-          <label for="project-cat" class="cat-selector-label"
+          <label for="category" class="cat-selector-label"
             >Select Project Category:</label
           >
-          <select name="project-cat" class="custom-select">
+          <select name="category" class="custom-select">
             <option value="Kitchens">Kitchens</option>
             <option value="Cabinetry">Cabinetry</option>
             <option value="Closets">Closets</option>
@@ -90,9 +111,13 @@ const contact = await getAllContact();
 
         <lr-upload-ctx-provider ctx-name="my-uploader" id="my-uploader-provider"
         ></lr-upload-ctx-provider>
+        <label for="photo"></label>
         <input
           type="hidden"
-          name="my_files"
+          id="photo"
+          role="uploadcare-uploader"
+          name="photos"
+          data-public-key="e8567231b94b07c13e67"
           data-multiple="true"
         />
         <div id="previews"></div>
@@ -100,6 +125,8 @@ const contact = await getAllContact();
         <button type="submit" id="send-button" class="send-button-class"
           >Send</button
         >
+
+        <h3 id="status"></h3>
       </form>
     </div>
 
@@ -134,14 +161,13 @@ const contact = await getAllContact();
 
         console.log(file.fileInfo);
 
-
-        const imgNameNode = document.createElement("p");
-        imgNameNode.setAttribute("class", "preview-data");
-        imgNameNode.textContent = `${file.fileInfo.originalFileName}`;
-        const imgSizeNode = document.createElement("p");
-        imgSizeNode.setAttribute("class", "preview-data");
-        imgSizeNode.textContent = `${file.fileInfo.fileSize}`;
-        fileNode.append(imgNode, imgNameNode, imgSizeNode);
+        // const imgNameNode = document.createElement("p");
+        // imgNameNode.setAttribute("class", "preview-data");
+        // imgNameNode.textContent = `${file.fileInfo.originalFileName}`;
+        // const imgSizeNode = document.createElement("p");
+        // imgSizeNode.setAttribute("class", "preview-data");
+        // imgSizeNode.textContent = `${file.fileInfo.fileSize}`;
+        // fileNode.append(imgNode, imgNameNode, imgSizeNode);
 
         return fileNode;
       });
@@ -161,7 +187,7 @@ const contact = await getAllContact();
     }
   </script>
 
-  <script>
+  <script is:inline>
     import axios from "axios";
 
     function sendMail() {
@@ -170,13 +196,17 @@ const contact = await getAllContact();
         .getElementById("send-button")
         .addEventListener("click", function () {
           axios
-            .post("https://submit-form.com/n6nFdqZtI", {
+            .post("https://submit-form.com/KywouZ00x", {
               first: "First Name",
               last: "Last Name",
               message: "hello",
+              category: ["Kitchens", "Cabinetry", "Closets", "Other"],
+              photos: ["photo1", "photo2", "photo3"],
               email: {
                 from: "",
                 subject: "",
+                category: "",
+                photos: "",
                 template: {
                   title: false,
                   footer: false,
@@ -185,8 +215,10 @@ const contact = await getAllContact();
             })
             .then((response) => {
               if (response.data === "success") {
+                console.log("success");
                 status.innerHTML = "Thanks for your email";
               } else {
+                console.log("error");
                 status.innerHTML = "Something went wrong";
               }
             })
@@ -247,7 +279,7 @@ const contact = await getAllContact();
 
     .preview-data {
       font-size: 0.8rem;
-      display:none;
+      display: none;
     }
 
     .send-button-class {
@@ -304,10 +336,22 @@ const contact = await getAllContact();
 
     .custom-select {
       min-width: 150px;
+      padding: 1rem;
       max-width: 200px;
       margin-left: 1rem;
       position: relative;
       border-radius: 10px;
+    }
+
+    #my-uploader-provider {
+      background-color: #d6d6d6;
+      color: black;
+    }
+
+    .uploadcare--widget__button {
+      margin-top: 0.4rem;
+      color: black;
+      background-color: var(--offWhite);
     }
 
     .custom-select::before,
