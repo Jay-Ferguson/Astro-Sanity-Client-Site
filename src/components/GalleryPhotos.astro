@@ -3,34 +3,49 @@ import { getAllProjects } from "../lib/api";
 import { getAllGalleryImages } from "../lib/api";
 import { urlForImage } from "../lib/urlForImage";
 import Image from "astro/components/Image.astro";
-import "../lib/styles/photoswipe.css";
+import { getImage } from "astro:assets";
 
 const projects = await getAllProjects();
 
 const galleryImages = await getAllGalleryImages();
 ---
 
-<script type="module">
-  import PhotoSwipeLightbox from "photoswipe/lightbox";
+<!-- <script
+  src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe-lightbox.umd.min.js"
+  async></script>
+<script
+  src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe.umd.min.js"
+  async></script> -->
+<link
+  href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/photoswipe.min.css"
+  rel="stylesheet"
+/>
+
+<script type="module" async>
+  import PhotoSwipeLightbox from "https://unpkg.com/photoswipe/dist/photoswipe-lightbox.esm.js";
+
   const lightbox = new PhotoSwipeLightbox({
-    gallery: "#gallery--zoom-transition",
-    children: "a",
-    showHideAnimationType: "zoom",
-    pswpModule: () => import("photoswipe"),
+    gallery: "#my-gallery",
+    children: "a:has(img)",
+    pswpModule: () => import("https://unpkg.com/photoswipe"),
   });
 
   lightbox.init();
+
+  console.log("hope this works");
 </script>
 
-<ul class="gallery_container">
-  {  
+<ul class="gallery--zoom-transition project-container">
+  {
     projects.map((project) => (
-      <section id="gallery--zoom-transition">
+      <section id="#my-gallery">
         <li class="pswp-gallery project-item-container" id="lightgallery">
           <a
             href={urlForImage(project.mainImage).url()}
-            data-pspw-width="1669"
+            data-pspw-width="1875"
             data-pspw-height="2500"
+            target="_blank"
+            data-pswp-src={urlForImage(project.mainImage).url()}
           >
             <Image
               src={urlForImage(project.mainImage).url()}
@@ -45,17 +60,22 @@ const galleryImages = await getAllGalleryImages();
           <div class="thumbnail-container">
             {project.galleryImages.map((galleryImage) => (
               <div class="test-div">
-                <Image
-                  src={urlForImage(galleryImage.asset).url()}
-                  alt="project-thumnail"
-                  class="thumbnail-img"
-                  data-pspw-width="1669"
+                <a
+                  class="test-div"
+                  data-pspw-width="1875"
                   data-pspw-height="2500"
-                  height={100}
-                  width={200}
-                />
-
-                <a href="thumbnail-click" class="gal-thumbnail">
+                  href={urlForImage(galleryImage.asset).url()}
+                  target="_blank"
+                >
+                  <Image
+                    src={urlForImage(galleryImage.asset).url()}
+                    alt="project-thumnail"
+                    class="thumbnail-img"
+                    data-pspw-width="1669"
+                    data-pspw-height="2500"
+                    height={100}
+                    width={200}
+                  />
                   <h1 class="test" />
                 </a>
               </div>
@@ -65,7 +85,6 @@ const galleryImages = await getAllGalleryImages();
           <a href={`/posts/${project.slug.current}`} class="project-text">
             <h3 class="project-title project-text">{project.title}</h3>
             <p class="project-description">
-            
               {/* (project.body === undefined) ? " " : {
                 project.body[0].children[0].text
               } */}
@@ -86,6 +105,9 @@ const galleryImages = await getAllGalleryImages();
     margin: auto 0;
   }
 
+  .project-container {
+    margin: 4rem 4rem 2rem 4rem;
+  }
   .test {
     font-size: 5rem;
     color: #ececec;
@@ -177,7 +199,7 @@ const galleryImages = await getAllGalleryImages();
     }
   }
 
-  .project-text{
+  .project-text {
     text-decoration: none;
   }
 

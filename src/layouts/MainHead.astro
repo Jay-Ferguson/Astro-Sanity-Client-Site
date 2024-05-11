@@ -32,8 +32,6 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: "svg" });
     href="../images/favicon.png"
   />
   <!-- ligthgallery styles -->
-  <!-- <link type="text/css" rel="stylesheet" href='../dist/css/lightgallery.min.css' /> -->
-
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/lightgallery@2.0.1/css/lightgallery-bundle.css"
@@ -45,9 +43,9 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: "svg" });
   <link rel="icon" href="../../dist/_astro/favicon.png" sizes="32x32" />
   <link rel="icon" href={faviconSvg.src} type="image/svg+xml" />
   <link rel="apple-touch-icon" href={appleTouchIcon.src} />
-  <link rel="mask-icon" href={faviconSvg.src}>
+  <link rel="mask-icon" href={faviconSvg} />
   <link rel="manifest" href="/manifest.json" />
-  <link rel="manifest" href="manifest.webmanifest"/>
+  <link rel="manifest" href="manifest.webmanifest" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -62,18 +60,38 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: "svg" });
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap"
     rel="stylesheet"
   />
-  <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"
-  ></script>
 
   <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css"
+    integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
+  <script
+    async
+    src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+
+  <!-- <link
     rel="preload"
     type="text/javascript"
     <script
-    is:inline
+    type="text/javascript"
     src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"
-  /></head
->
+  /> -->
 
-<script
-  is:inline
-  src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+  <script
+    is:inline
+    src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"
+  ></script>
+
+  <!-- <script
+    defer
+    src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js"
+    integrity="sha512-Z5y5T62siZB4wxN80Bfmi4QJpZVPKYGAQM1q3XoaUjrzj0ZaJ9W2w5oGF6byXLYQGn/Ytj3CntKdBkKryglHdA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script> -->
+
+
+</head>
