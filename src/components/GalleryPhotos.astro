@@ -21,6 +21,13 @@ const galleryImages = await getAllGalleryImages();
   rel="stylesheet"
 />
 
+<script type="module">
+  ScrollReveal().version;
+  ScrollReveal({ distance: "60px" });
+  ScrollReveal().reveal(".project-item-container", { delay: 200 });
+  ScrollReveal().reveal(".thumbnail-container", { delay: 200, duration: 300 });
+</script>
+
 <script type="module" async>
   import PhotoSwipeLightbox from "https://unpkg.com/photoswipe/dist/photoswipe-lightbox.esm.js";
 
