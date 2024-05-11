@@ -34,7 +34,8 @@ const galleryImages = await getAllGalleryImages();
   const options = {
     gallery: "#my-gallery",
     children: "a:has(img)",
-    initialZoomLevel: "fit",
+    showHideAnimationType: 'fade',
+    initialZoomLevel: "fill",
     imageClickAction: "next",
     tapAction: "next",
     pswpModule: () => import("https://unpkg.com/photoswipe"),
