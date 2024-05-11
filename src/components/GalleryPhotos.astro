@@ -32,14 +32,14 @@ const galleryImages = await getAllGalleryImages();
 
   lightbox.init();
 
-  console.log("hope this works");
+  console.log(lightbox);
 </script>
 
 <ul class="gallery--zoom-transition project-container">
   {
     projects.map((project) => (
       <section id="#my-gallery">
-        <li class="pswp-gallery project-item-container" id="lightgallery">
+        <li class="pswp-gallery project-item-container" id="my-gallery">
           <a
             href={urlForImage(project.mainImage).url()}
             data-pspw-width="1875"
