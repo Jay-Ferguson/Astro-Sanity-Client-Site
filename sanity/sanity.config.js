@@ -6,7 +6,7 @@ import {media} from 'sanity-plugin-media'
 
 export default defineConfig({
   name: 'default',
-  title: 'Wornock Cabinetry',
+  title: 'Warnock Cabinetry',
 
   projectId: '9gy3ebd9',
   dataset: 'production',
