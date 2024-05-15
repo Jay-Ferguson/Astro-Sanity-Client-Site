@@ -222,24 +222,33 @@ const accentColor = "#f05a24";
   }
 </style>
 
-<script>
-  const btnOpen = document.querySelector("#btnOpen");
-  const btnClose = document.querySelector("#btnClose");
+<script is:inline>
+  function selectButton(){
+
+    const btnOpen = document.querySelector("#btnOpen");
+    const btnClose = document.querySelector("#btnClose");
+  }
 
   function openMobileMenu() {
     btnOpen.setAttribute("aria-expanded", "true");
-    if(window.performance.getEntriesByType('navigation')) {
-      console.log('page change')
-      closeMobileMenu();
-    }
+    console.log("open");
   }
   function closeMobileMenu() {
     btnOpen.setAttribute("aria-expanded", "false");
-    console.log("checking closeMobileMenu");
-  }
+    };
+
+  function pageTransiton() {
+    document.addEventListener("astro:after-swap", function () {
+      btnOpen.addEventListener("click", openMobileMenu);
+      btnClose.addEventListener("click", closeMobileMenu);
+      console.log('page-swap event listeners added');
+    })}
 
   btnOpen.addEventListener("click", openMobileMenu);
   btnClose.addEventListener("click", closeMobileMenu);
+
+  window.onload = pageTransiton();
+
 
   //menu animation
 </script>
