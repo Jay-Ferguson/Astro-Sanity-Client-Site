@@ -82,7 +82,7 @@ const accentColor = "#f05a24";
   </nav>
 </header>
 
-<style>
+<style is>
   .hamburger-menu {
     display: none;
   }
@@ -228,6 +228,10 @@ const accentColor = "#f05a24";
 
   function openMobileMenu() {
     btnOpen.setAttribute("aria-expanded", "true");
+    if(window.performance.getEntriesByType('navigation')) {
+      console.log('page change')
+      closeMobileMenu();
+    }
   }
   function closeMobileMenu() {
     btnOpen.setAttribute("aria-expanded", "false");
