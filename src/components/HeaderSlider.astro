@@ -4,6 +4,7 @@ import { getAllsliderImages } from "../lib/api";
 // import {Picture} from 'astro:assets'
 import { Image } from "@unpic/astro";
 const headerImages = await getAllsliderImages();
+import Splide from "@splidejs/splide";
 ---
 
 <!-- <link rel="stylesheet" href="./../../src/dist/css/splide.min.css" /> -->
@@ -74,6 +75,7 @@ const headerImages = await getAllsliderImages();
 
   .splide {
     max-width: 100vw;
+    margin: 0 auto;
     max-height: 55rem;
     min-height: 15rem;
   }
@@ -85,11 +87,15 @@ const headerImages = await getAllsliderImages();
   }
 
   @media screen and (min-width: 1000px) {
-    .splide__list {
+    .splide__image {
+      margin: 0 auto;
+      
     }
 
     .splide__slide {
       width: 100%;
+      display: flex;
+      justify-content: center;
       object-fit: cover;
     }
   }

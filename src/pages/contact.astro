@@ -33,12 +33,6 @@ const contact = await getAllContact();
         class="form contact-container"
       >
         <input
-          type="submit"
-          id="send-button"
-          value="Submit"
-          class="send-button-class"
-        />
-        <input
           type="hidden"
           name="_redirect.dark"
           value="true"
@@ -121,6 +115,13 @@ const contact = await getAllContact();
           data-multiple="true"
         />
         <div id="previews"></div>
+
+        <input
+          type="submit"
+          id="send-button"
+          value="Submit"
+          class="send-button-class"
+        />
 
         <button type="submit" id="send-button" class="send-button-class"
           >Send</button
