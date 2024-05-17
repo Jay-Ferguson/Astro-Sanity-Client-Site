@@ -29,7 +29,7 @@ export default defineConfig({
     sitemap(),
     robotsTxt(),
     favicons({
-      masterPicture: "/src/images/warnocklogo.svg",
+      masterPicture: "../astro-site/public/favicon.svg",
       emitAssets: true,
       orientation: "any",
       appleStatusBarStyle: "black-translucent",
