@@ -2,7 +2,7 @@
 const { title, description } = Astro.props;
 import { getImage } from "astro:assets";
 import faviconSrc from "../images/favicon.png";
-import faviconSvgSrc from "../images/warnocklogo.svg";
+import faviconSvgSrc from "../../public/favicon.svg";
 import { ViewTransitions } from "astro:transitions";
 
 const appleTouchIcon = await getImage({
@@ -42,7 +42,7 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: "svg" });
   <link rel="icon" href="../../dist/_astro/favicon.png" sizes="32x32" />
   <link rel="icon" href={faviconSvg.src} type="image/svg+xml" />
   <link rel="apple-touch-icon" href={appleTouchIcon.src} />
-  <link rel="mask-icon" href={faviconSvg} />
+  <link rel="mask-icon" href={faviconSvg.src} />
   <link rel="manifest" href="/manifest.json" />
   <link rel="manifest" href="manifest.webmanifest" />
 

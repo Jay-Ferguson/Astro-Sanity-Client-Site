@@ -7,6 +7,8 @@ import { Image } from "@unpic/astro";
 const size = "0.3rem";
 const offWhite = "rgb(255, 255, 255)";
 const contact = await getAllContact();
+const currentUrl = new URL(Astro.url.origin);
+console.log(currentUrl);
 ---
 
 <Layout>
@@ -26,18 +28,14 @@ const contact = await getAllContact();
     </h2>
 
     <p class="contact-subheader">{contact[0].subheading[0].children[0].text}</p>
+
     <div class="contact-container">
       <form
         action="https://submit-form.com/KywouZ00x"
-        onsubmit="sendMail()"
         class="form contact-container"
+        data-botpoison-public-key="pk_63cf250d-bf36-4970-ac6f-143da67ad4c4"
       >
-        <input
-          type="hidden"
-          name="_redirect.dark"
-          value="true"
-          value="warnockcabinetry.ca/contact"
-        />
+        <input type="hidden" name="_redirect" value="true" />
 
         <input
           type="checkbox"
@@ -119,13 +117,9 @@ const contact = await getAllContact();
         <input
           type="submit"
           id="send-button"
-          value="Submit"
+          value="Send"
           class="send-button-class"
         />
-
-        <button type="submit" id="send-button" class="send-button-class"
-          >Send</button
-        >
 
         <h3 id="status"></h3>
       </form>
@@ -134,8 +128,10 @@ const contact = await getAllContact();
     <!-- <iframe src="...." frameborder="0" class="contact-iframe"> </iframe> -->
   </section>
 
-  <script type="module">
-    import * as LR from "https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.js";
+  <script
+    src="https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.js"
+  >
+    // import * as LR from "https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.js";
     LR.registerBlocks(LR);
 
     const providerNode = document.getElementById("my-uploader-provider");
@@ -175,29 +171,17 @@ const contact = await getAllContact();
 
       previewsNode.replaceChildren(...renderedFiles);
     }
-
-    function formatSize(bytes) {
-      if (!bytes) return "0 bytes";
-
-      const k = 1024;
-      const sizes = ["bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-
-      const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-      return `${parseFloat((bytes / k ** i).toFixed(2))} ${sizes[i]}`;
-    }
   </script>
 
-  <script is:inline>
-    import axios from "axios";
-
+  <script is:inline src="https://unpkg.com/axios/dist/axios.min.js" async>
     function sendMail() {
       let status = document.getElementById("status");
       document
         .getElementById("send-button")
         .addEventListener("click", function () {
           axios
-            .post("https://submit-form.com/KywouZ00x", {
+            .post("https://submit-form.com/echo", {
+              _botpoison: "pk_63cf250d-bf36-4970-ac6f-143da67ad4c4",
               first: "First Name",
               last: "Last Name",
               message: "hello",
@@ -231,6 +215,11 @@ const contact = await getAllContact();
   </script>
 
   <style define:vars={{ size, offWhite }} is:global>
+
+  #status {
+    color: var(--offWhite);
+    font-size: 1.4rem;
+  }
     .contact-form {
       display: flex;
       flex-direction: column;
@@ -290,7 +279,6 @@ const contact = await getAllContact();
       width: 10rem;
       text-align: center;
       border-radius: 1rem;
-      margin-top: 3rem;
       padding: 0.5rem;
       border: none;
       background: linear-gradient(38deg, #f05a24, #ba2f2f);
