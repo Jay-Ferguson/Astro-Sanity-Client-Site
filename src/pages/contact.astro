@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { getAllContact } from "../lib/api";
+import axios from "axios";
 // import { Image } from "astro:assets";
 import { urlForImage } from "../lib/urlForImage";
 import { Image } from "@unpic/astro";
@@ -8,10 +9,61 @@ const size = "0.3rem";
 const offWhite = "rgb(255, 255, 255)";
 const contact = await getAllContact();
 const currentUrl = new URL(Astro.url.origin);
-console.log(currentUrl);
 ---
 
 <Layout>
+  <script is:inline src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script is:inline src="https://unpkg.com/@botpoison/browser"c></script>
+  <script is:inline async>
+    window.addEventListener("DOMContentLoaded", function () {
+      const botpoison = new Botpoison({
+        publicKey: "pk_63cf250d-bf36-4970-ac6f-143da67ad4c4",
+      });
+      botpoison.challenge().then(({ solution }) => {
+        let status = document.getElementById("status");
+        document
+          .querySelector("#send-button")
+          .addEventListener("click", function (event) {
+            console.log("axios init", "clicked");
+            event.preventDefault();
+            axios
+              .post("https://submit-form.com/n6nFdqZtI", {
+                _botpoison: solution,
+                first: "First Name",
+                last: "Last Name",
+                message: "hello",
+                category: ["Kitchens", "Cabinetry", "Closets", "Other"],
+                photos: ["photo1", "photo2", "photo3"],
+                email: {
+                  from: "",
+                  subject: "",
+                  category: "",
+                  photos: "",
+                  template: {
+                    title: false,
+                    footer: false,
+                  },
+                },
+              })
+
+              .then((response) => {
+                if (response.data.status === 200) {
+                  console.log("success");
+                  status.innerHTML = "Thanks for your email";
+                } else {
+                  console.log("error");
+                  console.log(response.data);
+                  status.innerHTML = "Something went wrong";
+                }
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          });
+      });
+    });
+  </script>
+
   <section class="contact-form">
     <Image
       src={urlForImage(contact[0].image).url()}
@@ -31,11 +83,11 @@ console.log(currentUrl);
 
     <div class="contact-container">
       <form
-        action="https://submit-form.com/KywouZ00x"
         class="form contact-container"
         data-botpoison-public-key="pk_63cf250d-bf36-4970-ac6f-143da67ad4c4"
       >
-        <input type="hidden" name="_redirect" value="true" />
+        <!-- <input type="hidden" name="_redirect" value="true" /> -->
+        <!-- action="https://submit-form.com/KywouZ00x" -->
 
         <input
           type="checkbox"
@@ -173,53 +225,11 @@ console.log(currentUrl);
     }
   </script>
 
-  <script is:inline src="https://unpkg.com/axios/dist/axios.min.js" async>
-    function sendMail() {
-      let status = document.getElementById("status");
-      document
-        .getElementById("send-button")
-        .addEventListener("click", function () {
-          axios
-            .post("https://submit-form.com/echo", {
-              _botpoison: "pk_63cf250d-bf36-4970-ac6f-143da67ad4c4",
-              first: "First Name",
-              last: "Last Name",
-              message: "hello",
-              category: ["Kitchens", "Cabinetry", "Closets", "Other"],
-              photos: ["photo1", "photo2", "photo3"],
-              email: {
-                from: "",
-                subject: "",
-                category: "",
-                photos: "",
-                template: {
-                  title: false,
-                  footer: false,
-                },
-              },
-            })
-            .then((response) => {
-              if (response.data === "success") {
-                console.log("success");
-                status.innerHTML = "Thanks for your email";
-              } else {
-                console.log("error");
-                status.innerHTML = "Something went wrong";
-              }
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-        });
-    }
-  </script>
-
   <style define:vars={{ size, offWhite }} is:global>
-
-  #status {
-    color: var(--offWhite);
-    font-size: 1.4rem;
-  }
+    #status {
+      color: var(--offWhite);
+      font-size: 1.4rem;
+    }
     .contact-form {
       display: flex;
       flex-direction: column;
