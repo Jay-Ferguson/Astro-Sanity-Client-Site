@@ -13,29 +13,40 @@ const currentUrl = new URL(Astro.url.origin);
 
 <Layout>
   <script is:inline src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script is:inline src="https://unpkg.com/@botpoison/browser"c></script>
+  <script is:inline src="https://unpkg.com/@botpoison/browser"></script>
   <script is:inline async>
     window.addEventListener("DOMContentLoaded", function () {
       const botpoison = new Botpoison({
         publicKey: "pk_63cf250d-bf36-4970-ac6f-143da67ad4c4",
       });
       botpoison.challenge().then(({ solution }) => {
+        let form = document.querySelector("form");
+        form.addEventListener("submit", function (event) {
+          e.preventDefault();
+        });
+        let formData = new FormData(form);
+        formData.append("first", form[0].value);
+        formData.append("last", form[1].value);
+
         let status = document.getElementById("status");
         document
           .querySelector("#send-button")
-          .addEventListener("click", function (event) {
+          .addEventListener("click", async function (event) {
             console.log("axios init", "clicked");
             event.preventDefault();
             axios
               .post("https://submit-form.com/n6nFdqZtI", {
                 _botpoison: solution,
+                data: formData,
+
                 first: "First Name",
                 last: "Last Name",
                 message: "hello",
                 category: ["Kitchens", "Cabinetry", "Closets", "Other"],
                 photos: ["photo1", "photo2", "photo3"],
                 email: {
-                  from: "",
+                  first: "",
+                  last: "",
                   subject: "",
                   category: "",
                   photos: "",
@@ -55,9 +66,6 @@ const currentUrl = new URL(Astro.url.origin);
                   console.log(response.data);
                   status.innerHTML = "Something went wrong";
                 }
-              })
-              .catch(function (error) {
-                console.log(error);
               });
           });
       });
@@ -228,7 +236,8 @@ const currentUrl = new URL(Astro.url.origin);
   <style define:vars={{ size, offWhite }} is:global>
     #status {
       color: var(--offWhite);
-      font-size: 1.4rem;
+      padding-top:.5rem;
+      font-size: 1.2rem;
     }
     .contact-form {
       display: flex;
