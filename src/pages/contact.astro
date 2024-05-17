@@ -20,18 +20,29 @@ const currentUrl = new URL(Astro.url.origin);
         publicKey: "pk_63cf250d-bf36-4970-ac6f-143da67ad4c4",
       });
       botpoison.challenge().then(({ solution }) => {
+        const status = document.getElementById("status");
         let form = document.querySelector("form");
-        form.addEventListener("submit", function (event) {
+        form.addEventListener("submit", function (e) {
           e.preventDefault();
         });
+        let fileInput = document.querySelector("#photo");
         let formData = new FormData(form);
+        console.log(form);
         formData.append("first", form[0].value);
         formData.append("last", form[1].value);
         formData.append("email", form[2].value);
         formData.append("message", form[3].value);
-        formData.append("Category", form[4].value);
+        formData.append("category", form[6].value);
 
-        let status = document.getElementById("status");
+        const jsonData = {};
+        for (const [key, value] of formData.entries()) {
+          jsonData[key] = value;
+        }
+        console.log(jsonData);
+
+        // addimageslater
+        // formData.append('file', form[9].files[0,1,2,4])
+
         document
           .querySelector("#send-button")
           .addEventListener("click", async function (event) {
@@ -40,31 +51,27 @@ const currentUrl = new URL(Astro.url.origin);
             axios
               .post("https://submit-form.com/n6nFdqZtI", {
                 _botpoison: solution,
-                data: formData,
-
-                photos: ["photo1", "photo2", "photo3"],
-                email: {
-                  first: "",
-                  last: "",
-                  subject: "",
-                  category: "",
-                  photos: "",
-                  template: {
-                    title: false,
-                    footer: false,
-                  },
+                data: jsonData,
+                headers: {
+                  "Content-Type": "application/json",
+                  Accept: "application/json",
                 },
               })
 
               .then((response) => {
+                console.log(response.data);
+                console.log(response.data.status);
                 if (response.data.status === 200) {
                   console.log("success");
                   status.innerHTML = "Thanks for your email";
                 } else {
                   console.log("error");
-                  console.log(response.data);
                   status.innerHTML = "Something went wrong";
                 }
+              })
+
+              .catch((error) => {
+                console.log(error.response.data);
               });
           });
       });
@@ -144,16 +151,16 @@ const currentUrl = new URL(Astro.url.origin);
           </select>
         </div>
 
-        <lr-config
+        <!-- <lr-config
           ctx-name="my-uploader"
           pubkey="e8567231b94b07c13e67"
           max-local-file-size-bytes="10000000"
           img-only="true"
           source-list="local, camera, url, instagram"
         >
-        </lr-config>
+        </lr-config> -->
 
-        <lr-file-uploader-regular
+        <!-- <lr-file-uploader-regular
           ctx-name="my-uploader"
           css-src="https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.css"
           class="my-config"
@@ -170,7 +177,7 @@ const currentUrl = new URL(Astro.url.origin);
           name="photos"
           data-public-key="e8567231b94b07c13e67"
           data-multiple="true"
-        />
+        /> -->
         <div id="previews"></div>
 
         <input
@@ -298,6 +305,7 @@ const currentUrl = new URL(Astro.url.origin);
       text-align: center;
       border-radius: 1rem;
       padding: 0.5rem;
+      margin-top:-2.5rem;
       border: none;
       background: linear-gradient(38deg, #f05a24, #ba2f2f);
       color: #efefef;
