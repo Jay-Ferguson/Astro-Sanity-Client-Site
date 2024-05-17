@@ -27,6 +27,9 @@ const currentUrl = new URL(Astro.url.origin);
         let formData = new FormData(form);
         formData.append("first", form[0].value);
         formData.append("last", form[1].value);
+        formData.append("email", form[2].value);
+        formData.append("message", form[3].value);
+        formData.append("Category", form[4].value);
 
         let status = document.getElementById("status");
         document
@@ -39,10 +42,6 @@ const currentUrl = new URL(Astro.url.origin);
                 _botpoison: solution,
                 data: formData,
 
-                first: "First Name",
-                last: "Last Name",
-                message: "hello",
-                category: ["Kitchens", "Cabinetry", "Closets", "Other"],
                 photos: ["photo1", "photo2", "photo3"],
                 email: {
                   first: "",
@@ -236,7 +235,7 @@ const currentUrl = new URL(Astro.url.origin);
   <style define:vars={{ size, offWhite }} is:global>
     #status {
       color: var(--offWhite);
-      padding-top:.5rem;
+      padding-top: 0.5rem;
       font-size: 1.2rem;
     }
     .contact-form {
