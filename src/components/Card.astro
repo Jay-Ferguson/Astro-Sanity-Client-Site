@@ -27,7 +27,7 @@ const accentGradient = "rgb(255, 255, 255)";
           class="card-img"
         />
 
-        <a href={`/posts/${promotion.slug.current}`} class="card-link">
+        <a href='/gallery/' class="card-link">
           {promotion.title}
 
           <svg
@@ -54,13 +54,22 @@ const accentGradient = "rgb(255, 255, 255)";
 
 <style define:vars={{ accentGradient, accentLight }}>
   .card-container {
-    margin: 0 auto;
     display: flex;
-    flex-flow: column;
+    flex-flow: row wrap;
     align-items: center;
+    justify-content: center;
     padding: 0;
     list-style: none;
   }
+
+  @media screen and (max-width: 1250px) {
+    .card-container{
+      flex-flow: column;
+      justify-items: center;
+      align-content: center;
+    }
+  }
+
 
   .link-card {
     list-style: none;

@@ -18,11 +18,12 @@ const lightcolor = "#f2f2f2";
   <div class="container">
     <Image
       src={urlForImage(backgrnd).url()}
-      class="bckgrnd-about"
+      class="bckgrnd-about-img"
       alt="about-image"
       placeholder="blurhash"
-      width={500}
-      height={500}
+      layout="fullWidth"
+      width={1000}
+      height={800}
       priority
     />
 
@@ -40,12 +41,13 @@ const lightcolor = "#f2f2f2";
   .container {
     padding-top: 2rem;
   }
-  .bckgrnd-about {
+  .bckgrnd-about-img {
     z-index: -4;
     position: absolute;
-    width: 60%;
-    height: auto;
-    top: 70px;
+    width: 100%;
+    max-height: 80%;
+    overflow: hidden;
+    top: 0px;
     margin-left: auto;
     margin-right: auto;
     left: 0;
@@ -59,12 +61,22 @@ const lightcolor = "#f2f2f2";
     font-weight: 700;
     padding: 2rem;
     text-align: center;
+    padding-top:5rem;
+  }
+
+  @media screen and (max-width: 500px) {
+    .about-title {
+      font-size: 2.5rem;
+      margin-bottom:-1rem;
+      margin-top:0;
+    }
   }
 
   .about-text {
     color: var(--lightcolor);
-    max-width: 30rem;
-    padding: 2.4rem;
+    max-width: 40rem;
+    padding-left:2rem;
+    padding-right:2rem;
     margin: 0 auto;
   }
 </style>
