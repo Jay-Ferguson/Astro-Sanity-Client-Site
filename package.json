@@ -10,9 +10,12 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/netlify": "^5.2.1",
+    "@astrojs/node": "^8.2.5",
     "@astrojs/react": "^3.0.10",
     "@astrojs/sitemap": "^3.1.4",
     "@babel/preset-react": "^7.23.3",
+    "@botpoison/node": "^0.1.10",
     "@formspark/use-formspark": "^0.1.39",
     "@sanity/astro": "^2.2.1",
     "@sanity/client": "^6.14.2",

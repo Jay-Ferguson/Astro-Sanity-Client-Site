@@ -5,83 +5,85 @@ import axios from "axios";
 // import { Image } from "astro:assets";
 import { urlForImage } from "../lib/urlForImage";
 import { Image } from "@unpic/astro";
+import FormComponent from "../components/FormComponent";
+//botpoison challenge server side check
+import Botpoison from "@botpoison/node";
+
+const botpoison = new Botpoison({
+  secretKey: "fff",
+});
+
 const size = "0.3rem";
 const offWhite = "rgb(255, 255, 255)";
 const contact = await getAllContact();
 const currentUrl = new URL(Astro.url.origin);
-import FormComponent from "../components/FormComponent";
 ---
 
 <Layout>
   <script is:inline src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script is:inline src="https://unpkg.com/@botpoison/browser"></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <!-- <script is:inline src="https://unpkg.com/@botpoison/browser"></script> -->
   <script is:inline async>
-    window
-      .addEventListener("DOMContentLoaded", function () {
-        const botPoison = new Botpoison({
-          token: "pk_63cf250d-bf36-4970-ac6f-143da67ad4c4",
-        });
+    window.addEventListener("DOMContentLoaded", function () {
+      // const botpoison = new Botpoison({
+      //   token: "pk_a608b697-3d53-492b-9ae2-1dd88798d486",
+      // });
 
-        botPoison.challenge().then(({ solution }) => {
-          const status = document.getElementById("status");
-          let form = document.querySelector("form");
+      const status = document.getElementById("status");
+      let form = document.querySelector("form");
+      document
+        .querySelector("#send-button")
+        .addEventListener("click", (event) => {
+          console.log("axios init", "clicked");
+          event.preventDefault();
+          // const { solution } = await botpoison.challenge();
 
-          document
-            .querySelector("#send-button")
-            .addEventListener("click", async function (event) {
-              console.log("axios init", "clicked");
-              event.preventDefault();
+          let formData = new FormData(form);
 
-              let formData = new FormData(form);
+          const firstNameInput = document.getElementById("firstName");
+          const lastNameInput = document.getElementById("lastName");
+          const emailInput = document.getElementById("email");
+          const messageInput = document.getElementById("message");
+          const categoryInput = document.getElementById("category");
 
-              const firstNameInput = document.getElementById("firstName");
-              const lastNameInput = document.getElementById("lastName");
-              const emailInput = document.getElementById("email");
-              const messageInput = document.getElementById("message");
-              const categoryInput = document.getElementById("category");
+          formData.append("first", firstNameInput.value);
+          formData.append("last", lastNameInput.value);
+          formData.append("email", emailInput.value);
+          formData.append("message", messageInput.value);
+          formData.append("category", categoryInput.value);
 
-              formData.append("first", firstNameInput.value);
-              formData.append("last", lastNameInput.value);
-              formData.append("email", emailInput.value);
-              formData.append("message", messageInput.value);
-              formData.append("category", categoryInput.value);
+          const jsonData = {};
+          for (const [key, value] of formData.entries()) {
+            jsonData[key] = value;
+          }
+          console.log(jsonData);
+          console.log(grecaptcha.getResponse());
 
-              const jsonData = {};
-              for (const [key, value] of formData.entries()) {
-                jsonData[key] = value;
+            axios
+            .post("https://submit-form.com/n6nFdqZtI", {
+              jsonData,
+              "g-recaptcha-response": grecaptcha.getResponse(),
+
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+            })
+
+            .then((response) => {
+              if (response.data.status === 'success') {
+                console.log("200");
+                status.innerHTML = "Thanks for your email";
+              } else {
+                console.log("not 200");
+                status.innerHTML = "Thanks for your email";
               }
-              // console.log((jsonData));
-
-              axios
-                .post("https://submit-form.com/n6nFdqZtI", jsonData, {
-                  _botpoison: solution,
-
-                  headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                  },
-                })
-
-                .then((response) => {
-                  console.log(response.data);
-                  console.log(response.data.status);
-                  if (response.data.status === 200) {
-                    console.log("200");
-                    status.innerHTML = "Thanks for your email";
-                  } else {
-                    console.log("not 200");
-                    status.innerHTML = "Thanks for your email";
-                  }
-                })
-                .catch((error) => {
-                  console.log(error.response.data);
-                });
+            })
+            .catch((error) => {
+              console.log(error.response.data);
             });
         });
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
+    });
   </script>
 
   <section class="contact-form">
@@ -102,70 +104,76 @@ import FormComponent from "../components/FormComponent";
 
     <p class="contact-subheader">{contact[0].subheading[0].children[0].text}</p>
 
-    <!-- <FormComponent client:load /> -->
-
     <div class="contact-container">
       <form
         class="form contact-container"
-        data-botpoison-public-key="pk_63cf250d-bf36-4970-ac6f-143da67ad4c4"
         id="form"
       >
-        <!-- <input type="hidden" name="_redirect" value="true" /> -->
-        <!-- action="https://submit-form.com/KywouZ00x" -->
+      </form>
 
-        <input
-          type="checkbox"
-          name="_honeypot"
-          style="display:none"
-          tabindex="-1"
-          autocomplete="off"
-        />
-        <input
-          name="first-name"
-          placeholder="first name"
-          id="firstName"
-          class="text-input"
-          required
-          minlength="2"
-          type="text"
-        />
-        <input
-          type="text"
-          name="last-name"
-          id="lastName"
-          placeholder="last name"
-          class="text-input"
-          minlength="4"
-          required
-        />
+      <input
+        type="checkbox"
+        name="_honeypot"
+        style="display:none"
+        tabindex="-1"
+        autocomplete="off"
+      />
+      <input
+        name="first-name"
+        placeholder="first name"
+        id="firstName"
+        class="text-input"
+        autocomplete="on"
+        required
+        minlength="2"
+        type="text"
+      />
+      <input
+        type="text"
+        name="last-name"
+        id="lastName"
+        placeholder="last name"
+        class="text-input"
+        minlength="4"
+        required
+      />
 
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="email"
-          class="text-input"
-          required
-        />
-        <textarea
-          name="message"
-          placeholder="message"
-          id="message"
-          class="text-input message-text"
-          required></textarea>
-        <div class="selector--container">
-          <label for="category" class="cat-selector-label"
-            >Select Project Category:</label
-          >
-          <select name="category" class="custom-select" id="category">
-            <option value="Kitchens">Kitchens</option>
-            <option value="Cabinetry">Cabinetry</option>
-            <option value="Closets">Closets</option>
-            <option value="Other">Other</option>
-          </select>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="email"
+        class="text-input"
+        autocomplete="on"
+        required
+        minlength="4"
+      />
+      <textarea
+        name="message"
+        placeholder="message"
+        id="message"
+        class="text-input message-text"
+        required></textarea>
+      <div class="selector--container">
+        <label for="category" class="cat-selector-label"
+          >Select Project Category:</label
+        >
+        <select name="category" class="custom-select" id="category">
+          <option value="Kitchens">Kitchens</option>
+          <option value="Cabinetry">Cabinetry</option>
+          <option value="Closets">Closets</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <div
+          class="g-recaptcha"
+          data-sitekey="6Ld_D-QpAAAAALCq5dNKAZiMKShQI4PpsIkVGX9_"
+        >
         </div>
+      </div>
+    </div>
 
-        <!-- <lr-config
+    <!-- <lr-config
           ctx-name="my-uploader"
           pubkey="e8567231b94b07c13e67"
           max-local-file-size-bytes="10000000"
@@ -174,7 +182,7 @@ import FormComponent from "../components/FormComponent";
         >
         </lr-config> -->
 
-        <!-- <lr-file-uploader-regular
+    <!-- <lr-file-uploader-regular
           ctx-name="my-uploader"
           css-src="https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.css"
           class="my-config"
@@ -192,308 +200,310 @@ import FormComponent from "../components/FormComponent";
           data-public-key="e8567231b94b07c13e67"
           data-multiple="true"
         /> -->
-        <div id="previews"></div>
+    <div id="previews"></div>
 
-        <input
-          type="submit"
-          id="send-button"
-          value="Send"
-          class="send-button-class"
-        />
+    <input
+      type="submit"
+      id="send-button"
+      value="Send"
+      class="send-button-class"
+    />
 
-        <h3 id="status"></h3>
-      </form>
-    </div>
-
-    <!-- <iframe src="...." frameborder="0" class="contact-iframe"> </iframe> -->
+    <h3 id="status"></h3>
   </section>
-
-  <script
-    src="https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.js"
-  >
-    // import * as LR from "https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.js";
-    LR.registerBlocks(LR);
-
-    const providerNode = document.getElementById("my-uploader-provider");
-    const previewsNode = document.getElementById("previews");
-
-    providerNode.addEventListener("change", handleChangeEvent);
-    function handleChangeEvent(e) {
-      console.log("change event payload", e);
-      renderFiles(e.detail.allEntries.filter((f) => f.status === "success"));
-    }
-
-    function renderFiles(files) {
-      const renderedFiles = files.map((file) => {
-        const fileNode = document.createElement("div");
-        fileNode.setAttribute("class", "preview-wrapper");
-
-        const imgNode = document.createElement("img");
-        imgNode.setAttribute("src", file.cdnUrl);
-        imgNode.setAttribute("class", "preview");
-        imgNode.setAttribute("width", "50");
-        imgNode.setAttribute("height", "50");
-        imgNode.setAttribute("alt", file.fileInfo.originalFilename);
-        imgNode.setAttribute("title", file.fileInfo.originalFilename);
-
-        console.log(file.fileInfo);
-
-        // const imgNameNode = document.createElement("p");
-        // imgNameNode.setAttribute("class", "preview-data");
-        // imgNameNode.textContent = `${file.fileInfo.originalFileName}`;
-        // const imgSizeNode = document.createElement("p");
-        // imgSizeNode.setAttribute("class", "preview-data");
-        // imgSizeNode.textContent = `${file.fileInfo.fileSize}`;
-        // fileNode.append(imgNode, imgNameNode, imgSizeNode);
-
-        return fileNode;
-      });
-
-      previewsNode.replaceChildren(...renderedFiles);
-    }
-  </script>
-
-  <style define:vars={{ size, offWhite }} is:global>
-    #status {
-      color: var(--offWhite);
-      padding-top: 0.5rem;
-      font-size: 1.2rem;
-    }
-    .contact-form {
-      padding-top: 2rem;
-      display: flex;
-      flex-direction: column;
-      justify-self: center;
-      align-items: center;
-    }
-
-    .contact-container {
-      width: 80%;
-      background-color: ececec;
-      display: flex;
-      flex-direction: column;
-      justify-self: center;
-      align-items: center;
-      border-radius: 10px;
-    }
-
-    .bckgrnd-contact {
-      z-index: -4;
-      position: absolute;
-      height: auto;
-      top: 0px;
-      margin-left: auto;
-      margin-right: auto;
-      object-fit: fit;
-      left: 0;
-      right: 0;
-      opacity: 0.3;
-    }
-
-    input {
-      border: none;
-      margin: 0.2rem;
-    }
-
-    #previews {
-      margin: 2rem;
-      object-fit: cover;
-    }
-
-    .preview-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .preview-data {
-      font-size: 0.8rem;
-      display: none;
-    }
-
-    .send-button-class {
-      position: relative;
-      font-size: 2rem;
-      text-transform: uppercase;
-      width: 10rem;
-      text-align: center;
-      border-radius: 1rem;
-      padding: 0.5rem;
-      margin-top: -3.5rem;
-      border: none;
-      background: linear-gradient(38deg, #f05a24, #ba2f2f);
-      color: #efefef;
-      transition: ease-out 0.4s;
-      box-shadow: 2px 2px 2px 4px rgba(35, 35, 35, 0.35);
-    }
-
-    .send-button-class:active {
-    }
-
-    .send-button-class:hover {
-      background: linear-gradient(-35deg, #f05a24, #ba2f2f);
-      transition: ease-in 0.5s;
-      color: rgb(30, 30, 30);
-      box-shadow: 2px 2px 2px 4px rgba(35, 35, 35, 0.35);
-    }
-
-    .send-button-class::after {
-    }
-
-    .selector--container {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
-      margin: 2rem;
-      padding: 1rem;
-    }
-
-    .contact-subheader {
-      padding: 2rem;
-      font-size: 1.2rem;
-      color: white;
-      max-width: 40rem;
-      margin-bottom: 1rem;
-    }
-
-    .contact-title {
-      font-size: 3rem;
-      color: var(--offWhite);
-      padding-top: 2rem;
-    }
-    @media screen and (max-width: 500px) {
-      .contact-title {
-        font-size: 2.5rem;
-        margin-bottom: -1rem;
-      }
-    }
-
-    .custom-select {
-      min-width: 150px;
-      padding: 1rem;
-      max-width: 200px;
-      margin-left: 1rem;
-      position: relative;
-      border-radius: 10px;
-    }
-
-    #my-uploader-provider {
-      background-color: #d6d6d6;
-      color: black;
-    }
-
-    .uploadcare--widget__button {
-      margin-top: 0.4rem;
-      color: black;
-      background-color: var(--offWhite);
-    }
-
-    .custom-select::before,
-    .custom-select::after {
-      --size: 0.3rem;
-      position: absolute;
-      content: "";
-      right: 1rem;
-      pointer-events: none;
-    }
-
-    .custom-select::before {
-      border-left: var(--size) solid transparent;
-      border-right: var(--size) solid transparent;
-      border-bottom: var(--size) solid black;
-      top: 40%;
-    }
-
-    .custom-select::after {
-      border-left: var(--size) solid transparent;
-      border-right: var(--size) solid transparent;
-      border-top: var(--size) solid black;
-      top: 55%;
-    }
-
-    label {
-      display: inline;
-      color: var(--offWhite);
-    }
-
-    select {
-      appearance: none;
-      /* safari */
-      -webkit-appearance: none;
-      /* other styles for aesthetics */
-      width: 100%;
-      font-size: 1.15rem;
-      padding: 0.675em 6em 0.675em 1em;
-      background-color: #fff;
-      border: 1px solid #caced1;
-      border-radius: 0.25rem;
-      color: #000;
-      cursor: pointer;
-    }
-
-    .message-text {
-      overflow: auto;
-      white-space: normal;
-      text-overflow: "-";
-      height: 10rem;
-    }
-
-    .text-input {
-      color: black;
-      width: 80%;
-      padding: 1rem;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-    }
-
-    @media screen and (max-width: 700px) {
-      .text-input {
-        min-width: 20rem;
-      }
-      .selector--container {
-        flex-direction: column;
-      }
-
-      .cat-selector-label {
-        margin-bottom: 0.5rem;
-      }
-      .custom-select {
-        margin: 0;
-      }
-    }
-
-    .box-input {
-      height: 20rem;
-      border: 1px dashed black;
-    }
-
-    .checkbox {
-    }
-
-    .box__dragndrop,
-    .box__uploading,
-    .box__success,
-    .box__error {
-      display: none;
-    }
-
-    .box.has-advanced-upload {
-      background-color: var(--offWhite);
-      outline: 2px dashed black;
-      outline-offset: -10px;
-    }
-
-    .box.has-advanced-upload .box__dragndrop {
-      display: inline;
-    }
-
-    .my-config {
-      --darkmode: 0;
-      --h-accent: 144;
-      --s-accent: 67%;
-      --l-accent: 57%;
-    }
-  </style>
 </Layout>
+
+<!-- <iframe src="...." frameborder="0" class="contact-iframe"> </iframe> -->
+
+<script
+  src="https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.js"
+>
+  // import * as LR from "https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.js";
+  LR.registerBlocks(LR);
+
+  const providerNode = document.getElementById("my-uploader-provider");
+  const previewsNode = document.getElementById("previews");
+
+  providerNode.addEventListener("change", handleChangeEvent);
+  function handleChangeEvent(e) {
+    console.log("change event payload", e);
+    renderFiles(e.detail.allEntries.filter((f) => f.status === "success"));
+  }
+
+  function renderFiles(files) {
+    const renderedFiles = files.map((file) => {
+      const fileNode = document.createElement("div");
+      fileNode.setAttribute("class", "preview-wrapper");
+
+      const imgNode = document.createElement("img");
+      imgNode.setAttribute("src", file.cdnUrl);
+      imgNode.setAttribute("class", "preview");
+      imgNode.setAttribute("width", "50");
+      imgNode.setAttribute("height", "50");
+      imgNode.setAttribute("alt", file.fileInfo.originalFilename);
+      imgNode.setAttribute("title", file.fileInfo.originalFilename);
+
+      console.log(file.fileInfo);
+
+      // const imgNameNode = document.createElement("p");
+      // imgNameNode.setAttribute("class", "preview-data");
+      // imgNameNode.textContent = `${file.fileInfo.originalFileName}`;
+      // const imgSizeNode = document.createElement("p");
+      // imgSizeNode.setAttribute("class", "preview-data");
+      // imgSizeNode.textContent = `${file.fileInfo.fileSize}`;
+      // fileNode.append(imgNode, imgNameNode, imgSizeNode);
+
+      return fileNode;
+    });
+
+    previewsNode.replaceChildren(...renderedFiles);
+  }
+</script>
+
+<style define:vars={{ size, offWhite }} is:global>
+  #status {
+    color: var(--offWhite);
+    padding-top: 0.5rem;
+    font-size: 1.2rem;
+  }
+
+  .g-recaptcha {
+    margin-top: 3rem;
+  }
+  .contact-form {
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+  }
+
+  .contact-container {
+    width: 80%;
+    background-color: ececec;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+    border-radius: 10px;
+  }
+
+  .bckgrnd-contact {
+    z-index: -4;
+    position: absolute;
+    height: auto;
+    top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    object-fit: fit;
+    left: 0;
+    right: 0;
+    opacity: 0.3;
+  }
+
+  input {
+    border: none;
+    margin: 0.2rem;
+  }
+
+  #previews {
+    margin: 2rem;
+    object-fit: cover;
+  }
+
+  .preview-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .preview-data {
+    font-size: 0.8rem;
+    display: none;
+  }
+
+  .send-button-class {
+    position: relative;
+    font-size: 2rem;
+    text-transform: uppercase;
+    width: 10rem;
+    text-align: center;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    margin-top: -3.5rem;
+    border: none;
+    background: linear-gradient(38deg, #f05a24, #ba2f2f);
+    color: #efefef;
+    transition: ease-out 0.4s;
+    box-shadow: 2px 2px 2px 4px rgba(35, 35, 35, 0.35);
+  }
+
+  .send-button-class:active {
+  }
+
+  .send-button-class:hover {
+    background: linear-gradient(-35deg, #f05a24, #ba2f2f);
+    transition: ease-in 0.5s;
+    color: rgb(30, 30, 30);
+    box-shadow: 2px 2px 2px 4px rgba(35, 35, 35, 0.35);
+  }
+
+  .send-button-class::after {
+  }
+
+  .selector--container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin: 2rem;
+    padding: 1rem;
+  }
+
+  .contact-subheader {
+    padding: 2rem;
+    font-size: 1.2rem;
+    color: white;
+    max-width: 40rem;
+    margin-bottom: 1rem;
+  }
+
+  .contact-title {
+    font-size: 3rem;
+    color: var(--offWhite);
+    padding-top: 2rem;
+  }
+  @media screen and (max-width: 500px) {
+    .contact-title {
+      font-size: 2.5rem;
+      margin-bottom: -1rem;
+    }
+  }
+
+  .custom-select {
+    min-width: 150px;
+    padding: 1rem;
+    max-width: 200px;
+    margin-left: 1rem;
+    position: relative;
+    border-radius: 10px;
+  }
+
+  #my-uploader-provider {
+    background-color: #d6d6d6;
+    color: black;
+  }
+
+  .uploadcare--widget__button {
+    margin-top: 0.4rem;
+    color: black;
+    background-color: var(--offWhite);
+  }
+
+  .custom-select::before,
+  .custom-select::after {
+    --size: 0.3rem;
+    position: absolute;
+    content: "";
+    right: 1rem;
+    pointer-events: none;
+  }
+
+  .custom-select::before {
+    border-left: var(--size) solid transparent;
+    border-right: var(--size) solid transparent;
+    border-bottom: var(--size) solid black;
+    top: 40%;
+  }
+
+  .custom-select::after {
+    border-left: var(--size) solid transparent;
+    border-right: var(--size) solid transparent;
+    border-top: var(--size) solid black;
+    top: 55%;
+  }
+
+  label {
+    display: inline;
+    color: var(--offWhite);
+  }
+
+  select {
+    appearance: none;
+    /* safari */
+    -webkit-appearance: none;
+    /* other styles for aesthetics */
+    width: 100%;
+    font-size: 1.15rem;
+    padding: 0.675em 6em 0.675em 1em;
+    background-color: #fff;
+    border: 1px solid #caced1;
+    border-radius: 0.25rem;
+    color: #000;
+    cursor: pointer;
+  }
+
+  .message-text {
+    overflow: auto;
+    white-space: normal;
+    text-overflow: "-";
+    height: 10rem;
+  }
+
+  .text-input {
+    color: black;
+    width: 80%;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+  }
+
+  @media screen and (max-width: 700px) {
+    .text-input {
+      min-width: 20rem;
+    }
+    .selector--container {
+      flex-direction: column;
+    }
+
+    .cat-selector-label {
+      margin-bottom: 0.5rem;
+    }
+    .custom-select {
+      margin: 0;
+    }
+  }
+
+  .box-input {
+    height: 20rem;
+    border: 1px dashed black;
+  }
+
+  .checkbox {
+  }
+
+  .box__dragndrop,
+  .box__uploading,
+  .box__success,
+  .box__error {
+    display: none;
+  }
+
+  .box.has-advanced-upload {
+    background-color: var(--offWhite);
+    outline: 2px dashed black;
+    outline-offset: -10px;
+  }
+
+  .box.has-advanced-upload .box__dragndrop {
+    display: inline;
+  }
+
+  .my-config {
+    --darkmode: 0;
+    --h-accent: 144;
+    --s-accent: 67%;
+    --l-accent: 57%;
+  }
+</style>
