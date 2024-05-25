@@ -1,0 +1,34 @@
+headers = []
+redirects = []
+
+[functions]
+
+[functions."*"]
+
+[[plugins]]
+package = "@netlify/plugin-lighthouse"
+pinned_version = "6"
+origin = "ui"
+
+[plugins.inputs]
+
+[build]
+publish = "/Users/Jay/Desktop/wornock-wood-site/astro-site/dist"
+publishOrigin = "config"
+base = "/Users/Jay/Desktop/wornock-wood-site/astro-site"
+command = "npm run build"
+commandOrigin = "config"
+
+[build.environment]
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
