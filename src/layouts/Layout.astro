@@ -13,12 +13,13 @@ import { getAllMetaData } from '../lib/api';
 const accentClour = "#f2f2f2";
 
 const metaData = await getAllMetaData();
+console.log(metaData);
 
 ---
 
 <!doctype html>
 <html lang="en">
-  <MainHead title={"Warnock Cabinetry"} description={"Welcome to warnock cabinetry custom design"}></MainHead>
+  <MainHead title={metaData.metaTitle} description={metaData.metaDescription}></MainHead>
   <body>
     <HeadingMenu></HeadingMenu>
     <div class="content">
