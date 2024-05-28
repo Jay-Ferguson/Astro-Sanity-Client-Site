@@ -14,7 +14,7 @@ const accentClour = "#f2f2f2";
 
 const metaData = await getAllMetaData();
 console.log(metaData);
-console.log('this is a test');
+console.log('this should log on the server');
 
 ---
 
@@ -22,6 +22,7 @@ console.log('this is a test');
 <html lang="en">
   <MainHead title={metaData.metaTitle} description={metaData.metaDescription}></MainHead>
   <body>
+    {console.log('this should log on the client')}
     <HeadingMenu></HeadingMenu>
     <div class="content">
       <slot />
