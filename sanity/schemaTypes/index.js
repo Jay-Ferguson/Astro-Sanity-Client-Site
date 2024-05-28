@@ -7,6 +7,7 @@ import sliderImage from './sliderImage'
 import projects from './projects'
 import pageType from './pageType'
 import promotion from './promotion'
+import metaData from './metaData'
 
 
 export const schemaTypes = [
@@ -18,5 +19,6 @@ export const schemaTypes = [
   clientProjects,
   sliderImage,
   projects,
-  promotion
+  promotion,
+  metaData
 ]
