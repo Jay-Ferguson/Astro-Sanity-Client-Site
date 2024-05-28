@@ -9,19 +9,23 @@ import {loadEnv} from 'vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site:'https://wornockwood.com',
-  output:'static',
-  prefetch:true,
-  image:{
-    service: imageService,
-    fallbackService: 'netlify',
-    placeholder: 'blurhash',
+  site: "https://wornockwood.com",
+  output: "static",
+  prefetch: true,
+  image: {
+    service: imageService({
+      fallbackService: "netlify",
+      placeholder: "blurhash",
+      layout: "constrained",
+    }),
   },
-  integrations: [react(), sanityIntegration({
-    projectId: '9gy3ebd9',
-    dataset: "production",
-    //set 
-    useCdn: false
-  })
-]
+  integrations: [
+    react(),
+    sanityIntegration({
+      projectId: "9gy3ebd9",
+      dataset: "production",
+      //set
+      useCdn: false,
+    }),
+  ],
 });
