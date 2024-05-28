@@ -79,3 +79,11 @@ export async function getAllHome() {
   const catalog = await useSanityClient().fetch(catalogQuery, catalogParams);
   return catalog;
 }
+
+
+export async function getAllMetaData() {
+  const metaQuery = '*[_type == "MetaData"]';
+  const metaParams = {};
+  const meta = await useSanityClient().fetch(metaQuery, metaParams);
+  return meta;
+}

@@ -9,14 +9,16 @@ const { title } = Astro.props;
 import MainHead from './MainHead.astro';
 import HeadingMenu from '../components/HeadingMenu.astro';
 import Footer from '../components/Footer.astro';
-
+import { getAllMetaData } from '../lib/api';
 const accentClour = "#f2f2f2";
+
+const metaData = await getAllMetaData();
 
 ---
 
 <!doctype html>
 <html lang="en">
-  <MainHead title={"Wornock Cabinetry"} description={"welcome to wornock cabinetry custom design"}></MainHead>
+  <MainHead title={"Warnock Cabinetry"} description={"Welcome to warnock cabinetry custom design"}></MainHead>
   <body>
     <HeadingMenu></HeadingMenu>
     <div class="content">
