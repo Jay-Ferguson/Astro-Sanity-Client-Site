@@ -4,7 +4,8 @@ import { getImage } from "astro:assets";
 import faviconSrc from "../images/favicon.png";
 import faviconSvgSrc from "../../public/favicon.svg";
 import { ViewTransitions } from "astro:transitions";
-
+import { getAllMetaData } from '../lib/api';
+const metaData = await getAllMetaData();
 const appleTouchIcon = await getImage({
   src: faviconSrc,
   width: 180,
@@ -23,7 +24,6 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: "svg" });
 
   <title>{title}</title>
   <meta name="description" content={description} />
-
   <link
     rel="icon"
     type="image/svg"

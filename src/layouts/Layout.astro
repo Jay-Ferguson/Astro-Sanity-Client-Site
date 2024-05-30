@@ -16,7 +16,7 @@ console.log(metaData);
 
 <!doctype html>
 <html lang="en">
-  <MainHead title={metaData.metaTitle} description={metaData.metaDescription}></MainHead>
+  <MainHead title={metaData[0].metaTitle} description={metaData[0].metaDescription}></MainHead>
   <body>
     <HeadingMenu transition:persist></HeadingMenu>
     <div class="content">
