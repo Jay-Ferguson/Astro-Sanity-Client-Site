@@ -74,7 +74,7 @@ const headerImg = "../images/homepage1.jpg";
       <h6 class="lower-sub-header body-text">
         {homeText[0].body[0].children[0].text}
       </h6>
-      <h2 class="info-cta">For more information</h2>
+      <h2 class="info-cta">{homeText[0].pageBuilder[0].subheaders}</h2>
       <a class="subheader--contact__button" href="/contact/"> Contact </a>
     </div>
   </main>
@@ -123,7 +123,7 @@ const headerImg = "../images/homepage1.jpg";
     top: 20%;
     margin: 0 auto;
     padding: 2.5rem;
-    width:70%;
+    width: 70%;
     max-width: 40rem;
     min-height: 22rem;
     display: flex;
@@ -267,17 +267,15 @@ const headerImg = "../images/homepage1.jpg";
     .link-card-grid {
       margin-top: 20%;
     }
-
   }
 
-    @media screen and (min-width: 1100px) {
-      .link-card-grid {
-        margin-top: 25rem;
-      }
+  @media screen and (min-width: 1100px) {
+    .link-card-grid {
+      margin-top: 25rem;
     }
+  }
 
-    .link-card {
-      min-width: 10rem;
-    }
-
+  .link-card {
+    min-width: 10rem;
+  }
 </style>
