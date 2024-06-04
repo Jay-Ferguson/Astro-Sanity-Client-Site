@@ -3,7 +3,6 @@ import sitemap from "@astrojs/sitemap";
 import robotsTxt from "astro-robots-txt";
 import { sanityIntegration } from "@sanity/astro";
 import react from "@astrojs/react";
-import netlify from "@astrojs/netlify";
 import { defineConfig } from "astro/config";
 import { imageService } from "@unpic/astro/service";
 import lottie from "astro-integration-lottie";
