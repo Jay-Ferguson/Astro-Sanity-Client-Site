@@ -16,7 +16,6 @@ import { loadEnv } from "vite";
 export default defineConfig({
   site: "https://warnockcabinetry.com",
   output: "static",
-  adapter: netlify(),
   prefetch: true,
   base: "/",
   lang: "en-CA",
