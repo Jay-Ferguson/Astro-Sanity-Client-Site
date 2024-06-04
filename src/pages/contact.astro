@@ -2,16 +2,9 @@
 import Layout from "../layouts/Layout.astro";
 import { getAllContact } from "../lib/api";
 import axios from "axios";
-// import { Image } from "astro:assets";
 import { urlForImage } from "../lib/urlForImage";
 import { Image } from "@unpic/astro";
 import FormComponent from "../components/FormComponent";
-//botpoison challenge server side check
-import Botpoison from "@botpoison/node";
-
-const botpoison = new Botpoison({
-  secretKey: "fff",
-});
 
 const size = "0.3rem";
 const offWhite = "rgb(255, 255, 255)";
@@ -189,40 +182,14 @@ const currentUrl = new URL(Astro.url.origin);
       </form>
     </div>
 
-    <!-- <lr-config
-          ctx-name="my-uploader"
-          pubkey="e8567231b94b07c13e67"
-          max-local-file-size-bytes="10000000"
-          img-only="true"
-          source-list="local, camera, url, instagram"
-        >
-        </lr-config> -->
+   
 
-    <!-- <lr-file-uploader-regular
-          ctx-name="my-uploader"
-          css-src="https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.css"
-          class="my-config"
-        >
-        </lr-file-uploader-regular>
-
-        <lr-upload-ctx-provider ctx-name="my-uploader" id="my-uploader-provider"
-        ></lr-upload-ctx-provider>
-        <label for="photo"></label>
-        <input
-          type="hidden"
-          id="photo"
-          role="uploadcare-uploader"
-          name="photos"
-          data-public-key="e8567231b94b07c13e67"
-          data-multiple="true"
-        /> -->
     <div id="previews"></div>
 
     <h3 id="status"></h3>
   </section>
 </Layout>
 
-<!-- <iframe src="...." frameborder="0" class="contact-iframe"> </iframe> -->
 
 <script
   src="https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.js"

@@ -15,7 +15,7 @@ import { loadEnv } from "vite";
 // https://astro.build/config
 export default defineConfig({
   site: "https://warnockcabinetry.com",
-  output: "hybrid",
+  output: "static",
   adapter: netlify(),
   prefetch: true,
   base: "/",
