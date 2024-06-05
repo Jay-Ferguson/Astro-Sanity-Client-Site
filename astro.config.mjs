@@ -29,7 +29,7 @@ export default defineConfig({
     sitemap(),
     robotsTxt(),
     favicons({
-      masterPicture: "../astro-site/public/favicon.svg",
+      masterPicture: "./src/images/favicon.png",
       emitAssets: true,
       orientation: "any",
       appleStatusBarStyle: "black-translucent",
