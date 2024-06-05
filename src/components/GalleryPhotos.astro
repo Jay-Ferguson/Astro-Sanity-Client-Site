@@ -138,7 +138,7 @@ const projects = await getAllProjects();
     max-width: 1000px;
     display: grid;
     grid-template-columns: 1fr 30%;
-    grid-template-rows: 1fr 20% 20%;
+    grid-template-rows: 1fr max-content 20%;
     grid-gap: 0.2rem;
     margin-bottom: 2rem;
     margin-top:5rem;
@@ -154,15 +154,12 @@ const projects = await getAllProjects();
   }
 
   .thumbnail-container {
-    min-height: 5rem;
-    margin-bottom: -5rem;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     gap: 0.5rem;
-    padding-top: 1rem;
-    padding-bottom: 0.5rem;
+    margin-top:1rem;
   }
 
   .test-text {
@@ -179,6 +176,13 @@ const projects = await getAllProjects();
     border-radius: 5px;
   }
 
+  .test-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:3rem;
+  }
+
   .projects_text {
     color: #ececec;
     text-decoration: none;
@@ -187,9 +191,9 @@ const projects = await getAllProjects();
   .project-title {
     color: #ececec;
     text-decoration: none;
-    margin-bottom: 4rem;
-    margin-top: -1rem;
+    margin-top: 0.3rem;
     font-size: 2.5rem;
+  
   }
 
   @media screen and (min-width: 700px) {
@@ -199,6 +203,8 @@ const projects = await getAllProjects();
     }
 
     .project-description {
+      font-size:1.2rem;
+      justify-self:left;
       grid-column: 2 / 3;
       grid-row: 1;
     }
