@@ -90,7 +90,7 @@ const projects = await getAllProjects();
           <h3 class="project-title project-text">{project.title}</h3>
           <p class="project-description">
             {project.body === undefined || project.body.length === 0
-              ? " no project description"
+              ? null
               : project.body[0].children[0].text}
           </p>
         </li>
