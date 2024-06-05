@@ -27,7 +27,6 @@ const currentUrl = new URL(Astro.url.origin);
       document
         // .querySelector("#send-button")
         .addEventListener("submit", async (event) => {
-          console.log("axiospost", "submit");
           event.preventDefault();
 
           let formData = new FormData(form);
@@ -48,7 +47,7 @@ const currentUrl = new URL(Astro.url.origin);
           for (const [key, value] of formData.entries()) {
             jsonData[key] = value;
           }
-          console.log(jsonData);
+          // console.log(jsonData);
 
           axios
             .post("https://submit-form.com/n6nFdqZtI", {
@@ -63,10 +62,10 @@ const currentUrl = new URL(Astro.url.origin);
 
             .then((response) => {
               if (response.data.status === 200) {
-                console.log("200");
+                // console.log("200");
                 status.innerHTML = "Thanks for your email";
               } else {
-                console.log("not 200", response.data.status);
+                // console.log("not 200", response.data.status);
                 status.innerHTML = "Thanks for your email";
               }
             })
