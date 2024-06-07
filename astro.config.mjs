@@ -7,6 +7,7 @@ import { defineConfig } from "astro/config";
 import { imageService } from "@unpic/astro/service";
 import lottie from "astro-integration-lottie";
 import favicons from "astro-favicons";
+import partytown from "@astrojs/partytown";
 import { loadEnv } from "vite";
 
 // const projectId = loadEnv(process.env.PROJECT_ID, process.cwd(), "");
@@ -34,8 +35,10 @@ export default defineConfig({
       orientation: "any",
       appleStatusBarStyle: "black-translucent",
     }),
+    partytown(),
     react(),
     lottie(),
+
     sanityIntegration({
       projectId: "9gy3ebd9",
       dataset: "production",
