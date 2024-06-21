@@ -4,14 +4,15 @@
 npm create astro@latest -- --template basics
 ```
 ```
-after downloading the code run the site locally using npm install then npm run dev 
+after downloading the code run the site locally using npm (or other package-manager) install then npm run dev 
 after site is built with npm run dev - all code output is in the dist folder in the root directory
 
 ```
 
-
-
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+```
+This Project contains Astro & Sanity CMS.
+All CMS post types and settings are in the sanity folder in root directory. To run both locally after installing the dependencies, navigate to the folder and use the "run dev" command. The "run build" command will build the production site locally. All commands will are saved in the relevant package.json under the scripts object.
+```
 
 ## 🚀 Project Structure
 
@@ -52,4 +53,4 @@ All commands are run from the root of the project, from a terminal:
 
 ## 👀 Want to learn more?
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Feel free to check [the documentation](https://docs.astro.build) 
