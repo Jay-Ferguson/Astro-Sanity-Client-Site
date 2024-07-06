@@ -31,16 +31,21 @@ export default defineConfig({
       title: 'Website Preview',
     }),
     dashboardTool({
+      name: 'dashboard',
+      title: 'Deploy',
       widgets: [
         netlifyWidget({
+          layout: 'medium',
           title: 'My Netlify deploys',
+          description: 'deploys website with all published changes',
           sites: [
             {
-              title: 'Website Deploy',
+              title: 'Warnock Website Deploy',
+              siteId: 'cdeaf534-e38d-47f0-8af6-c9302cfc8705',
               apiId: 'bb377697-7601-4d2f-8ba9-9b10ff19ac51',
-              buildHookId: 'https://api.netlify.com/build_hooks/6634ecbe0e479a2c199cf2e9',
+              buildHookId: 'https://api.netlify.com/build_hooks/6689be2ee539312d68508f64',
               name: 'webdeploy',
-              url: 'https://www.warnockcabinetry.com',
+              url: 'https://www.warnockcabinetry.ca',
               branch: 'main',
             },
           ],
