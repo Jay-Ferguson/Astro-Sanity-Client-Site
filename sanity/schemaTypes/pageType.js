@@ -28,34 +28,34 @@ const pageType = defineType({
       title: 'Body',
       type: 'blockContent',
     }),
+
     defineField({
       name: 'pageBuilder',
       type: 'array',
       title: 'Page builder',
       of: [
-        //  defineArrayMember({
-        //    name: 'hero',
-        //    type: 'hero',
-        //  }),
-        //  defineArrayMember({
-        //    name: 'gallery',
-        //    type: 'gallery',
-        //  }),
-        //  defineArrayMember({
-        //    name: 'form',
-        //    type: 'form',
-        //  }),
-        defineArrayMember({
-          name: 'posts',
-          type: 'reference',
-          to: [{type: 'post'}],
-        }),
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'subheaders',
+              title: 'Subheaders',
+              type: 'string',
+            },
+            defineArrayMember({
+              name: 'posts',
+              type: 'reference',
+              to: [{type: 'post'}],
+            }),
 
-        defineArrayMember({
-          name: 'callToAction',
-          type: 'reference',
-          to: [{type: 'promotion'}],
-        }),
+            defineArrayMember({
+              name: 'callToAction',
+              type: 'reference',
+              to: [{type: 'promotion'}],
+            }),
+          ],
+        },
+
         // etc...
       ],
     }),

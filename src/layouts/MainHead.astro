@@ -1,9 +1,11 @@
 ---
 const { title, description } = Astro.props;
 import { getImage } from "astro:assets";
-import faviconSrc from "../local-images/favicon.png";
-import faviconSvgSrc from "../local-images/warnock-logo.svg";
-
+import faviconSrc from "../images/favicon.png";
+import faviconSvgSrc from "../../public/favicon.svg";
+import { ViewTransitions } from "astro:transitions";
+import { getAllMetaData } from "../lib/api";
+const metaData = await getAllMetaData();
 const appleTouchIcon = await getImage({
   src: faviconSrc,
   width: 180,
@@ -18,19 +20,17 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: "svg" });
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="viewport" content="width=device-width" />
   <meta name="generator" content={Astro.generator} />
+  <meta name="robots" content="index" />
 
   <title>{title}</title>
   <meta name="description" content={description} />
-
   <link
     rel="icon"
     type="image/svg"
     sizes="32X32"
-    href="../local-images/favicon.png"
+    href="../images/favicon.png"
   />
   <!-- ligthgallery styles -->
-  <!-- <link type="text/css" rel="stylesheet" href='../dist/css/lightgallery.min.css' /> -->
-
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/lightgallery@2.0.1/css/lightgallery-bundle.css"
@@ -39,10 +39,12 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: "svg" });
     referrerpolicy="no-referrer"
   />
 
-  <link rel="icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="icon" href="../../dist/_astro/favicon.png" sizes="32x32" />
   <link rel="icon" href={faviconSvg.src} type="image/svg+xml" />
   <link rel="apple-touch-icon" href={appleTouchIcon.src} />
+  <link rel="mask-icon" href={faviconSvg.src} />
   <link rel="manifest" href="/manifest.json" />
+  <link rel="manifest" href="manifest.webmanifest" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -58,12 +60,68 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: "svg" });
     rel="stylesheet"
   />
 
-
-  
   <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css"
+    integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
+  <!-- Umami Analytics-->
+  <script
+    defer
+    src="https://cloud.umami.is/script.js"
+    data-website-id="e08326e8-ef74-4bae-b63c-4e765ae7a04a"
+    crossorigin="anonymous"
+    ></script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4PR8773PTK"
+  ></script>
+
+  <!-- Google Tag Manager -->
+  <script type="text/partytown">
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != "dataLayer" ? "&l=" + l : "";
+      j.async = true;
+      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "dataLayer", "GTM-T3Q7R8RM");
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <script type="text/partytown">
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function gtag() {
+      dataLayer.push(arguments);
+    };
+    gtag("js", new Date());
+
+    gtag("config", "GTM-T3Q7R8RM");
+  </script>
+
+  <!-- <link
     rel="preload"
     type="text/javascript"
-    <script is:inline src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+    <script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"
+  /> -->
 
-  <script is:inline src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+  <script
+    is:inline
+    src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"
+  ></script>
+
+  <!-- <script
+    defer
+    src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js"
+    integrity="sha512-Z5y5T62siZB4wxN80Bfmi4QJpZVPKYGAQM1q3XoaUjrzj0ZaJ9W2w5oGF6byXLYQGn/Ytj3CntKdBkKryglHdA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script> -->
 </head>

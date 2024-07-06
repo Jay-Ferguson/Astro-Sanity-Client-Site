@@ -3,8 +3,10 @@ import { getAllPromotions } from "../lib/api";
 import { urlForImage } from "../lib/urlForImage";
 const { href, title, body, image } = Astro.props;
 const promotion = await getAllPromotions();
-import arrow from "../local-images/arrowRight.svg";
+import arrow from "../images/arrowRight.svg";
 import { Image } from "astro:assets";
+const accentLight = "rgba(255, 255, 255, 0.3)";
+const accentGradient = "rgb(255, 255, 255)";
 ---
 
 <script type="module">
@@ -25,26 +27,49 @@ import { Image } from "astro:assets";
           class="card-img"
         />
 
-        <a href={`/posts/${promotion.slug.current}`} class="card-link">
+        <a href='/gallery/' class="card-link">
           {promotion.title}
 
-          <Image src={arrow} alt="why" class="arrow-right" />
+          <svg
+          class='arrow-right'
+            width="161"
+            height="10"
+            viewBox="0 0 161 10"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1 1H160C158.167 1.16667 154.3 2.9 153.5 8.5"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
         </a>
       </li>
     ))
   }
 </ul>
 
-
-<style>
+<style define:vars={{ accentGradient, accentLight }}>
   .card-container {
-    margin: 0 auto;
     display: flex;
-    flex-flow: column;
+    flex-flow: row wrap;
     align-items: center;
+    justify-content: center;
     padding: 0;
     list-style: none;
   }
+
+  @media screen and (max-width: 1250px) {
+    .card-container{
+      flex-flow: column;
+      justify-items: center;
+      align-content: center;
+    }
+  }
+
 
   .link-card {
     list-style: none;
@@ -63,6 +88,11 @@ import { Image } from "astro:assets";
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
   }
 
+  @media screen and (max-width: 500px) {
+    .link-card {
+      min-width: 10rem;
+    }
+  }
   .card-link {
     display: flex;
     flex-flow: column;
@@ -100,10 +130,10 @@ import { Image } from "astro:assets";
   }
   .link-card:is(:hover, :focus-within) {
     background-position: 0;
-    background-image: var(--accent-gradient);
+    background-image: var(--accentGradient);
   }
   .link-card:is(:hover, :focus-within) h2 {
-    color: rgb(var(--accent-light));
+    color: rgb(var(--accentLight));
   }
 
   /* large-monitor and desktop */

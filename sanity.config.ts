@@ -4,6 +4,7 @@ import { defineConfig } from "sanity";
 import { media } from "sanity-plugin-media";
 import { structureTool } from "sanity/structure";
 
+
 export default defineConfig({
   name: "project-name",
   title: "Project Name",

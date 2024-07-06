@@ -1,34 +1,53 @@
 ---
 import { getAllProjects } from "../lib/api";
-import { getAllGalleryImages } from "../lib/api";
 import { urlForImage } from "../lib/urlForImage";
 import Image from "astro/components/Image.astro";
+import { getImage } from "astro:assets";
 const projects = await getAllProjects();
-const galleryImages = await getAllGalleryImages();
 ---
 
-<script>
-  import "../dist/css/photoswipe.css";
-  import PhotoSwipeLightbox from "photoswipe/lightbox";
-  const lightbox = new PhotoSwipeLightbox({
-    gallery: "#gallery--zoom-transition",
-    children: "a",
-    showHideAnimationType: "zoom",
-    pswpModule: () => import("photoswipe"),
-  });
+<link
+  href="https://unpkg.com/photoswipe@5.2.2/dist/photoswipe.css"
+  rel="stylesheet"
+/>
 
+<script type="module">
+  ScrollReveal().version;
+  ScrollReveal({ distance: "60px" });
+  ScrollReveal().reveal(".project-item-container", { delay: 200 });
+  ScrollReveal().reveal(".thumbnail-container", { delay: 200, duration: 300 });
+</script>
+
+<script type="module" async>
+  import PhotoSwipeLightbox from "https://unpkg.com/photoswipe/dist/photoswipe-lightbox.esm.js";
+
+  const options = {
+    gallery: "#my-gallery",
+    children: "a:has(img)",
+    bgOpacity: 0.4,
+    initialZoomLevel: "fit",
+    showHideAnimationType: "fade",
+    initialZoomLevel: "fit",
+    imageClickAction: "next",
+    tapAction: "next",
+    pswpModule: () => import("https://unpkg.com/photoswipe"),
+  };
+  const lightbox = new PhotoSwipeLightbox(options);
   lightbox.init();
 </script>
 
-<ul class="gallery_container">
+<ul class="gallery--zoom-transition project-container">
   {
     projects.map((project) => (
-      <section id="gallery--zoom-transition">
-        <li class="pswp-gallery project-item-container" id="lightgallery">
+      <section id="#my-gallery">
+        <li class="pswp-gallery project-item-container" id="my-gallery">
           <a
             href={urlForImage(project.mainImage).url()}
-            data-pspw-width="1669"
+            data-pspw-width="1875"
             data-pspw-height="2500"
+            target="_blank"
+            data-pswp-src={urlForImage(project.mainImage).url()}
+            class="container-project"
           >
             <Image
               src={urlForImage(project.mainImage).url()}
@@ -40,50 +59,60 @@ const galleryImages = await getAllGalleryImages();
             />
           </a>
 
-
           <div class="thumbnail-container">
-            {project.galleryImages.map((galleryImage) => (
-              <div class="test-div">
-            <Image
-              src={urlForImage(galleryImage.asset).url()}
-              alt="project-thumnail"
-              class="thumbnail-img"
-              data-pspw-width="1669"
-              data-pspw-height="2500"
-              height={100}
-              width={200}
-            />
-            
-            <a href="thumbnail-click" class="gal-thumbnail">
-              <h1 class="test"></h1>
-              </a>
+            {project.galleryImages === undefined ||
+            project.galleryImages.length === 0
+              ? " "
+              : project.galleryImages.map((galleryImage) => (
+                  <div class="test-div">
+                    <a
+                      class="test-div"
+                      data-pspw-width="1875"
+                      data-pspw-height="2500"
+                      href={urlForImage(galleryImage.asset).url()}
+                      target="_blank"
+                    >
+                      <Image
+                        src={urlForImage(galleryImage.asset).url()}
+                        alt="project-thumnail"
+                        class="thumbnail-img"
+                        data-pspw-width="1669"
+                        data-pspw-height="2500"
+                        height={100}
+                        width={200}
+                      />
+                      <h1 class="test" />
+                    </a>
+                  </div>
+                ))}
+          </div>
 
-              </div>
-            ))
-          }
-            </div>
-
-          <a href={`/posts/${project.slug.current}`} class="project-text">
-            <h3 class="project-title project-text">{project.title}</h3>
-            <p class="project-description">
-              {project.body[0].children[0].text}
-            </p>
-          </a>
+          <h3 class="project-title project-text">{project.title}</h3>
+          <p class="project-description">
+            {project.body === undefined || project.body.length === 0
+              ? null
+              : project.body[0].children[0].text}
+          </p>
         </li>
       </section>
     ))
   }
 </ul>
 
-<style>
+<style is:global>
   .gallery_container {
     padding: 2rem;
     display: grid;
     gap: 2rem;
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-rows: 1fr min-content 20%;
     margin: auto 0;
   }
 
+  .container-project {
+    display: grid;
+    grid-row: 1;
+    grid-column: 1;
+  }
   .test {
     font-size: 5rem;
     color: #ececec;
@@ -101,39 +130,35 @@ const galleryImages = await getAllGalleryImages();
     text-wrap: balance;
   }
 
-  .project_item_container {
+  /* !! fix this for mobile display of project information-- */
+  .project-item-container {
     justify-items: center;
+    align-items: start;
     max-width: 1000px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
-    gap: 0.2rem;
-    margin-right: 4rem;
-    margin-left: 2rem;
-
+    grid-template-columns: 1fr 30%;
+    grid-template-rows: 1fr max-content 20%;
+    grid-gap: 0.2rem;
+    margin-bottom: 2rem;
+    margin-top: 5rem;
     @media screen and (max-width: 700px) {
       grid-template-columns: 1fr;
-      grid-template-rows: 1fr 1fr;
+      grid-template-rows: 1fr min-content max-content;
       justify-items: center;
     }
   }
 
   .project_image {
     margin-top: 2rem;
-
-    @media screen and (max-width: 700px) {
-    }
   }
 
   .thumbnail-container {
-    margin-bottom: -5rem;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     gap: 0.5rem;
-    padding-top: 1rem;
-    padding-bottom: 0.5rem;
+    margin-top: 1rem;
   }
 
   .test-text {
@@ -150,6 +175,13 @@ const galleryImages = await getAllGalleryImages();
     border-radius: 5px;
   }
 
+  .test-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+  }
+
   .projects_text {
     color: #ececec;
     text-decoration: none;
@@ -158,34 +190,490 @@ const galleryImages = await getAllGalleryImages();
   .project-title {
     color: #ececec;
     text-decoration: none;
-    margin-bottom: 2rem;
-    margin-top: 2rem;
+    margin-top: 0.3rem;
     font-size: 2.5rem;
-
-    @media screen and (max-width: 700px) {
-      grid-column: 1;
-      grid-rows: 1 / 2;
-    }
   }
 
   .project-description {
     color: #ececec;
-    margin-top: 2rem;
-    @media screen and (max-width: 700px) {
+  }
+
+  .project-text {
+    text-decoration: none;
+  }
+
+  /* media queries */
+
+  @media screen and (max-width: 700px) {
+    .project-title {
+      font-size: 2rem;
+      max-width: 80%;
+      margin-right: 1rem;
+    }
+
+    .project-description {
+      font-size: 1.2rem;
+      max-width: 80%;
+      margin-left: 3rem;
+      margin-top: 0rem;
+      justify-self: start;
+    }
+  }
+
+  @media screen and (min-width: 700px) {
+    .project-title {
+      grid-column: 1;
+      grid-rows: 3;
+    }
+
+    .project-description {
+      margin-top: 2rem;
+      font-size: 1.5rem;
+      justify-self: left;
+      grid-column: 2 / 3;
+      grid-row: 1;
+    }
+    .thumbnail-container {
+      order: 2;
+      grid-row: 2 / 3;
+      grid-column: 1;
+    }
+
+    .project_image {
+      grid-row: 1;
+      align-self: start;
     }
   }
 
   /* gallery-controls */
 
+  .photo-swipe {
   @font-face {
     font-family: "lg";
-    src:
-      url("../fonts/lg.woff2?io9a6k") format("woff2"),
-      url("../fonts/lg.ttf?io9a6k") format("truetype"),
-      url("../fonts/lg.woff?io9a6k") format("woff"),
-      url("../fonts/lg.svg?io9a6k#lg") format("svg");
+    src: url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
     font-weight: normal;
     font-style: normal;
     font-display: block;
+  }
+}
+
+  /* gallery-controls */
+  /*! PhotoSwipe main CSS by Dmytro Semenov | photoswipe.com */
+
+  .pswp {
+    --pswp-bg: #000;
+    --pswp-placeholder-bg: #222;
+
+    --pswp-root-z-index: 100000;
+
+    --pswp-preloader-color: rgba(79, 79, 79, 0.4);
+    --pswp-preloader-color-secondary: rgba(255, 255, 255, 0.9);
+
+    /* defined via js:
+  --pswp-transition-duration: 333ms; */
+
+    --pswp-icon-color: #fff;
+    --pswp-icon-color-secondary: #4f4f4f;
+    --pswp-icon-stroke-color: #4f4f4f;
+    --pswp-icon-stroke-width: 2px;
+
+    --pswp-error-text-color: var(--pswp-icon-color);
+  }
+
+  /*
+	Styles for basic PhotoSwipe (pswp) functionality (sliding area, open/close transitions)
+*/
+
+  .pswp {
+    position: fixed;
+    z-index: var(--pswp-root-z-index);
+    display: none;
+    touch-action: none;
+    outline: 0;
+    opacity: 0.003;
+    contain: layout style size;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+
+  /* Prevents focus outline on the root element,
+  (it may be focused initially) */
+  .pswp:focus {
+    outline: 0;
+  }
+
+  .pswp * {
+    box-sizing: border-box;
+  }
+
+  .pswp img {
+    max-width: none;
+    object-fit: contain;
+  }
+
+  .pswp--open {
+    display: block;
+  }
+
+  .pswp,
+  .pswp__bg {
+    transform: translateZ(0);
+    will-change: opacity;
+  }
+
+  .pswp__bg {
+    opacity: 0.005;
+    background: var(--pswp-bg);
+  }
+
+  .pswp,
+  .pswp__scroll-wrap {
+    overflow: hidden;
+  }
+
+  .pswp,
+  .pswp__scroll-wrap,
+  .pswp__bg,
+  .pswp__container,
+  .pswp__item,
+  .pswp__content,
+  .pswp__img,
+  .pswp__zoom-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .pswp {
+    position: fixed;
+  }
+
+  .pswp__img,
+  .pswp__zoom-wrap {
+    width: auto;
+    height: auto;
+  }
+
+  .pswp--click-to-zoom.pswp--zoom-allowed .pswp__img {
+    cursor: -webkit-zoom-in;
+    cursor: -moz-zoom-in;
+    cursor: zoom-in;
+  }
+
+  .pswp--click-to-zoom.pswp--zoomed-in .pswp__img {
+    cursor: move;
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+    cursor: grab;
+  }
+
+  .pswp--click-to-zoom.pswp--zoomed-in .pswp__img:active {
+    cursor: -webkit-grabbing;
+    cursor: -moz-grabbing;
+    cursor: grabbing;
+  }
+
+  /* :active to override grabbing cursor */
+  .pswp--no-mouse-drag.pswp--zoomed-in .pswp__img,
+  .pswp--no-mouse-drag.pswp--zoomed-in .pswp__img:active,
+  .pswp__img {
+    cursor: -webkit-zoom-out;
+    cursor: -moz-zoom-out;
+    cursor: zoom-out;
+  }
+
+  /* Prevent selection and tap highlights */
+  .pswp__container,
+  .pswp__img,
+  .pswp__button,
+  .pswp__counter {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .pswp__item {
+    /* z-index for fade transition */
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .pswp__hidden {
+    display: none !important;
+  }
+
+  /* Allow to click through pswp__content element, but not its children */
+  .pswp__content {
+    pointer-events: none;
+  }
+  .pswp__content > * {
+    pointer-events: auto;
+  }
+
+  /*
+
+  PhotoSwipe UI
+
+*/
+
+  /*
+	Error message appears when image is not loaded
+	(JS option errorMsg controls markup)
+*/
+  .pswp__error-msg-container {
+    display: grid;
+  }
+  .pswp__error-msg {
+    margin: auto;
+    font-size: 1em;
+    line-height: 1;
+    color: var(--pswp-error-text-color);
+  }
+
+  /*
+class pswp__hide-on-close is applied to elements that
+should hide (for example fade out) when PhotoSwipe is closed
+and show (for example fade in) when PhotoSwipe is opened
+ */
+  .pswp .pswp__hide-on-close {
+    opacity: 0.005;
+    will-change: opacity;
+    transition: opacity var(--pswp-transition-duration)
+      cubic-bezier(0.4, 0, 0.22, 1);
+    z-index: 10; /* always overlap slide content */
+    pointer-events: none; /* hidden elements should not be clickable */
+  }
+
+  /* class pswp--ui-visible is added when opening or closing transition starts */
+  .pswp--ui-visible .pswp__hide-on-close {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* <button> styles, including css reset */
+  .pswp__button {
+    position: relative;
+    display: block;
+    width: 50px;
+    height: 60px;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    cursor: pointer;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    opacity: 0.85;
+    -webkit-appearance: none;
+    -webkit-touch-callout: none;
+  }
+
+  .pswp__button:hover,
+  .pswp__button:active,
+  .pswp__button:focus {
+    transition: none;
+    padding: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    opacity: 1;
+  }
+
+  .pswp__button:disabled {
+    opacity: 0.3;
+    cursor: auto;
+  }
+
+  .pswp__icn {
+    fill: var(--pswp-icon-color);
+    color: var(--pswp-icon-color-secondary);
+  }
+
+  .pswp__icn {
+    position: absolute;
+    top: 14px;
+    left: 9px;
+    width: 32px;
+    height: 32px;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .pswp__icn-shadow {
+    stroke: var(--pswp-icon-stroke-color);
+    stroke-width: var(--pswp-icon-stroke-width);
+    fill: none;
+  }
+
+  .pswp__icn:focus {
+    outline: 0;
+  }
+
+  /*
+	div element that matches size of large image,
+	large image loads on top of it,
+	used when msrc is not provided
+*/
+  div.pswp__img--placeholder,
+  .pswp__img--with-bg {
+    background: var(--pswp-placeholder-bg);
+  }
+
+  .pswp__top-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    z-index: 10;
+
+    /* allow events to pass through top bar itself */
+    pointer-events: none !important;
+  }
+  .pswp__top-bar > * {
+    pointer-events: auto;
+    /* this makes transition significantly more smooth,
+     even though inner elements are not animated */
+    will-change: opacity;
+  }
+
+  /*
+
+  Close button
+
+*/
+  .pswp__button--close {
+    margin-right: 6px;
+  }
+
+  /*
+
+  Arrow buttons
+
+*/
+  .pswp__button--arrow {
+    position: absolute;
+    top: 0;
+    width: 75px;
+    height: 100px;
+    top: 50%;
+    margin-top: -50px;
+  }
+
+  .pswp__button--arrow:disabled {
+    display: none;
+    cursor: default;
+  }
+
+  .pswp__button--arrow .pswp__icn {
+    top: 50%;
+    margin-top: -30px;
+    width: 60px;
+    height: 60px;
+    background: none;
+    border-radius: 0;
+  }
+
+  .pswp--one-slide .pswp__button--arrow {
+    display: none;
+  }
+
+  /* hide arrows on touch screens */
+  .pswp--touch .pswp__button--arrow {
+    visibility: hidden;
+  }
+
+  /* show arrows only after mouse was used */
+  .pswp--has_mouse .pswp__button--arrow {
+    visibility: visible;
+  }
+
+  .pswp__button--arrow--prev {
+    right: auto;
+    left: 0px;
+  }
+
+  .pswp__button--arrow--next {
+    right: 0px;
+  }
+  .pswp__button--arrow--next .pswp__icn {
+    left: auto;
+    right: 14px;
+    /* flip horizontally */
+    transform: scale(-1, 1);
+  }
+
+  /*
+
+  Zoom button
+
+*/
+  .pswp__button--zoom {
+    display: none;
+  }
+
+  .pswp--zoom-allowed .pswp__button--zoom {
+    display: block;
+  }
+
+  /* "+" => "-" */
+  .pswp--zoomed-in .pswp__zoom-icn-bar-v {
+    display: none;
+  }
+
+  /*
+
+  Loading indicator
+
+*/
+  .pswp__preloader {
+    position: relative;
+    overflow: hidden;
+    width: 50px;
+    height: 60px;
+    margin-right: auto;
+  }
+
+  .pswp__preloader .pswp__icn {
+    opacity: 0;
+    transition: opacity 0.2s linear;
+    animation: pswp-clockwise 600ms linear infinite;
+  }
+
+  .pswp__preloader--active .pswp__icn {
+    opacity: 0.85;
+  }
+
+  @keyframes pswp-clockwise {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /*
+
+  "1 of 10" counter
+
+*/
+  .pswp__counter {
+    height: 30px;
+    margin: 15px 0 0 20px;
+    font-size: 14px;
+    line-height: 30px;
+    color: var(--pswp-icon-color);
+    text-shadow: 1px 1px 3px var(--pswp-icon-color-secondary);
+    opacity: 0.85;
+  }
+
+  .pswp--one-slide .pswp__counter {
+    display: none;
   }
 </style>

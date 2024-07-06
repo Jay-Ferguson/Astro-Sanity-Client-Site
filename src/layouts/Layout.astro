@@ -3,146 +3,164 @@ interface Props {
   title?: string;
   description?: string;
 }
-
 const { title } = Astro.props;
-
-import MainHead from './MainHead.astro';
-import HeadingMenu from '../components/HeadingMenu.astro';
-import Footer from '../components/Footer.astro';
-import { getAllMetaData } from '../lib/api';
-const accentClour = "#f2f2f2";
-
+import MainHead from "./MainHead.astro";
+import HeadingMenu from "../components/HeadingMenu.astro";
+import Footer from "../components/Footer.astro";
+import { enableVisualEditing } from "@sanity/visual-editing";
+import { getAllMetaData } from "../lib/api";
 const metaData = await getAllMetaData();
-console.log(metaData);
-console.log('this should log on the server');
-
+const accentColour = "#f2f2f2";
 ---
 
 <!doctype html>
 <html lang="en">
-  <MainHead title={metaData.metaTitle} description={metaData.metaDescription}></MainHead>
+  <MainHead
+    title={metaData[0].metaTitle}
+    description={metaData[0].metaDescription}
+  />
+  <!-- google tag manager analytics -->
+
+  <script async is:inline src="https://www.googletagmanager.com/gtag/js?id=G-4PR8773PTK"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-4PR8773PTK");
+  </script>
+
   <body>
-    {console.log('this should log on the client')}
-    <HeadingMenu></HeadingMenu>
-    <div class="content">
-      <slot />
-    </div>
-    <Footer></Footer>
+      <!-- Google Tag Manager (noscript) -->
+      <noscript
+        ><iframe
+          src="https://www.googletagmanager.com/ns.html?id=GTM-T3Q7R8RM"
+          height="0"
+          width="0"
+          style="display:none;visibility:hidden"></iframe></noscript
+      >
+      <!-- End Google Tag Manager (noscript) -->
+      <HeadingMenu transition:persist />
+      <div class="content">
+        <slot />
+      </div>
+      <Footer />
+      <style is:global define:vars={{ accentColour }}>
+        :root {
+          --accent: #f2f2f2;
+          --main-bg-color: #221f1e;
+          --secondary-bg-color: #1f1f1f;
+          --secondary-font-family: "Roboto", sans-serif;
+        }
+
+        * {
+          padding: 0;
+          box-sizing: border-box;
+          font-size: 16px;
+          font-weight: 300;
+          font-family: "Cormorant Garamond", serif;
+          color: var(--accentColour);
+          list-style: none;
+        }
+        html {
+          /* background: ; */
+          height: 100%;
+          background: radial-gradient(#201a15, #111111);
+        }
+
+        body {
+          margin: 0px;
+          height: 100%;
+          box-sizing: border-box;
+          padding: 0px;
+          display: flex;
+          flex-direction: column;
+        }
+        code {
+          font-family:
+            Menlo,
+            Monaco,
+            Lucida Console,
+            Liberation Mono,
+            DejaVu Sans Mono,
+            Bitstream Vera Sans Mono,
+            Courier New,
+            monospace;
+        }
+
+        .content {
+          flex: 1 0 auto;
+        }
+
+        #text {
+          display: none;
+        }
+
+        .body-text {
+          font-size: 1.2rem;
+        }
+        .cormorant-garamond-light {
+          font-family: "Cormorant Garamond", serif;
+          font-weight: 300;
+          font-style: normal;
+        }
+
+        .cormorant-garamond-regular {
+          font-family: "Cormorant Garamond", serif;
+          font-weight: 400;
+          font-style: normal;
+        }
+
+        .cormorant-garamond-medium {
+          font-family: "Cormorant Garamond", serif;
+          font-weight: 500;
+          font-style: normal;
+        }
+
+        .cormorant-garamond-semibold {
+          font-family: "Cormorant Garamond", serif;
+          font-weight: 600;
+          font-style: normal;
+        }
+
+        .cormorant-garamond-bold {
+          font-family: "Cormorant Garamond", serif;
+          font-weight: 700;
+          font-style: normal;
+        }
+
+        .cormorant-garamond-light-italic {
+          font-family: "Cormorant Garamond", serif;
+          font-weight: 300;
+          font-style: italic;
+        }
+
+        .cormorant-garamond-regular-italic {
+          font-family: "Cormorant Garamond", serif;
+          font-weight: 400;
+          font-style: italic;
+        }
+
+        .cormorant-garamond-medium-italic {
+          font-family: "Cormorant Garamond", serif;
+          font-weight: 500;
+          font-style: italic;
+        }
+
+        .cormorant-garamond-semibold-italic {
+          font-family: "Cormorant Garamond", serif;
+          font-weight: 600;
+          font-style: italic;
+        }
+
+        .cormorant-garamond-bold-italic {
+          font-family: "Cormorant Garamond", serif;
+          font-weight: 700;
+          font-style: italic;
+        }
+      </style>
+    </enableVisualEditing>
   </body>
 </html>
-<style is:global>
-  :root {
-    --accent: #f2f2f2;
-    --main-bg-color: #221f1e;
-    --secondary-bg-color: #1f1f1f;
-    --secondary-font-family: "Roboto", sans-serif;
-  }
-
-  * {
-    padding: 0;
-    box-sizing: border-box;
-    font-size: 16px;
-    font-weight: 300;
-    font-family: "Cormorant Garamond", serif;
-    color: var(--main-highlight-color)
-    list-style:none;
-  }
-  html {
-    /* background: ; */
-    height: 100%;
-    background: radial-gradient(#201a15, #111111);
-  } 
-
-  body{
-	margin:0px;
-  height:100%;
-  box-sizing: border-box;
-  padding: 0px;
-  display:flex;
-  flex-direction: column;
-  }
-  code {
-    font-family:
-      Menlo,
-      Monaco,
-      Lucida Console,
-      Liberation Mono,
-      DejaVu Sans Mono,
-      Bitstream Vera Sans Mono,
-      Courier New,
-      monospace;
-  }
-
-  .content{
-    flex: 1 0 auto;
-  }
-
-
-  #text{
-    display:none;
-  }
-
-
-  .body-text {
-    font-size:1.2rem;
-  }
-  .cormorant-garamond-light {
-    font-family: "Cormorant Garamond", serif;
-    font-weight: 300;
-    font-style: normal;
-  }
-
-  .cormorant-garamond-regular {
-    font-family: "Cormorant Garamond", serif;
-    font-weight: 400;
-    font-style: normal;
-  }
-
-  .cormorant-garamond-medium {
-    font-family: "Cormorant Garamond", serif;
-    font-weight: 500;
-    font-style: normal;
-  }
-
-  .cormorant-garamond-semibold {
-    font-family: "Cormorant Garamond", serif;
-    font-weight: 600;
-    font-style: normal;
-  }
-
-  .cormorant-garamond-bold {
-    font-family: "Cormorant Garamond", serif;
-    font-weight: 700;
-    font-style: normal;
-  }
-
-  .cormorant-garamond-light-italic {
-    font-family: "Cormorant Garamond", serif;
-    font-weight: 300;
-    font-style: italic;
-  }
-
-  .cormorant-garamond-regular-italic {
-    font-family: "Cormorant Garamond", serif;
-    font-weight: 400;
-    font-style: italic;
-  }
-
-  .cormorant-garamond-medium-italic {
-    font-family: "Cormorant Garamond", serif;
-    font-weight: 500;
-    font-style: italic;
-  }
-
-  .cormorant-garamond-semibold-italic {
-    font-family: "Cormorant Garamond", serif;
-    font-weight: 600;
-    font-style: italic;
-  }
-
-  .cormorant-garamond-bold-italic {
-    font-family: "Cormorant Garamond", serif;
-    font-weight: 700;
-    font-style: italic;
-  }
-</style>

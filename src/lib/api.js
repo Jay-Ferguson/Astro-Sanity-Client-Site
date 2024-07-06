@@ -17,13 +17,13 @@ export async function getAllProjects() {
 }
 
 
-export async function getAllGalleryImages(){
-  const client = useSanityClient();
-  const query = '*[_type == "projects"]';
-  const params = '{galleryImages}';
-  const gallerys = await client.fetch(query, params);
-  return gallerys;
-}
+// export async function getAllGalleryImages(){
+//   const client = useSanityClient();
+//   const query = '*[_type == "projects"]';
+//   const params = '{galleryImages}';
+//   const gallerys = await client.fetch(query, params);
+//   return gallerys;
+// }
 
 export async function getAllsliderImages() {
   const sliderQuery = `*[_type == "slider"]`;
@@ -79,7 +79,6 @@ export async function getAllHome() {
   const catalog = await useSanityClient().fetch(catalogQuery, catalogParams);
   return catalog;
 }
-
 
 export async function getAllMetaData() {
   const metaQuery = '*[_type == "MetaData"]';

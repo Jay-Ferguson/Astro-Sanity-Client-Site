@@ -1,69 +1,173 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { getAllContact } from "../lib/api";
-// import { Image } from "astro:assets";
+import axios from "axios";
 import { urlForImage } from "../lib/urlForImage";
 import { Image } from "@unpic/astro";
+import FormComponent from "../components/FormComponent";
+
 const size = "0.3rem";
 const offWhite = "rgb(255, 255, 255)";
 const contact = await getAllContact();
+const currentUrl = new URL(Astro.url.origin);
 ---
 
 <Layout>
+  <script is:inline src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script is:inline async>
+    window.addEventListener("DOMContentLoaded", function () {
+      const status = document.getElementById("status");
+      let form = document.getElementById("form");
+      document.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        let formData = new FormData(form);
+        const formValues = Object.fromEntries(formData.entries(), null, 2);
+
+        const gReCaptchaResponse = grecaptcha.getResponse();
+        let userFormValues = {
+          firstName: formValues.firstName,
+          lastName: formValues.lastName,
+          email: formValues.email,
+          message: formValues.message,
+          category: formValues.category,
+        };
+
+        console.log({ formValues });
+        console.log({ userFormValues });
+        console.log({ gReCaptchaResponse });
+
+        const firstNameInput = document.getElementById("firstName");
+        const lastNameInput = document.getElementById("lastName");
+        const emailInput = document.getElementById("email");
+        const messageInput = document.getElementById("message");
+        const categoryInput = document.getElementById("category");
+
+        formData.append("first", firstNameInput.value);
+        formData.append("last", lastNameInput.value);
+        formData.append("email", emailInput.value);
+        formData.append("message", messageInput.value);
+        formData.append("category", categoryInput.value);
+
+        axios
+          .post("https://submit-form.com/n6nFdqZtI", {
+            firstName: formValues.firstName,
+            lastName: formValues.lastName,
+            email: formValues.email,
+            message: formValues.message,
+            category: formValues.category,
+            "g-recaptcha-response": grecaptcha.getResponse(),
+            // headers: {
+            //   "Content-Type": "application/json",
+            //   Accept: "application/json",
+            // },
+          })
+
+          .then((response) => {
+            if (response.data.status === 200) {
+              console.log("200");
+              status.innerHTML = "Thanks for your email";
+              document.getElementById("form").reset();
+            } else {
+              console.log(response.data);
+              console.log("not 200", response.data.status);
+              status.innerHTML = "Thanks for your email";
+              document.getElementById("form").reset();
+            }
+          })
+          .catch((error) => {
+            console.log(error.response.data);
+            status.innerHTML = "Something went wrong. Please try again later.";
+             document.getElementById("form").reset();
+          });
+      });
+    });
+  </script>
+
+  <!-- client validation -->
+
+  <script
+    async
+    is:inline
+    src="https://rickharrison.github.io/validate.js/validate.min.js"></script>
+
   <section class="contact-form">
     <Image
       src={urlForImage(contact[0].image).url()}
-      
       class="bckgrnd-contact"
       alt="contact-image"
-       width={500}
-        height={200}
-        placeholder="blurhash"
-        priority
-        />
+      layout="fullWidth"
+      width={1000}
+      height={1000}
+      placeholder="blurhash"
+      priority
+    />
 
-    <h2 class="contact-subtitle">
+    <h2 class="contact-title">
       {contact[0].subtitle}
     </h2>
 
     <p class="contact-subheader">{contact[0].subheading[0].children[0].text}</p>
+
     <div class="contact-container">
-      <form
-        action="https://submit-form.com/n6nFdqZtI"
-        onsubmit="return sumbitMail();"
-        class="form contact-container"
-      >
+      <form class="form contact-container" id="form">
         <input
-          name="first-name"
+          type="checkbox"
+          name="_honeypot"
+          style="display:none"
+          tabindex="-1"
+          autocomplete="off"
+        />
+        <input
+          name="firstName"
           placeholder="first name"
+          id="firstName"
           class="text-input"
+          autocomplete="on"
           required
+          required
+          title="Please enter your last name without any numbers"
+          pattern="^[^\d]*$"
           minlength="2"
           type="text"
         />
         <input
           type="text"
-          name="last-name"
+          name="lastName"
+          id="lastName"
+          pattern="^[^\d]*$"
           placeholder="last name"
           class="text-input"
           minlength="4"
           required
+          required
+          title="Please enter your last name without any numbers"
         />
+
         <input
           type="email"
           name="email"
+          id="email"
           placeholder="email"
           class="text-input"
+          autocomplete="on"
+          pattern="^(?=.{5,}$).*@.*$"
           required
+          title="Please am email containing the @ character"
+          minlength="4"
         />
         <textarea
           name="message"
           placeholder="message"
+          id="message"
           class="text-input message-text"
           required></textarea>
         <div class="selector--container">
-          <label for="project-cat" class="cat-selector-label">Select Project Category:</label>
-          <select name="project-cat" class="custom-select">
+          <label for="category" class="cat-selector-label"
+            >Select Project Category:</label
+          >
+          <select name="category" class="custom-select" id="category">
             <option value="Kitchens">Kitchens</option>
             <option value="Cabinetry">Cabinetry</option>
             <option value="Closets">Closets</option>
@@ -71,329 +175,333 @@ const contact = await getAllContact();
           </select>
         </div>
 
-        <lr-config
-          ctx-name="my-uploader"
-          pubkey="e8567231b94b07c13e67"
-          max-local-file-size-bytes="10000000"
-          img-only="true"
-          source-list="local, url, camera, instagram"
+        <div
+          class="g-recaptcha"
+          data-sitekey="6Ld_D-QpAAAAALCq5dNKAZiMKShQI4PpsIkVGX9_"
         >
-        </lr-config>
+        </div>
 
-        <lr-file-uploader-regular
-          ctx-name="my-uploader"
-          css-src="https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.css"
-          class="my-config"
-        >
-        </lr-file-uploader-regular>
-
-        <lr-upload-ctx-provider ctx-name="my-uploader" id="my-uploader-provider"
-        ></lr-upload-ctx-provider>
-
-        <div id="previews"></div>
-
-        <button type="submit" id="send-button" class="send-button-class">Send</button>
+        <input
+          type="submit"
+          id="send-button"
+          value="Send"
+          class="send-button-class"
+        />
       </form>
     </div>
 
-    <!-- <iframe src="...." frameborder="0" class="contact-iframe"> </iframe> -->
+    <div id="previews"></div>
+
+    <h3 id="status"></h3>
   </section>
+</Layout>
 
-  <script type="module">
-    import * as LR from "https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.js";
-    LR.registerBlocks(LR);
+<script
+  src="https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.js"
+>
+  // import * as LR from "https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.js";
+  LR.registerBlocks(LR);
 
-    const providerNode = document.getElementById("my-uploader-provider");
-    const previewsNode = document.getElementById("previews");
+  const providerNode = document.getElementById("my-uploader-provider");
+  const previewsNode = document.getElementById("previews");
 
-    providerNode.addEventListener("change", handleChangeEvent);
-    function handleChangeEvent(e) {
-      console.log("change event payload", e);
-      renderFiles(e.detail.allEntries.filter((f) => f.status === "success"));
-    }
+  providerNode.addEventListener("change", handleChangeEvent);
+  function handleChangeEvent(e) {
+    console.log("change event payload", e);
+    renderFiles(e.detail.allEntries.filter((f) => f.status === "success"));
+  }
 
-    function renderFiles(files) {
-      const renderedFiles = files.map((file) => {
-        const fileNode = document.createElement("div");
-        fileNode.setAttribute("class", "preview-wrapper");
+  function renderFiles(files) {
+    const renderedFiles = files.map((file) => {
+      const fileNode = document.createElement("div");
+      fileNode.setAttribute("class", "preview-wrapper");
 
-        const imgNode = document.createElement("img");
-        imgNode.setAttribute("class", "preview");
-        imgNode.setAttribute("src", file.cdnUrl + "/-/preview/-resize/x400/");
-        imgNode.setAttribute("width", "200");
-        imgNode.setAttribute("height", "200");
-        imgNode.setAttribute("alt", file.fileInfo.originalFilename);
-        imgNode.setAttribute("title", file.fileInfo.originalFilename);
+      const imgNode = document.createElement("img");
+      imgNode.setAttribute("src", file.cdnUrl);
+      imgNode.setAttribute("class", "preview");
+      imgNode.setAttribute("width", "50");
+      imgNode.setAttribute("height", "50");
+      imgNode.setAttribute("alt", file.fileInfo.originalFilename);
+      imgNode.setAttribute("title", file.fileInfo.originalFilename);
 
-        const imgNameNode = document.createElement("p");
-        imgNameNode.setAttribute("class", "preview-data");
-        imgNameNode.textContent = `${file.fileInfo.originalFileName}`;
-        const imgSizeNode = document.createElement("p");
-        imgSizeNode.setAttribute("class", "preview-data");
-        imgSizeNode.textContent = `${file.fileInfo.fileSize}`;
+      console.log(file.fileInfo);
 
-        fileNode.append(imgNode, imgNameNode, imgSizeNode);
+      // const imgNameNode = document.createElement("p");
+      // imgNameNode.setAttribute("class", "preview-data");
+      // imgNameNode.textContent = `${file.fileInfo.originalFileName}`;
+      // const imgSizeNode = document.createElement("p");
+      // imgSizeNode.setAttribute("class", "preview-data");
+      // imgSizeNode.textContent = `${file.fileInfo.fileSize}`;
+      // fileNode.append(imgNode, imgNameNode, imgSizeNode);
 
-        return fileNode;
-      });
+      return fileNode;
+    });
 
-      previewsNode.replaceChildren(...renderedFiles);
-    }
+    previewsNode.replaceChildren(...renderedFiles);
+  }
+</script>
 
-    function formatSize(bytes) {
-      if (!bytes) return "0 bytes";
+<script>
+  ScrollReveal({ distance: "50px" });
+  ScrollReveal().reveal("#status", {
+    delay: 250,
+    origin: "bottom",
+    easing: "ease-in",
+  });
+</script>
 
-      const k = 1024;
-      const sizes = ["bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+<style define:vars={{ size, offWhite }} is:global>
+  #status {
+    color: var(--offWhite);
+    padding-top: 0.5rem;
+    font-size: 1.4rem;
+    margin-top: -2rem;
+  }
 
-      const i = Math.floor(Math.log(bytes) / Math.log(k));
+  .g-recaptcha {
+    margin: 2rem;
+  }
+  .contact-form {
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+  }
 
-      return `${parseFloat((bytes / k ** i).toFixed(2))} ${sizes[i]}`;
-    }
-  </script>
+  .contact-container {
+    width: 80%;
+    background-color: ececec;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+    border-radius: 10px;
+  }
 
-  <script>
-    import axios from "axios";
-
-    function sendMail() {
-      let status = document.getElementById("status");
-      document
-        .getElementById("send-button")
-        .addEventListener("click", function () {
-          axios
-            .post("https://submit-form.com/n6nFdqZtI", {
-              first: "First Name",
-              last: "Last Name",
-              message: "hello",
-              email: {
-                from: "",
-                subject: "",
-                template: {
-                  title: false,
-                  footer: false,
-                },
-              },
-            })
-            .then((response) => {
-              if (response.data === "success") {
-                status.innerHTML = "Thanks for your email";
-              } else {
-                status.innerHTML = "Something went wrong";
-              }
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-        });
-    }
-  </script>
-
-  <style define:vars={{ size, offWhite }}>
-    .contact-form {
-      display: flex;
-      flex-direction: column;
-      justify-self: center;
-      align-items: center;
-    }
-
-    .contact-container {
-      width: 80%;
-      padding: 1rem;
-      background-color: ececec;
-      display: flex;
-      flex-direction: column;
-      justify-self: center;
-      align-items: center;
-      border-radius: 10px;
-    }
-
-    .bckgrnd-contact {
+  .bckgrnd-contact {
     z-index: -4;
     position: absolute;
     height: auto;
-    top: 70px;
+    top: 0px;
     margin-left: auto;
     margin-right: auto;
+    object-fit: fit;
     left: 0;
     right: 0;
     opacity: 0.3;
   }
 
-    input {
-      border: none;
-      margin: 0.2rem;
+  input {
+    border: none;
+    margin: 0.2rem;
+  }
+
+  #previews {
+    margin: 2rem;
+    object-fit: cover;
+  }
+
+  .preview-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .preview-data {
+    font-size: 0.8rem;
+    display: none;
+  }
+
+  .send-button-class {
+    position: relative;
+    font-size: 2rem;
+    text-transform: uppercase;
+    width: 10rem;
+    text-align: center;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    border: none;
+    background: linear-gradient(38deg, #f05a24, #ba2f2f);
+    color: #efefef;
+    transition: ease-out 0.4s;
+    box-shadow: 2px 2px 2px 4px rgba(35, 35, 35, 0.35);
+  }
+
+  .send-button-class:active {
+  }
+
+  .send-button-class:hover {
+    background: linear-gradient(-35deg, #f05a24, #ba2f2f);
+    transition: ease-in 0.5s;
+    color: rgb(30, 30, 30);
+    box-shadow: 2px 2px 2px 4px rgba(35, 35, 35, 0.35);
+  }
+
+  .send-button-class::after {
+  }
+
+  .selector--container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0.5rem;
+    padding: 1rem;
+  }
+
+  .contact-subheader {
+    padding: 2rem;
+    font-size: 1.2rem;
+    color: white;
+    max-width: 40rem;
+    margin-bottom: 1rem;
+  }
+
+  .contact-title {
+    font-size: 3rem;
+    color: var(--offWhite);
+    padding-top: 2rem;
+  }
+  @media screen and (max-width: 500px) {
+    .contact-title {
+      font-size: 2.5rem;
+      margin-bottom: -1rem;
     }
+  }
 
-    .send-button-class {
-      position: relative;
-      font-size: 2rem;
-      text-transform: uppercase;
-      width: 10rem;
-      text-align: center;
-      border-radius: 1rem;
-      margin-top: 3rem;
-      padding: 0.5rem;
-      border: none;
-      background: linear-gradient(38deg, #f05a24, #ba2f2f);
-      color: #efefef;
-      transition: ease-out 0.4s;
-      box-shadow: 2px 2px 2px 4px rgba(35, 35, 35, 0.35);
-    }
+  .custom-select {
+    min-width: 150px;
+    padding: 1rem;
+    max-width: 200px;
+    margin-left: 1rem;
+    position: relative;
+    border-radius: 10px;
+  }
 
-    .send-button-class:active {
-    }
+  #my-uploader-provider {
+    background-color: #d6d6d6;
+    color: black;
+  }
 
-    .send-button-class:hover {
-      background: linear-gradient(-35deg,  #f05a24, #ba2f2f);
-      transition: ease-in 0.5s;
-rgb(241, 198, 190)rgb(176, 65, 46)rgb(176, 55, 46)      top: -1px;
-      color: rgb(55, 55, 55);
-      box-shadow: 2px 2px 2px 4px rgba(35, 35, 35, 0.35);
-    }
+  .uploadcare--widget__button {
+    margin-top: 0.4rem;
+    color: black;
+    background-color: var(--offWhite);
+  }
 
-    .send-button-class::after {
-    }
+  .custom-select::before,
+  .custom-select::after {
+    --size: 0.3rem;
+    position: absolute;
+    content: "";
+    right: 1rem;
+    pointer-events: none;
+  }
 
-    .selector--container {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
-      margin: 2rem;
-      padding:1rem;
-    }
+  .custom-select::before {
+    border-left: var(--size) solid transparent;
+    border-right: var(--size) solid transparent;
+    border-bottom: var(--size) solid black;
+    top: 40%;
+  }
 
-    .contact-subheader{
-      padding:2rem;
-      font-size: 1.2rem;
-      color:white;
-      max-width:40rem;
-      margin-bottom: 1rem;
-    }
+  .custom-select::after {
+    border-left: var(--size) solid transparent;
+    border-right: var(--size) solid transparent;
+    border-top: var(--size) solid black;
+    top: 55%;
+  }
 
-    .contact-subtitle{
-      font-size: 1.9rem;
-      color:var(--offWhite);
-      padding-top:2rem;
-    }
+  label {
+    display: inline;
+    color: var(--offWhite);
+  }
 
-  
+  select {
+    appearance: none;
+    /* safari */
+    -webkit-appearance: none;
+    /* other styles for aesthetics */
+    width: 100%;
+    font-size: 1.15rem;
+    padding: 0.675em 6em 0.675em 1em;
+    background-color: #fff;
+    border: 1px solid #caced1;
+    border-radius: 0.25rem;
+    color: #000;
+    cursor: pointer;
+  }
 
-    .custom-select {
-      min-width: 150px;
-      max-width: 200px;
-      margin-left:1rem;
-      position: relative;
-      border-radius: 10px;
-    }
+  .message-text {
+    overflow: auto;
+    white-space: normal;
+    text-overflow: "-";
+    height: 10rem;
+  }
 
-    .custom-select::before,
-    .custom-select::after {
-      --size: 0.3rem;
-      positon: absolute;
-      content: "";
-      right: 1rem;
-      pointer-events: none;
-    }
+  .text-input {
+    color: black;
+    width: 80%;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+  }
 
-    ,
-    .custom-select::before {
-      border-left: var(--size) solid transparent;
-      border-right: var(--size) solid transparent;
-      border-bottom: var(--size) solid black;
-      top: 40%;
-    }
+  /* input:invalid {
+    box-shadow: 0 0 5px 1px rgb(245, 9, 9);
+  }
 
-    .custom-select::after {
-      border-left: var(--size) solid transparent;
-      border-right: var(--size) solid transparent;
-      border-top: var(--size) solid black;
-      top: 55%;
-    }
+  input:focus:invalid {
+    box-shadow: none;
+  } */
 
-    label {
-      display: inline;
-      color: var(--offWhite);
-  
-    }
-
-    select {
-      appearance: none;
-      /* safari */
-      -webkit-appearance: none;
-      /* other styles for aesthetics */
-      width: 100%;
-      font-size: 1.15rem;
-      padding: 0.675em 6em 0.675em 1em;
-      background-color: #fff;
-      border: 1px solid #caced1;
-      border-radius: 0.25rem;
-      color: #000;
-      cursor: pointer;
-    }
-
-    .message-text {
-      overflow: auto;
-      white-space: normal;
-      text-overflow: "-";
-      height: 10rem;
-    }
-
+  @media screen and (max-width: 700px) {
     .text-input {
-      width: 80%;
-      padding: 1rem;
-      border-radius: 10px;
-      margin-bottom: 1rem;
+      min-width: 20rem;
+    }
+    .selector--container {
+      flex-direction: column;
     }
 
-    @media screen and (max-width: 700px) {
-      .text-input {
-        min-width:20rem;
-}
-      .selector--container{
-        flex-direction: column;
-      }
-
-      .cat-selector-label {
-            margin-bottom: .5rem;
-      }
-        .custom-select {
-          margin:0;
-        }
-      }      
-    
-
-    .box-input {
-      height: 20rem;
-      border: 1px dashed black;
+    .cat-selector-label {
+      margin-bottom: 0.5rem;
     }
-
-    .checkbox {
+    .custom-select {
+      margin: 0;
     }
+  }
 
-    .box__dragndrop,
-    .box__uploading,
-    .box__success,
-    .box__error {
-      display: none;
-    }
+  .box-input {
+    height: 20rem;
+    border: 1px dashed black;
+  }
 
-    .box.has-advanced-upload {
-      background-color: var(--offWhite);
-      outline: 2px dashed black;
-      outline-offset: -10px;
-    }
+  .checkbox {
+  }
 
-    .box.has-advanced-upload .box__dragndrop {
-      display: inline;
-    }
+  .box__dragndrop,
+  .box__uploading,
+  .box__success,
+  .box__error {
+    display: none;
+  }
 
-    .my-config {
-      --darkmode: 0;
-      --h-accent: 144;
-      --s-accent: 67%;
-      --l-accent: 57%;
-    }
-  </style>
-</Layout
->
+  .box.has-advanced-upload {
+    background-color: var(--offWhite);
+    outline: 2px dashed black;
+    outline-offset: -10px;
+  }
+
+  .box.has-advanced-upload .box__dragndrop {
+    display: inline;
+  }
+
+  .my-config {
+    --darkmode: 0;
+    --h-accent: 144;
+    --s-accent: 67%;
+    --l-accent: 57%;
+  }
+</style>

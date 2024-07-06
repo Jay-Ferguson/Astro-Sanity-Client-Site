@@ -1,0 +1,7 @@
+// const botpoison = new Botpoison({
+      //   publicKey: "pk_63cf250d-bf36-4970-ac6f-143da67ad4c4",
+      // });
+      // botpoison.challenge().then(({ solution }) => {
+
+
+let fileInput = document.querySelector("#photo");
