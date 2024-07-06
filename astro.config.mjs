@@ -14,7 +14,7 @@ import { loadEnv } from "vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://warnockcabinetry.com",
+  site: "https://warnockcabinetry.ca",
   output: "static",
   prefetch: true,
   base: "/",
