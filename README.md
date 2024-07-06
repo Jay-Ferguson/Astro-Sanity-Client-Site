@@ -1,7 +1,8 @@
-# Astro Starter Kit: Basics
+# Astro : with Sanity CMS
 
 ```sh
-npm create astro@latest -- --template basics
+npm install
+npm run dev
 ```
 ```
 after downloading the code run the site locally using npm (or other package-manager) install then npm run dev 
