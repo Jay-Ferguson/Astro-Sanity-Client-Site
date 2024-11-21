@@ -9,10 +9,10 @@ const catalogue = await getAllGallery();
 <Layout>
   <div class="gal-heading-container">
     <h2 class="gal-title">
-      {catalogue[0].subtitle}
+      {catalogue.subtitle ?? null}
     </h2>
     <p class="gal-intro-text">
-      {catalogue[0].subheading[0].children[0].text}
+      {catalogue.subheading ?? null}
     </p>
   </div>
   <!-- project data from sanity.io -->

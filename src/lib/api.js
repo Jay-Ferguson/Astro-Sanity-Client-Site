@@ -67,7 +67,7 @@ export async function getAllContact() {
 }
 
 export async function getAllGallery() {
-  const catalogQuery = '*[_type == "page" && title match "Catalogue"]';
+  const catalogQuery = '*[_type == "page" && title match "gallery"]';
   const catalogParams = {};
   const catalog = await useSanityClient().fetch(catalogQuery, catalogParams);
   return catalog;
