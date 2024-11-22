@@ -67,10 +67,10 @@ export async function getAllContact() {
 }
 
 export async function getAllGallery() {
-  const catalogQuery = '*[_type == "page" && title match "gallery"]';
-  const catalogParams = {};
-  const catalog = await useSanityClient().fetch(catalogQuery, catalogParams);
-  return catalog;
+  const galleryQuery = '*[_type == "page" && title match "gallery"]';
+  const galleryParams = {};
+  const gallery = await useSanityClient().fetch(galleryQuery, galleryParams);
+  return gallery;
 }
 
 export async function getAllHome() {

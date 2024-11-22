@@ -3,16 +3,18 @@
 import Layout from "../layouts/Layout.astro";
 import GalleryPhotos from "../components/GalleryPhotos.astro";
 import { getAllGallery } from "../lib/api.js";
-const catalogue = await getAllGallery();
+const gallery = await getAllGallery();
+console.log(gallery[0].subtitle);
 ---
 
 <Layout>
   <div class="gal-heading-container">
     <h2 class="gal-title">
-      {catalogue.subtitle ?? null}
+      {console.log(gallery)}
+      {gallery[0].subtitle ?? null}
     </h2>
     <p class="gal-intro-text">
-      {catalogue.subheading ?? null}
+      {gallery.subheading ?? null}
     </p>
   </div>
   <!-- project data from sanity.io -->
