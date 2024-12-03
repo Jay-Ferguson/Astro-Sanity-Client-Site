@@ -74,10 +74,10 @@ export async function getAllGallery() {
 }
 
 export async function getAllHome() {
-  const catalogQuery = '*[_type == "page" && title match "Home"]';
-  const catalogParams = {};
-  const catalog = await useSanityClient().fetch(catalogQuery, catalogParams);
-  return catalog;
+  const homeQuery = '*[_type == "page" && title match "Home"]';
+  const homeParams = {};
+  const home = await useSanityClient().fetch(homeQuery, homeParams);
+  return home;
 }
 
 export async function getAllMetaData() {

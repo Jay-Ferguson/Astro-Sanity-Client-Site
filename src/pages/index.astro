@@ -15,6 +15,7 @@ const homeText = await getAllHome();
 const posts = await getAllPosts();
 const promotion = await getAllPromotions();
 const headerImg = "../images/homepage1.jpg";
+console.log("this is a server test", homeText[0]);
 ---
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -37,7 +38,7 @@ const headerImg = "../images/homepage1.jpg";
 
 <html>
   <meta name="generator" content={Astro.generator} />
-  <title>{homeText[0].subtitle}</title>
+  <title>{homeText[0].subtitle ?? null}{console.log(homeText)}</title>
 </html>
 
 <Layout>
@@ -46,9 +47,9 @@ const headerImg = "../images/homepage1.jpg";
       <HeaderSlider />
 
       <div class="subtitle_container">
-        <h1 class="title-header">{homeText[0].subtitle}</h1>
+        <h1 class="title-header">{homeText[0].subtitle ?? null}{console.log(homeText)}</h1>
         <h5 class="subtitle-header">
-          {homeText[0].subheading[0].children[0].text}
+          {homeText[0].subheading[0].children[0].text ?? null}
         </h5>
 
         <a href="/contact/" class="call-to-action" data-astro-prefetch
@@ -72,9 +73,9 @@ const headerImg = "../images/homepage1.jpg";
 
     <div class="cta-container">
       <h6 class="lower-sub-header body-text">
-        {homeText[0].body[0].children[0].text}
+        {homeText[0].subheading[0].children[0].text ?? null}
       </h6>
-      <h2 class="info-cta">{homeText[0].pageBuilder[0].subheaders}</h2>
+      <!-- <h2 class="info-cta">{homeText[0].pageBuilder[0]?.subheaders ?? null}</h2> -->
       <a class="subheader--contact__button" href="/contact/"> Contact </a>
     </div>
   </main>
